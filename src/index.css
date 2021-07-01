@@ -1,0 +1,40 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+*::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #393a45;
+    border-radius: 8px;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: #4c4d5c;
+    border-radius: 8px;
+    width: 3px;
+    height: 3px;
+}
+
+html {
+    background-color: #2C2D35;
+}
+
+/* body, html, #root {
+    height: 100%;
+} */
+
+@font-face {
+    font-family: "Lato";
+    src: url("./assets/Lato-Regular.ttf");
+}
+
+@font-face {
+    font-family: "Lato-Bold";
+    src: url("./assets/Lato-Bold.ttf");
+}

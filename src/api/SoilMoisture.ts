@@ -1,4 +1,4 @@
-import { APISoilMoistureResponse, LatLong, SoilMoistureResponse } from "../interfaces/interfaces";
+import { APISoilMoistureResponse, LatLong, SoilMoistureResponse } from "../interfaces/Interfaces";
 import { toDClimateFormat } from "../helpers/DateFormat";
 
 export async function get(latLong: LatLong, date?: Date): Promise<any> {

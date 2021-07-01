@@ -1,25 +1,55 @@
-import { useEffect, useState } from 'react';
-import { LatLong } from './interfaces/interfaces';
-import * as soilMoisture from './api/SoilMoisture';
+import { useState } from 'react';
+import styled from 'styled-components';
 
-const accra: LatLong = {
-  lat: 5.614818,
-  long: -0.205874
-};
+import DateInputBar from './components/DateInputBar';
+import WeatherForecast from './components/WeatherForecast';
+import ForecastPreviews from './components/ForecastPreviews';
+import WeatherData from './components/WeatherData';
+import LocationInput from './components/LocationInput';
+import { ThemeContextProvider } from './contexts/ThemeContext';
 
-function App() {
-  const [moisture, setMoisture] = useState(0);
+const AppContainer = styled.div`
+  width: 90%;
+  height: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+`;
 
-  useEffect(() => {
-    soilMoisture.get(accra).then(res => setMoisture(res.moisture));
-  }, []);
+const Header = styled.div`
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.2);
+  background-color: #414141;
+`;
+
+const Separator = styled.hr`
+  border-radius: 999px;
+  border: none;
+  border-top: 3px solid #393a45;
+`;
+
+export default function App() {
+  // useEffect(() => {
+  //   soilMoisture.get(accra).then(res => setMoisture(res.moisture));
+  // }, []);
 
   return (
-    <div>
-      <h1>Taikai-Weather2021 Dashboard</h1>
-      <p>Soil moisture: {moisture}</p>
-    </div>
+    <>
+      {/* <Header>
+        <Title>Sunrise Dashboard</Title>
+      </Header> */}
+      <AppContainer>
+        <ThemeContextProvider>
+          <DateInputBar />
+          <WeatherForecast />
+          <LocationInput />
+          <Separator />
+          <ForecastPreviews />
+          <WeatherData />
+        </ThemeContextProvider>
+      </AppContainer>
+    </>
   );
 }
-
-export default App;
