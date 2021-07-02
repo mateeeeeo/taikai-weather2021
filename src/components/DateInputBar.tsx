@@ -68,7 +68,9 @@ const CalendarIcon = styled(CalendarOutline)`
 export default function DateInputBar() {
     const [dateInput, setDateInput] = useState('2021-05-21');
 
-    const [theme, setTheme] = useContext(ThemeContext);
+    const { theme, setTheme } = useContext(ThemeContext);
+
+    console.log(theme);
 
     return (
         <DateInputContainer>

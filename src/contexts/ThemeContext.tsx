@@ -1,21 +1,26 @@
+import { Dispatch, SetStateAction } from 'react';
+import { useContext } from 'react';
 import { createContext, useState, useEffect } from 'react';
+import { Theme } from '../interfaces/Interfaces';
 
-type ThemeProps = {
-    isDarkMode: boolean;
+const defaultTheme = {
+    theme: { isDarkMode: true },
+    setTheme: (theme: Theme) => { }
 }
 
-export const ThemeContext = createContext({});
+export const ThemeContext = createContext(defaultTheme);
 
 export function ThemeContextProvider(props: any) {
-    const [themeProps, setThemeProps] = useState<ThemeProps>({ isDarkMode: false });
+
+    const [theme, setTheme] = useState<Theme>(defaultTheme.theme);
 
     useEffect(() => {
-        if(!themeProps.isDarkMode)
+        if (!theme.isDarkMode)
             document.documentElement.style.backgroundColor = '#EDF0FF';
     }, []);
 
     return (
-        <ThemeContext.Provider value={[themeProps, setThemeProps]}>
+        <ThemeContext.Provider value={{ theme, setTheme }}>
             {props.children}
         </ThemeContext.Provider>
     );

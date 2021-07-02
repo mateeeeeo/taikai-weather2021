@@ -17,6 +17,6 @@ export interface APISoilMoistureResponse {
     snappedTo: Array<number>
 }
 
-export interface Theme {
+export type Theme = {
     isDarkMode: boolean;
 }
