@@ -3,6 +3,8 @@ import styled from 'styled-components';
 import { WeatherType } from './enums/enums';
 import { Text } from './../styled_components/styledComponents';
 import { Sunny } from 'react-ionicons';
+import { useContext } from 'react';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 interface ForecastPreviewProps {
     time: number,
@@ -15,11 +17,13 @@ const TimeText = styled(Text)`
     font-size: 20px;
     font-weight: normal;
     margin-bottom: 4px;
+    color: ${props => props.theme.isDarkMode ? 'white' : '#232323'};
 `;
 
 const TemperatureText = styled(TimeText)`
     font-size: 20px;
     margin: 0;
+    color: ${props => props.theme.isDarkMode ? 'white' : '#232323'};
 `;
 
 const PreviewContainer = styled.div`
@@ -29,21 +33,23 @@ const PreviewContainer = styled.div`
     padding: 8px;
 `;
 
-const SunnyIcon = styled(Sunny)`
+    const SunnyIcon = styled(Sunny)`
     width: 24px;
     height: 24px;
 `;
 
 export default function ForecastPreview(props: ForecastPreviewProps) {
+    const { theme } = useContext(ThemeContext);
+
     return (
         <PreviewContainer>
-            <TimeText as="p">{props.time < 10 ? '0' : ''}{props.time}:00</TimeText>
+            <TimeText theme={theme} as="p">{props.time < 10 ? '0' : ''}{props.time}:00</TimeText>
             <SunnyIcon
                 width='24px'
                 height='24px'
-                color='white'
+                color={theme.isDarkMode ? 'white' : '#232323'}
             />
-            <TemperatureText>{props.temperature}°</TemperatureText>
+            <TemperatureText theme={theme}>{props.temperature}°</TemperatureText>
         </PreviewContainer>
     );
 }

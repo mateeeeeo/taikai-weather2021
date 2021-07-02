@@ -70,15 +70,14 @@ export default function DateInputBar() {
 
     const { theme, setTheme } = useContext(ThemeContext);
 
-    console.log(theme);
-
     return (
         <DateInputContainer>
             <TopContainer>
                 <MobileSettingsButton
-                    color='white'
+                    color={theme.isDarkMode ? 'white' : '#232323'}
                     height='32px'
                     width='32px'
+                    onClick={() => { setTheme({ isDarkMode: !theme.isDarkMode }) }} // toggles dark mode
                 />
                 <DateInputContainer>
                     <DateInput
@@ -96,7 +95,7 @@ export default function DateInputBar() {
                     </InputIconContainer>
                 </DateInputContainer>
                 <MobileSearchButton
-                    color='white'
+                    color={theme.isDarkMode ? 'white' : '#232323'}
                     height='32px'
                     width='32px'
                 />

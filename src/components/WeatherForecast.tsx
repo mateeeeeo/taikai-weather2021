@@ -2,11 +2,14 @@ import React from 'react';
 import styled from 'styled-components';
 import { LocationSharp, Sunny } from 'react-ionicons';
 import { Text } from './../styled_components/styledComponents';
+import { useContext } from 'react';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 const LocationText = styled(Text)`
   font-size: 36px;
   margin-left: 8px;
   font-weight: normal;
+  color: ${props => props.theme.isDarkMode ? 'white' : '#232323'};
 
   @media (min-width: 360px) {
     font-size: 44px;
@@ -37,6 +40,7 @@ const TemperatureText = styled(Text)`
   font-size: 40px;
   font-weight: normal;
   margin-left: 4px;
+  color: ${props => props.theme.isDarkMode ? 'white' : '#232323'};
 
   @media (min-width: 360px) {
     font-size: 48px;
@@ -54,23 +58,26 @@ const SunnyIcon = styled(Sunny)`
 `;
 
 function WeatherForecast() {
+
+  const { theme } = useContext(ThemeContext);
+
   return (
     <WeatherForecastContainer>
       <ForecastLocation>
         <LocationIcon
-          color='white'
+          color={theme.isDarkMode ? 'white' : '#232323'}
           height='40px'
           width='40px'
         />
-        <LocationText>Accra</LocationText>
+        <LocationText theme={theme}>Accra</LocationText>
       </ForecastLocation>
       <ForecastWeatherDisplay>
         <SunnyIcon
-          color='white'
+          color={theme.isDarkMode ? 'white' : '#232323'}
           height='40px'
           width='40px'
         />
-        <TemperatureText>35°</TemperatureText>
+        <TemperatureText theme={theme}>35°</TemperatureText>
       </ForecastWeatherDisplay>
     </WeatherForecastContainer>
   );
