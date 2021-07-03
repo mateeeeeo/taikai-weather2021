@@ -94,11 +94,11 @@ export default function DateInputBar() {
                         />
                     </InputIconContainer>
                 </DateInputContainer>
-                <MobileSearchButton
+                {/* <MobileSearchButton
                     color={theme.isDarkMode ? 'white' : '#232323'}
                     height='32px'
                     width='32px'
-                />
+                /> */}
             </TopContainer>
         </DateInputContainer>
     );

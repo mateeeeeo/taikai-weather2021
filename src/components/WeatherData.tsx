@@ -1,5 +1,9 @@
 import React from 'react';
+import { useContext } from 'react';
+import { useState } from 'react';
 import styled from 'styled-components';
+import { SelectedDateContext } from '../contexts/SelectedDateContext';
+import { format } from '../helpers/DateFormat';
 import { Text, Title } from '../styled_components/styledComponents';
 import { Severity } from './enums/enums';
 
@@ -89,12 +93,13 @@ function DataContainer(props: DataContainerProps) {
 }
 
 export default function WeatherData() {
+    const { selectedDate } = useContext(SelectedDateContext);
+
     return (
         <Container>
             <div>
                 <LocationTitle as='h1'>Accra, Ghana</LocationTitle>
-                <DateText>5/21/2021</DateText>
-                <DateText>15:00</DateText>
+                <DateText>{format(selectedDate)}</DateText>
             </div>
             <DataContainers>
                 <DataContainer

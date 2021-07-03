@@ -1,5 +1,3 @@
-import { Dispatch, SetStateAction } from 'react';
-import { useContext } from 'react';
 import { createContext, useState, useEffect } from 'react';
 import { Theme } from '../interfaces/Interfaces';
 

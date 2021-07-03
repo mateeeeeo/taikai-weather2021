@@ -23,7 +23,7 @@ export const Input = styled.input`
     outline: none;
     border-radius: 8px 0 0 8px;
     text-align: center;
-    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.3);
 
     &::placeholder {
         color: white;

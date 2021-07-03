@@ -53,8 +53,8 @@ const LocationIcon = styled(LocationSharp)`
 `;
 
 const SunnyIcon = styled(Sunny)`
-  height: 40px;
-  width: 40px;
+  height: 48px;
+  width: 48px;
 `;
 
 function WeatherForecast() {
@@ -74,8 +74,8 @@ function WeatherForecast() {
       <ForecastWeatherDisplay>
         <SunnyIcon
           color={theme.isDarkMode ? 'white' : '#232323'}
-          height='40px'
-          width='40px'
+          height='48px'
+          width='48px'
         />
         <TemperatureText theme={theme}>35°</TemperatureText>
       </ForecastWeatherDisplay>
