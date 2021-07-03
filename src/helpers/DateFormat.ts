@@ -10,3 +10,11 @@ export function format(date: Date): string {
 
     return `${month < 10 ? '0' + month : month}/${day < 10 ? '0' + day : day}/${year}`;
 }
+
+export function inputFormat(date: Date): string {
+    const month: number = date.getMonth();
+    const day: number = date.getDate();
+    const year: number = date.getFullYear();
+
+    return `${year}-${month < 10 ? '0' + month : month}-${day < 10 ? '0' + day : day}`;
+}

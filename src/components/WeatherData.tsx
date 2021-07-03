@@ -1,6 +1,4 @@
-import React from 'react';
 import { useContext } from 'react';
-import { useState } from 'react';
 import styled from 'styled-components';
 import { SelectedDateContext } from '../contexts/SelectedDateContext';
 import { format } from '../helpers/DateFormat';

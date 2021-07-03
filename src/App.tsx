@@ -1,13 +1,11 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 
 import DateInputBar from './components/DateInputBar';
 import WeatherForecast from './components/WeatherForecast';
 import ForecastPreviews from './components/ForecastPreviews';
 import WeatherData from './components/WeatherData';
-import LocationInput from './components/LocationInput';
 import { ThemeContextProvider } from './contexts/ThemeContext';
-import { SelectedDateContext, SelectedDateContextProvider } from './contexts/SelectedDateContext';
+import { SelectedDateContextProvider } from './contexts/SelectedDateContext';
 
 const AppContainer = styled.div`
   width: 90%;
@@ -17,13 +15,13 @@ const AppContainer = styled.div`
   flex-direction: column;
 `;
 
-const Header = styled.div`
-  width: 100%;
-  padding: 12px 16px;
-  margin-bottom: 16px;
-  box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.2);
-  background-color: #414141;
-`;
+// const Header = styled.div`
+//   width: 100%;
+//   padding: 12px 16px;
+//   margin-bottom: 16px;
+//   box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.2);
+//   background-color: #414141;
+// `;
 
 const Separator = styled.hr`
   border-radius: 999px;
@@ -43,11 +41,11 @@ export default function App() {
       </Header> */}
       <AppContainer>
         <ThemeContextProvider>
-          <DateInputBar />
-          <WeatherForecast />
-          {/* <LocationInput /> */}
-          <Separator />
           <SelectedDateContextProvider>
+            <DateInputBar />
+            <WeatherForecast />
+            {/* <LocationInput /> */}
+            <Separator />
             <ForecastPreviews />
             <WeatherData />
           </SelectedDateContextProvider>

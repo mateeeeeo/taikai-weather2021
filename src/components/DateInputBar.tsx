@@ -1,8 +1,10 @@
 import { useState, useContext } from 'react';
 import styled from 'styled-components';
-import { CalendarOutline, Cog, Search } from 'react-ionicons';
+import { CalendarOutline, Cog } from 'react-ionicons';
 import { Input, InputIconContainer } from '../styled_components/styledComponents';
 import { ThemeContext } from '../contexts/ThemeContext';
+import { SelectedDateContext } from '../contexts/SelectedDateContext';
+import { inputFormat } from '../helpers/DateFormat';
 
 const DateInputContainer = styled.div`
     display: flex;
@@ -40,16 +42,16 @@ const MobileSettingsButton = styled(Cog)`
 }
 `;
 
-const MobileSearchButton = styled(Search)`
-    justify-self: end;
-    align-self: center;
-    width: 32px;
-    height: 32px;
+// const MobileSearchButton = styled(Search)`
+//     justify-self: end;
+//     align-self: center;
+//     width: 32px;
+//     height: 32px;
 
-    @media (min-width: 768px) {
-        display: none;
-    }
-`;
+//     @media (min-width: 768px) {
+//         display: none;
+//     }
+// `;
 
 const CalendarIcon = styled(CalendarOutline)`
     width: 24px;
@@ -66,9 +68,10 @@ const CalendarIcon = styled(CalendarOutline)`
 `;
 
 export default function DateInputBar() {
-    const [dateInput, setDateInput] = useState('2021-05-21');
-
     const { theme, setTheme } = useContext(ThemeContext);
+    const { selectedDate } = useContext(SelectedDateContext);
+
+    const [, setDateInput] = useState(inputFormat(selectedDate));
 
     return (
         <DateInputContainer>
@@ -83,7 +86,7 @@ export default function DateInputBar() {
                     <DateInput
                         type='date'
                         placeholder='Enter a date'
-                        value={dateInput}
+                        value={inputFormat(selectedDate)}
                         onChange={e => setDateInput(e.target.value)}
                     />
                     <InputIconContainer>

@@ -1,6 +1,5 @@
-import { useContext, useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { SelectedDateContext } from '../contexts/SelectedDateContext';
 import { WeatherType } from './enums/enums';
 import ForecastPreview from './ForecastPreview';
 
