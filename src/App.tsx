@@ -13,6 +13,10 @@ const AppContainer = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
+
+  @media (min-width: 768px) {
+    width: 80%;
+  }
 `;
 
 // const Header = styled.div`

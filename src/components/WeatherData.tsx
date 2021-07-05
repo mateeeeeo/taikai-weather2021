@@ -101,6 +101,16 @@ export default function WeatherData() {
             </div>
             <DataContainers>
                 <DataContainer
+                    valueName='Pressure'
+                    value='1000.7mb'
+                    severity={Severity.ok}
+                />
+                <DataContainer
+                    valueName='Humidity'
+                    value='77%'
+                    severity={Severity.ok}
+                />
+                <DataContainer
                     valueName='Soil moisture'
                     value='3.3cm'
                     severity={Severity.ok}
