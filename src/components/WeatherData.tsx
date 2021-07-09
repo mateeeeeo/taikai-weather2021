@@ -7,15 +7,15 @@ import { Severity } from './enums/enums';
 
 const Container = styled.div`
     // flex: 1;
-    background-color: #4C65E9;
+    // background-color: #4C65E9;
     border-radius: 16px;
-    padding: 16px;
+    // padding: 16px;
     margin-bottom: 16px;
-    width: 80%;
+    width: 90%;
     align-self: center;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
+    // box-shadow: 0 8px 8px rgba(0, 0, 0, 0.3);
 `;
 
 const StyledDataContainer = styled.div`

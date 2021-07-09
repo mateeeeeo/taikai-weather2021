@@ -19,13 +19,14 @@ const PreviewsContainer = styled.div`
     margin-bottom: 16px;
 `;
 
+const forecastPreviewWidth: number = 69.875;
+
 export default function ForecastPreviews() {
     const [previews, setPreviews] = useState<Forecast[]>([]);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-    const forecastPreviewWidth: number = 69.875;
-
     const dayIndex = useRef<number>(0);
+    const isMouseOverContainer = useRef<boolean>(false);
 
     function loadNewDates(dates?: number): void {
         if (scrollContainerRef.current) {
@@ -46,6 +47,35 @@ export default function ForecastPreviews() {
             }
             setPreviews([...previews]);
         }
+    }
+
+    function onScroll() : void{
+        if (scrollContainerRef.current) {
+            const scrollWidth = scrollContainerRef.current.scrollWidth - scrollContainerRef.current.clientWidth;
+
+            if (scrollWidth - scrollContainerRef.current.scrollLeft == 0) {
+                loadNewDates(7);
+            }
+        }
+    }
+
+    // function onMouseOver() : void{
+    //     if(!isMouseOverContainer.current)
+    //         isMouseOverContainer.current = true;
+    // }
+
+    // function onMouseLeave() : void {
+    //     isMouseOverContainer.current = false;
+    // }
+
+    // function onWindowScroll(e : Event) : void {
+    //     if(isMouseOverContainer.current) {
+    //         console.log(e);
+    //     }
+    // }
+
+    function onMouseWheelMove(e : any) : void {
+        scrollContainerRef.current?.scrollBy({ left: e.deltaY / 1.5 });
     }
 
     useEffect(() => {
@@ -94,18 +124,16 @@ export default function ForecastPreviews() {
     //     ]
     // };
 
+
+
     return (
         <PreviewsContainer
             ref={scrollContainerRef}
-            onScroll={() => {
-                if (scrollContainerRef.current) {
-                    const scrollWidth = scrollContainerRef.current.scrollWidth - scrollContainerRef.current.clientWidth;
-
-                    if (scrollWidth - scrollContainerRef.current.scrollLeft == 0) {
-                        loadNewDates(7);
-                    }
-                }
-            }}>
+            onScroll={onScroll}
+            onWheel={onMouseWheelMove}
+            // onMouseOver={onMouseOver}
+            // onMouseLeave={onMouseLeave}
+            >
             {/* // <Slider {...settings}> */}
             {previews.map((preview, i) =>
                 <ForecastPreview
