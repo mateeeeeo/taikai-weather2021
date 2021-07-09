@@ -6,7 +6,7 @@ import { ThemeContext } from '../contexts/ThemeContext';
 import { SelectedDateContext } from '../contexts/SelectedDateContext';
 import { inputFormat } from '../helpers/DateFormat';
 import DatePicker from 'react-datepicker';
-import './../src/react-datepicker.css';
+import './../react-datepicker.css';
 
 const DateInputContainer = styled.div`
     display: flex;
@@ -60,24 +60,20 @@ const MobileSettingsButton = styled(Cog)`
 const CalendarIcon = styled(CalendarOutline)`
     width: 24px;
     height: 24px;
-    cursor: pointer;
+    // cursor: pointer;
 
-    transition: transform 300ms ease;
+    // // transition: transform 300ms ease;
 
-    @media (min-width: 768px) {
-        &:hover {
-            transform: scale(1.1)
-        }
-    }
+    // // @media (min-width: 768px) {
+    // //     &:hover {
+    // //         transform: scale(1.1)
+    // //     }
+    // // }
 `;
 
 export default function DateInputBar() {
     const { theme, setTheme } = useContext(ThemeContext);
-    const { selectedDate } = useContext(SelectedDateContext);
-
-    // const [, setDateInput] = useState(inputFormat(selectedDate));
-
-    const [date, setDate] = useState(new Date());
+    const { selectedDate, setSelectedDate } = useContext(SelectedDateContext);
 
     return (
         <DateInputContainer>
@@ -96,8 +92,8 @@ export default function DateInputBar() {
                         onChange={e => setDateInput(e.target.value)}
                     /> */}
                     <DatePicker
-                        selected={date}
-                        onChange={date => setDate(date as Date)}
+                        selected={selectedDate}
+                        onChange={date => setSelectedDate(date as Date)}
                         customInput={<DateInput />}
                     />
                     <InputIconContainer>
