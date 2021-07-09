@@ -4,7 +4,7 @@
     box-sizing: border-box;
     /* Firefox */
     scrollbar-width: thin;
-
+    scrollbar-color: #4c4d5c #393a45;
 }
 
 *::-webkit-scrollbar {

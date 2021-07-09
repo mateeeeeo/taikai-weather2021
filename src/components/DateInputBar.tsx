@@ -5,6 +5,8 @@ import { Input, InputIconContainer } from '../styled_components/styledComponents
 import { ThemeContext } from '../contexts/ThemeContext';
 import { SelectedDateContext } from '../contexts/SelectedDateContext';
 import { inputFormat } from '../helpers/DateFormat';
+import DatePicker from 'react-datepicker';
+import './../src/react-datepicker.css';
 
 const DateInputContainer = styled.div`
     display: flex;
@@ -19,6 +21,8 @@ const TopContainer = styled.div`
 `;
 
 const DateInput = styled(Input)`
+    height: 100%;
+    
     &::-webkit-inner-spin-button,
     &::-webkit-calendar-picker-indicator {
         display: none;
@@ -71,7 +75,9 @@ export default function DateInputBar() {
     const { theme, setTheme } = useContext(ThemeContext);
     const { selectedDate } = useContext(SelectedDateContext);
 
-    const [, setDateInput] = useState(inputFormat(selectedDate));
+    // const [, setDateInput] = useState(inputFormat(selectedDate));
+
+    const [date, setDate] = useState(new Date());
 
     return (
         <DateInputContainer>
@@ -83,11 +89,16 @@ export default function DateInputBar() {
                     onClick={() => { setTheme({ isDarkMode: !theme.isDarkMode }) }} // toggles dark mode
                 />
                 <DateInputContainer>
-                    <DateInput
+                    {/* <DateInput
                         type='date'
                         placeholder='Enter a date'
                         value={inputFormat(selectedDate)}
                         onChange={e => setDateInput(e.target.value)}
+                    /> */}
+                    <DatePicker
+                        selected={date}
+                        onChange={date => setDate(date as Date)}
+                        customInput={<DateInput />}
                     />
                     <InputIconContainer>
                         <CalendarIcon

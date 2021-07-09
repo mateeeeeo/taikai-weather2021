@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
 import { WeatherType } from './enums/enums';
 import ForecastPreview from './ForecastPreview';
-import Slider, { LazyLoadTypes } from 'react-slick';
 
 interface Forecast {
     temperature: number,
@@ -26,7 +25,6 @@ export default function ForecastPreviews() {
     const scrollContainerRef = useRef<HTMLDivElement>(null);
 
     const dayIndex = useRef<number>(0);
-    const isMouseOverContainer = useRef<boolean>(false);
 
     function loadNewDates(dates?: number): void {
         if (scrollContainerRef.current) {
