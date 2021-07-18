@@ -26,6 +26,7 @@
 
 html {
     background-color: #2C2D35;
+    transition: all 0.25s ease;
 }
 
 /* body, html, #root {

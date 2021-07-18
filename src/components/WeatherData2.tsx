@@ -1,8 +1,9 @@
 import { Severity } from './enums/enums';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { Text } from '../styled_components/styledComponents';
-import { Water } from 'react-ionicons';
+import { CompassSharp, RainySharp, SunnySharp, Water } from 'react-ionicons';
 import { useRef, useEffect } from 'react';
+import { Sunny } from 'react-ionicons';
 
 function getSeverityColor(severity: Severity): string {
     switch (severity) {
@@ -66,12 +67,6 @@ function PressureDisplay(props: CircularDisplayProps) {
 
     const DisplayContainer = styled.svg`
         overflow: hidden;
-
-        // &::before {
-        //     content: "";
-        //     padding-bottom: 100%;
-        //     display: block;
-        // }
     `;
 
     const Value = styled.path`
@@ -145,6 +140,7 @@ function HumidityDisplay(props: HumidityDisplayProps) {
     const HumidityIcon = styled(Water)`
         width: 32px;
         height: 32px;
+        margin-right: 4px;
     `;
 
     const HumidityValue = styled(Text)`
@@ -169,19 +165,179 @@ enum WindDirection {
 
 interface WindDisplayProps {
     speed: number,
-    from: WindDirection,
-    to: WindDirection,
+    direction: WindDirection,
 }
 
 function WindDisplay(props: WindDisplayProps) {
     const WindDisplayContainer = styled.div`
-        
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    `;
+
+    const WindText = styled(Text)`
+        font-size: 20px;
+        margin-bottom: 0.25rem;
+    `;
+
+    const WindIcon = styled.i`
+        font-size: 32px;
+        color: white;
+    `;
+
+    const ArrowIcon = styled(WindIcon)`
+        font-size: 24px;
+        padding: 0 8px;
+    `;
+
+    const CompassIcon = styled(CompassSharp)`
+        width: 32px;
+        height: 32px;
+        margin-right: 4px;
+    `;
+
+    const WindValueContainer = styled.div`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    `;
+
+    const WindValue = styled(Text)`
+        font-size: 32px;
     `;
 
     return (
         <WindDisplayContainer>
-
+            <WindText>Wind</WindText>
+            <WindValueContainer>
+                <WindIcon className="ri-windy-line" />
+                <WindValue>
+                    <b>{props.speed}m/s</b>
+                    <ArrowIcon className="ri-arrow-right-line" />
+                </WindValue>
+                <CompassIcon width="32px" height="32px" color="white" />
+                <WindValue><b>{WindDirection[props.direction]}</b></WindValue>
+            </WindValueContainer>
         </WindDisplayContainer>
+    );
+}
+
+interface RainChanceDisplayProps {
+    chance: number
+}
+
+function RainChanceDisplay(props: RainChanceDisplayProps) {
+    const RainDisplayContainer = styled.div`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    `;
+
+    const RainText = styled(Text)`
+        font-size: 20px;
+        margin-bottom: 0.25rem;
+    `;
+
+    const RainIcon = styled(RainySharp)`
+        width: 32px;
+        height: 32px;
+        margin-right: 8px;
+    `;
+
+    const RainValueContainer = styled.div`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    `;
+
+    const RainValue = styled(Text)`
+        font-size: 32px;
+        font-weight: bold;
+    `;
+
+    return (
+        <RainDisplayContainer>
+            <RainText>Chance of rain</RainText>
+            <RainValueContainer>
+                <RainIcon width="32px" height="32px" color="white" />
+                <RainValue>{props.chance}%</RainValue>
+            </RainValueContainer>
+        </RainDisplayContainer>
+    );
+}
+
+enum WeatherCondition {
+    Sunny, Clear, PartlyCloudy, Cloudy, Foggy,
+}
+
+interface WeatherConditionDisplayProps {
+    condition: WeatherCondition
+}
+
+function WeatherConditionDisplay(props: WeatherConditionDisplayProps) {
+    const WeatherConditionContainer = styled.div`
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    `;
+
+    const WeatherConditionText = styled(Text)`
+        font-size: 20px;
+        margin-bottom: 0.25rem;
+    `;
+
+    const WeatherConditionValue = styled(Text)`
+        font-size: 32px;
+        font-weight: bold;
+    `;
+
+    let conditionIconClass: string;
+    const ConditionIcon = styled.i`
+        font-size: 32px;
+        color: white;
+        margin-right: 8px;
+    `;
+
+    const ConditionValueContainer = styled.div`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    `;
+
+    switch (props.condition) {
+        case WeatherCondition.Sunny:
+            conditionIconClass = 'ri-sun-fill';
+            break;
+
+        case WeatherCondition.PartlyCloudy:
+            conditionIconClass = 'ri-sun-cloudy-fill';
+            break;
+
+        case WeatherCondition.Cloudy:
+            conditionIconClass = 'ri-cloudy-fill';
+            break;
+
+        case WeatherCondition.Foggy:
+            conditionIconClass = 'ri-foggy-fill';
+            break;
+
+        case WeatherCondition.Clear:
+            conditionIconClass = 'ri-sun-foggy-fill';
+            break;
+    }
+
+    return (
+        <WeatherConditionContainer>
+            <WeatherConditionText>Weather Condition</WeatherConditionText>
+            <ConditionValueContainer>
+                <ConditionIcon className={conditionIconClass} />
+                <WeatherConditionValue>{WeatherCondition[props.condition]}</WeatherConditionValue>
+            </ConditionValueContainer>
+        </WeatherConditionContainer>
+
     );
 }
 
@@ -189,7 +345,8 @@ export default function WeatherData2() {
     const Grid = styled.div`
         margin-top: 1rem;
         display: grid;
-        grid-gap: 1rem;
+        column-gap: 2.5rem;
+        row-gap: 4rem;
         grid-template-columns: 1fr;
         align-items: center;
         justify-items: center;
@@ -211,6 +368,11 @@ export default function WeatherData2() {
                 severity={Severity.good}
             />
             <HumidityDisplay humidity={77} />
+            <RainChanceDisplay chance={20} />
+            <WindDisplay
+                speed={15}
+                direction={WindDirection.SW} />
+            <WeatherConditionDisplay condition={WeatherCondition.Foggy} />
         </Grid>
     );
 }
