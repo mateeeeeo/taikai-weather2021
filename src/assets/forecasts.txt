@@ -1,0 +1,31 @@
+Uyo, NG: January 18, 2021
+Pressure: 1000.7 mb
+Temperature: 29.5 C
+Humidity: 77%
+Condition: Cloudy
+Wind: WSW at 5 m/s
+Chance of rain: 80%
+
+Uyo, NG: February 7, 2021
+Pressure: 999.3 mb
+Temperature: 34.7 C
+Humidity: 57%
+Condition: Cloudy
+Wind: Unknown
+Chance of rain: 20%
+
+Uyo, NG: March 9, 2021
+Pressure: 998.2 mb
+Temperature: 34.9 C
+Humidity: 60%
+Condition: Sunny
+Wind: NE at 15 m/s
+Chance of rain: 20%
+
+Accra, GH: June 9, 2021
+Pressure: 1002.0 mb
+Temperature: 32.7 C
+Humidity: 68%
+Condition: Partly Cloudy
+Wind: Unknown
+Chance of rain: 30%
