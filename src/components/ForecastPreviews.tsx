@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
-import { WeatherType } from './enums/enums';
+import { WeatherType } from './../enums/enums';
 import ForecastPreview from './ForecastPreview';
 
 interface Forecast {

@@ -1,9 +1,10 @@
 import { useContext } from 'react';
 import styled from 'styled-components';
 import { SelectedDateContext } from '../contexts/SelectedDateContext';
+import { ThemeContext } from '../contexts/ThemeContext';
 import { format } from '../helpers/DateFormat';
 import { Text, Title } from '../styled_components/styledComponents';
-import { Severity } from './enums/enums';
+import { Severity } from '../enums/enums';
 
 const Container = styled.div`
     // flex: 1;
@@ -82,9 +83,11 @@ interface DataContainerProps {
 }
 
 function DataContainer(props: DataContainerProps) {
+    const { theme } = useContext(ThemeContext);
+
     return (
         <StyledDataContainer>
-            <DataText>{props.valueName}</DataText>
+            <DataText isDarkMode={theme.isDarkMode}>{props.valueName}</DataText>
             <ValueText severity={props.severity}>{props.value}</ValueText>
         </StyledDataContainer>
     )
@@ -92,12 +95,13 @@ function DataContainer(props: DataContainerProps) {
 
 export default function WeatherData() {
     const { selectedDate } = useContext(SelectedDateContext);
+    const { theme } = useContext(ThemeContext);
 
     return (
         <Container>
             <div>
-                <LocationTitle as='h1'>Accra, Ghana</LocationTitle>
-                <DateText>{format(selectedDate)}</DateText>
+                <LocationTitle as='h1' isDarkMode={theme.isDarkMode}>Accra, Ghana</LocationTitle>
+                <DateText isDarkMode={theme.isDarkMode}>{format(selectedDate)}</DateText>
             </div>
             <DataContainers>
                 <DataContainer

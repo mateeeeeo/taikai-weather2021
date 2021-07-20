@@ -1,5 +1,7 @@
 import { Text } from '../styled_components/styledComponents';
 import styled from 'styled-components';
+import { useContext } from 'react';
+import { ThemeContext } from '../contexts/ThemeContext';
 
 export enum WeatherCondition {
     Sunny, Clear, PartlyCloudy, Cloudy, Foggy,
@@ -9,36 +11,37 @@ interface WeatherConditionDisplayProps {
     condition: WeatherCondition
 }
 
+const ConditionIcon = styled.i`
+    font-size: 32px;
+    color: ${({ isDarkMode }: { isDarkMode: boolean }) => isDarkMode ? 'white' : '#232323'};
+    margin-right: 8px;
+`;
+
+const ConditionValueContainer = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+`;
+
+const WeatherConditionContainer = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+`;
+
+const WeatherConditionText = styled(Text)`
+    font-size: 20px;    
+    margin-bottom: 0.25rem;
+`;
+
+const WeatherConditionValue = styled(Text)`
+    font-size: 32px;
+    font-weight: bold;
+`;
+
 export default function WeatherConditionDisplay(props: WeatherConditionDisplayProps) {
-    const WeatherConditionContainer = styled.div`
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    `;
-
-    const WeatherConditionText = styled(Text)`
-        font-size: 20px;
-        margin-bottom: 0.25rem;
-    `;
-
-    const WeatherConditionValue = styled(Text)`
-        font-size: 32px;
-        font-weight: bold;
-    `;
-
     let conditionIconClass: string;
-    const ConditionIcon = styled.i`
-        font-size: 32px;
-        color: white;
-        margin-right: 8px;
-    `;
-
-    const ConditionValueContainer = styled.div`
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    `;
 
     switch (props.condition) {
         case WeatherCondition.Sunny:
@@ -62,12 +65,14 @@ export default function WeatherConditionDisplay(props: WeatherConditionDisplayPr
             break;
     }
 
+    const { theme } = useContext(ThemeContext);
+
     return (
         <WeatherConditionContainer>
-            <WeatherConditionText>Weather Condition</WeatherConditionText>
+            <WeatherConditionText isDarkMode={theme.isDarkMode}>Weather Condition</WeatherConditionText>
             <ConditionValueContainer>
-                <ConditionIcon className={conditionIconClass} />
-                <WeatherConditionValue>{WeatherCondition[props.condition]}</WeatherConditionValue>
+                <ConditionIcon isDarkMode={theme.isDarkMode} className={conditionIconClass} />
+                <WeatherConditionValue isDarkMode={theme.isDarkMode}>{WeatherCondition[props.condition]}</WeatherConditionValue>
             </ConditionValueContainer>
         </WeatherConditionContainer>
     );
