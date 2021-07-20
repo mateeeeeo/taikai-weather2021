@@ -26,10 +26,16 @@ export default function ForecastPreviews() {
 
     const dayIndex = useRef<number>(0);
 
+    useEffect(() => {
+        scrollContainerRef.current?.addEventListener('wheel', onMouseWheelMove);
+
+        loadNewDates();
+    }, []);
+
+
     function loadNewDates(dates?: number): void {
         if (scrollContainerRef.current) {
             const forecastsAmount: number = dates ?? Math.floor(scrollContainerRef.current.clientWidth / forecastPreviewWidth);
-            console.log(forecastsAmount);
 
             for (let i = 0; i < forecastsAmount; i++) {
                 const date: Date = new Date();
@@ -58,19 +64,14 @@ export default function ForecastPreviews() {
     }
 
     function onMouseWheelMove(e: any): void {
-        scrollContainerRef.current?.scrollBy({ left: e.deltaY / 1.5 });
+        e.preventDefault();
+        scrollContainerRef.current?.scrollBy({ left: e.deltaY / 2 });
     }
-
-    useEffect(() => {
-        loadNewDates();
-    }, []);
-
 
     return (
         <PreviewsContainer
             ref={scrollContainerRef}
-            onScroll={onScroll}
-            onWheel={onMouseWheelMove}>
+            onScroll={onScroll}>
             {previews.map((preview, i) =>
                 <ForecastPreview
                     key={i}
