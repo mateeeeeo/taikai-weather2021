@@ -47,7 +47,7 @@ export default function ForecastPreviews() {
         }
     }
 
-    function onScroll() : void{
+    function onScroll(): void {
         if (scrollContainerRef.current) {
             const scrollWidth = scrollContainerRef.current.scrollWidth - scrollContainerRef.current.clientWidth;
 
@@ -57,22 +57,7 @@ export default function ForecastPreviews() {
         }
     }
 
-    // function onMouseOver() : void{
-    //     if(!isMouseOverContainer.current)
-    //         isMouseOverContainer.current = true;
-    // }
-
-    // function onMouseLeave() : void {
-    //     isMouseOverContainer.current = false;
-    // }
-
-    // function onWindowScroll(e : Event) : void {
-    //     if(isMouseOverContainer.current) {
-    //         console.log(e);
-    //     }
-    // }
-
-    function onMouseWheelMove(e : any) : void {
+    function onMouseWheelMove(e: any): void {
         scrollContainerRef.current?.scrollBy({ left: e.deltaY / 1.5 });
     }
 
@@ -80,59 +65,12 @@ export default function ForecastPreviews() {
         loadNewDates();
     }, []);
 
-    // const settings = {
-    //     dots: false,
-    //     speed: 500,
-    //     slidesToShow: 14,
-    //     slidesToScroll: 1,
-    //     swipeToSlide: true,
-    //     draggable: true,
-    //     lazyLoad: "progressive" as LazyLoadTypes,
-    //     responsive: [
-    //         {
-    //             breakpoint: 1600,
-    //             settings: {
-    //                 slidesToShow: 12,
-    //             }
-    //         },
-    //         {
-    //             breakpoint: 1440,
-    //             settings: {
-    //                 slidesToShow: 10,
-    //             }
-    //         },
-    //         {
-    //             breakpoint: 1024,
-    //             settings: {
-    //                 slidesToShow: 8,
-    //             }
-    //         },
-    //         {
-    //             breakpoint: 768,
-    //             settings: {
-    //                 slidesToShow: 6,
-    //             }
-    //         },
-    //         {
-    //             breakpoint: 600,
-    //             settings: {
-    //                 slidesToShow: 4,
-    //             }
-    //         },
-    //     ]
-    // };
-
-
 
     return (
         <PreviewsContainer
             ref={scrollContainerRef}
             onScroll={onScroll}
-            onWheel={onMouseWheelMove}
-            // onMouseOver={onMouseOver}
-            // onMouseLeave={onMouseLeave}
-            >
-            {/* // <Slider {...settings}> */}
+            onWheel={onMouseWheelMove}>
             {previews.map((preview, i) =>
                 <ForecastPreview
                     key={i}
@@ -142,7 +80,6 @@ export default function ForecastPreviews() {
                     weatherType={preview.weatherType}
                 />
             )}
-            {/* // </Slider> */}
         </PreviewsContainer>
     );
 }

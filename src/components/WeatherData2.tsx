@@ -341,6 +341,51 @@ function WeatherConditionDisplay(props: WeatherConditionDisplayProps) {
     );
 }
 
+interface SoilMoistureDisplayProps {
+    moisture: number
+}
+
+function SoilMoistureDisplay(props: SoilMoistureDisplayProps) {
+    const SoilMoistureContainer = styled.div`
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    `;
+
+    const SoilMoistureText = styled(Text)`
+        font-size: 20px;
+        margin-bottom: 0.25rem;
+    `;
+
+    const SoilMoistureValueContainer = styled.div`
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    `;
+
+    const SoilMoistureValue = styled(Text)`
+        font-size: 32px;
+        font-weight: bold;
+    `;
+
+    const SoilMoistureIcon = styled.i`
+        font-size: 32px;
+        color: white;
+        margin-right: 8px;
+    `;
+
+    return (
+        <SoilMoistureContainer>
+            <SoilMoistureText>Soil moisture</SoilMoistureText>
+            <SoilMoistureValueContainer>
+                <SoilMoistureIcon className="ri-flood-fill" />
+                <SoilMoistureValue>{props.moisture}m</SoilMoistureValue>
+            </SoilMoistureValueContainer>
+        </SoilMoistureContainer>
+    );
+}
+
 export default function WeatherData2() {
     const Grid = styled.div`
         margin-top: 1rem;
@@ -360,19 +405,28 @@ export default function WeatherData2() {
         }
     `;
 
+    const LocationText = styled(Text)`
+        text-decoration: underline;
+        margin: 0.5rem 1rem;
+    `;
+
     return (
-        <Grid>
-            <PressureDisplay
-                valueName={'Pressure'}
-                value={'1000mb'}
-                severity={Severity.good}
-            />
-            <HumidityDisplay humidity={77} />
-            <RainChanceDisplay chance={20} />
-            <WindDisplay
-                speed={15}
-                direction={WindDirection.SW} />
-            <WeatherConditionDisplay condition={WeatherCondition.Foggy} />
-        </Grid>
+        <>
+            <LocationText as="h1">Accra, GH</LocationText>
+            <Grid>
+                <PressureDisplay
+                    valueName={'Pressure'}
+                    value={'1000mb'}
+                    severity={Severity.good}
+                />
+                <HumidityDisplay humidity={77} />
+                <RainChanceDisplay chance={20} />
+                <WindDisplay
+                    speed={15}
+                    direction={WindDirection.SW} />
+                <WeatherConditionDisplay condition={WeatherCondition.Foggy} />
+                <SoilMoistureDisplay moisture={0.033} />
+            </Grid>
+        </>
     );
 }
