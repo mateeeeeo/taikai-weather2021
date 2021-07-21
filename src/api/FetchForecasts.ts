@@ -1,7 +1,7 @@
 import readline from 'readline';
 import fs from 'fs';
-import {LatLong} from './interfaces/Interfaces';
-import { revformat } from './helpers/DateFormat';
+import {LatLong} from '../interfaces/Interfaces';
+import { revformat } from '../helpers/DateFormat';
 
 type WeatherInfo = {
   pressure?: number,
@@ -25,7 +25,7 @@ type Location = {
 };
 
 export let locations: Array<Location>;
-const path = "C:\\Users\\Administrator\\Documents\\taikai-weather2021\\src\\assets\\forecasts.txt"
+const path = "../assets/forecasts.txt"
 
 export function fetchForecasts(range:number) { //The forecasts will be saved in global variable locations
   let actforecast: Forecast;
