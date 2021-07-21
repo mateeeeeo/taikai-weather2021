@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
-import { WeatherType } from './enums/enums';
+import { WeatherType } from './../enums/enums';
 import ForecastPreview from './ForecastPreview';
 
 interface Forecast {
@@ -26,10 +26,16 @@ export default function ForecastPreviews() {
 
     const dayIndex = useRef<number>(0);
 
+    useEffect(() => {
+        scrollContainerRef.current?.addEventListener('wheel', onMouseWheelMove);
+
+        loadNewDates();
+    }, []);
+
+
     function loadNewDates(dates?: number): void {
         if (scrollContainerRef.current) {
             const forecastsAmount: number = dates ?? Math.floor(scrollContainerRef.current.clientWidth / forecastPreviewWidth);
-            console.log(forecastsAmount);
 
             for (let i = 0; i < forecastsAmount; i++) {
                 const date: Date = new Date();
@@ -47,7 +53,7 @@ export default function ForecastPreviews() {
         }
     }
 
-    function onScroll() : void{
+    function onScroll(): void {
         if (scrollContainerRef.current) {
             const scrollWidth = scrollContainerRef.current.scrollWidth - scrollContainerRef.current.clientWidth;
 
@@ -57,82 +63,15 @@ export default function ForecastPreviews() {
         }
     }
 
-    // function onMouseOver() : void{
-    //     if(!isMouseOverContainer.current)
-    //         isMouseOverContainer.current = true;
-    // }
-
-    // function onMouseLeave() : void {
-    //     isMouseOverContainer.current = false;
-    // }
-
-    // function onWindowScroll(e : Event) : void {
-    //     if(isMouseOverContainer.current) {
-    //         console.log(e);
-    //     }
-    // }
-
-    function onMouseWheelMove(e : any) : void {
-        scrollContainerRef.current?.scrollBy({ left: e.deltaY / 1.5 });
+    function onMouseWheelMove(e: any): void {
+        e.preventDefault();
+        scrollContainerRef.current?.scrollBy({ left: e.deltaY / 2 });
     }
-
-    useEffect(() => {
-        loadNewDates();
-    }, []);
-
-    // const settings = {
-    //     dots: false,
-    //     speed: 500,
-    //     slidesToShow: 14,
-    //     slidesToScroll: 1,
-    //     swipeToSlide: true,
-    //     draggable: true,
-    //     lazyLoad: "progressive" as LazyLoadTypes,
-    //     responsive: [
-    //         {
-    //             breakpoint: 1600,
-    //             settings: {
-    //                 slidesToShow: 12,
-    //             }
-    //         },
-    //         {
-    //             breakpoint: 1440,
-    //             settings: {
-    //                 slidesToShow: 10,
-    //             }
-    //         },
-    //         {
-    //             breakpoint: 1024,
-    //             settings: {
-    //                 slidesToShow: 8,
-    //             }
-    //         },
-    //         {
-    //             breakpoint: 768,
-    //             settings: {
-    //                 slidesToShow: 6,
-    //             }
-    //         },
-    //         {
-    //             breakpoint: 600,
-    //             settings: {
-    //                 slidesToShow: 4,
-    //             }
-    //         },
-    //     ]
-    // };
-
-
 
     return (
         <PreviewsContainer
             ref={scrollContainerRef}
-            onScroll={onScroll}
-            onWheel={onMouseWheelMove}
-            // onMouseOver={onMouseOver}
-            // onMouseLeave={onMouseLeave}
-            >
-            {/* // <Slider {...settings}> */}
+            onScroll={onScroll}>
             {previews.map((preview, i) =>
                 <ForecastPreview
                     key={i}
@@ -142,7 +81,6 @@ export default function ForecastPreviews() {
                     weatherType={preview.weatherType}
                 />
             )}
-            {/* // </Slider> */}
         </PreviewsContainer>
     );
 }

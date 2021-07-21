@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { WeatherType } from './enums/enums';
+import { WeatherType } from './../enums/enums';
 import { Text } from './../styled_components/styledComponents';
 import { Sunny } from 'react-ionicons';
 import { useContext } from 'react';
@@ -14,36 +14,31 @@ interface ForecastPreviewProps {
     weatherType: WeatherType
 }
 
-interface PreviewContainerProps {
-    theme: Theme
-    isSelected: boolean
-}
-
 interface TextProps {
-    theme: Theme,
     isSelected: boolean
+    isDarkMode: boolean
 }
 
 const DateText = styled(Text) <TextProps>`
     font-size: 20px;
     font-weight: normal;
     margin-bottom: 4px;
-    color: ${props => getTextColor(props.isSelected, props.theme.isDarkMode)};
+    color: ${(props: TextProps) => getTextColor(props.isSelected, props.isDarkMode)};
 `;
 
 const TemperatureText = styled(DateText) <TextProps>`
     font-size: 20px;
     margin: 0;
-    color: ${props => getTextColor(props.isSelected, props.theme.isDarkMode)};
+    color: ${(props: TextProps) => getTextColor(props.isSelected, props.isDarkMode)};
 `;
 
-const PreviewContainer = styled.div<PreviewContainerProps>`
+const PreviewContainer = styled.div<TextProps>`
     display: inline-flex;
     flex-direction: column;
     align-items: center;
-    padding: ${(props: PreviewContainerProps) => props.isSelected ? '8px 16px' : '8px'};
+    padding: ${(props: TextProps) => props.isSelected ? '8px 16px' : '8px'};
     transition: all 250ms ease;
-    background-color: ${(props: PreviewContainerProps) => getBackgroundColor(props.isSelected, props.theme.isDarkMode)};
+    background-color: ${(props: TextProps) => getBackgroundColor(props.isSelected, props.isDarkMode)};
     border-radius: 8px;
     margin: 8px;
     cursor: pointer;
@@ -68,7 +63,7 @@ function getTextColor(isSelected: boolean, isDarkMode: boolean): string {
     return isSelected ? 'white' : '#232323';
 }
 
-export default function   ForecastPreview(props: ForecastPreviewProps) {
+export default function ForecastPreview(props: ForecastPreviewProps) {
     const { theme } = useContext(ThemeContext);
     const { selectedDate, setSelectedDate } = useContext(SelectedDateContext);
 
@@ -76,12 +71,11 @@ export default function   ForecastPreview(props: ForecastPreviewProps) {
 
     return (
         <PreviewContainer
-            theme={theme}
-            onClick={() => setSelectedDate(props.date)}
-            isSelected={props.date.toDateString() === selectedDate.toDateString()}>
+            isDarkMode={theme.isDarkMode}
+            isSelected={props.date.toDateString() === selectedDate.toDateString()}
+            onClick={() => setSelectedDate(props.date)}>
             <DateText
-                theme={theme}
-                as="p"
+                isDarkMode={theme.isDarkMode}
                 isSelected={props.date.toDateString() === selectedDate.toDateString()}>
                 {month < 10 ? '0' + month : month}
                 /
@@ -93,7 +87,7 @@ export default function   ForecastPreview(props: ForecastPreviewProps) {
                 color={getTextColor(props.date.toDateString() === selectedDate.toDateString(), theme.isDarkMode)}
             />
             <TemperatureText
-                theme={theme}
+                isDarkMode={theme.isDarkMode}
                 isSelected={props.date.toDateString() === selectedDate.toDateString()}>
                 {props.temperature}°
             </TemperatureText>

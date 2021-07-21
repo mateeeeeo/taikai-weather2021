@@ -1,6 +1,6 @@
 import { useState, useContext } from 'react';
-import styled from 'styled-components';
-import { CalendarOutline, Cog } from 'react-ionicons';
+import styled, { css } from 'styled-components';
+import { CalendarOutline, Moon, Sunny } from 'react-ionicons';
 import { Input, InputIconContainer } from '../styled_components/styledComponents';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { SelectedDateContext } from '../contexts/SelectedDateContext';
@@ -30,21 +30,29 @@ const DateInput = styled(Input)`
     }
 `;
 
-const MobileSettingsButton = styled(Cog)`
+const iconCss = css`
     justify-self: start;
     align-self: center;
     width: 32px;
     height: 32px;
 
-@media (min-width: 1024px) {
-    transition: transform 300ms ease;
+    @media (min-width: 1024px) {
+        transition: transform 300ms ease;
 
-    &:hover {
-        transform: scale(1.2);
-        cursor: pointer;
+        &:hover {
+            transform: scale(1.2);
+            cursor: pointer;
+        }
     }
-}
 `;
+
+const DarkModeIcon = styled(Moon)`
+    ${iconCss}
+`;
+
+const LightModeIcon = styled(Sunny)`
+    ${iconCss}
+`
 
 // const MobileSearchButton = styled(Search)`
 //     justify-self: end;
@@ -60,37 +68,24 @@ const MobileSettingsButton = styled(Cog)`
 const CalendarIcon = styled(CalendarOutline)`
     width: 24px;
     height: 24px;
-    // cursor: pointer;
-
-    // // transition: transform 300ms ease;
-
-    // // @media (min-width: 768px) {
-    // //     &:hover {
-    // //         transform: scale(1.1)
-    // //     }
-    // // }
 `;
 
 export default function DateInputBar() {
     const { theme, setTheme } = useContext(ThemeContext);
     const { selectedDate, setSelectedDate } = useContext(SelectedDateContext);
 
+    const themeIconProps = {
+        color: theme.isDarkMode ? 'white' : '#232323',
+        height: '32px',
+        width: '32px',
+        onClick: () => setTheme({ isDarkMode: !theme.isDarkMode }) // toggles dark mode
+    };
+
     return (
         <DateInputContainer>
             <TopContainer>
-                <MobileSettingsButton
-                    color={theme.isDarkMode ? 'white' : '#232323'}
-                    height='32px'
-                    width='32px'
-                    onClick={() => { setTheme({ isDarkMode: !theme.isDarkMode }) }} // toggles dark mode
-                />
+                {theme.isDarkMode ? <DarkModeIcon {...themeIconProps} /> : <LightModeIcon {...themeIconProps} />}
                 <DateInputContainer>
-                    {/* <DateInput
-                        type='date'
-                        placeholder='Enter a date'
-                        value={inputFormat(selectedDate)}
-                        onChange={e => setDateInput(e.target.value)}
-                    /> */}
                     <DatePicker
                         selected={selectedDate}
                         onChange={date => setSelectedDate(date as Date)}

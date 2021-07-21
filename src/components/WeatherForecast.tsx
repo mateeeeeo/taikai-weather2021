@@ -9,7 +9,6 @@ const LocationText = styled(Text)`
   font-size: 36px;
   margin-left: 8px;
   font-weight: normal;
-  color: ${props => props.theme.isDarkMode ? 'white' : '#232323'};
 
   @media (min-width: 360px) {
     font-size: 44px;
@@ -40,7 +39,6 @@ const TemperatureText = styled(Text)`
   font-size: 40px;
   font-weight: normal;
   margin-left: 4px;
-  color: ${props => props.theme.isDarkMode ? 'white' : '#232323'};
 
   @media (min-width: 360px) {
     font-size: 48px;
@@ -69,7 +67,7 @@ function WeatherForecast() {
           height='40px'
           width='40px'
         />
-        <LocationText theme={theme}>Accra</LocationText>
+        <LocationText isDarkMode={theme.isDarkMode}>Accra</LocationText>
       </ForecastLocation>
       <ForecastWeatherDisplay>
         <SunnyIcon
@@ -77,7 +75,7 @@ function WeatherForecast() {
           height='48px'
           width='48px'
         />
-        <TemperatureText theme={theme}>35°</TemperatureText>
+        <TemperatureText isDarkMode={theme.isDarkMode}>35°</TemperatureText>
       </ForecastWeatherDisplay>
     </WeatherForecastContainer>
   );

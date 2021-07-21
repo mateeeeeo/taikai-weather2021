@@ -3,11 +3,8 @@ import styled from 'styled-components';
 import DateInputBar from './components/DateInputBar';
 import WeatherForecast from './components/WeatherForecast';
 import ForecastPreviews from './components/ForecastPreviews';
-import WeatherData from './components/WeatherData';
 import { ThemeContextProvider } from './contexts/ThemeContext';
 import { SelectedDateContextProvider } from './contexts/SelectedDateContext';
-import CircularDisplay from './components/WeatherData2';
-import { Severity } from './components/enums/enums';
 import WeatherData2 from './components/WeatherData2';
 
 const AppContainer = styled.div`
