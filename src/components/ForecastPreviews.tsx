@@ -93,6 +93,8 @@ export default function ForecastPreviews() {
     }
 
     function onScroll(): void {
+        const forecastsAmount : number = 7;
+
         if (scrollContainerRef.current) {
             const scrollWidth = scrollContainerRef.current.scrollWidth - scrollContainerRef.current.clientWidth;
 
@@ -100,6 +102,7 @@ export default function ForecastPreviews() {
                 loadNewDates(7);
             } else if(scrollContainerRef.current.scrollLeft == 0) {
                 loadNewDates(-7);
+                scrollContainerRef.current?.scrollBy({ left: forecastPreviewWidth * forecastsAmount }); // scrolls the length of specified amount of forecasts 
             }
         }
     }
