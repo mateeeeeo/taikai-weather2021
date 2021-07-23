@@ -10,8 +10,8 @@ import { Theme } from '../interfaces/Interfaces';
 interface ForecastPreviewProps {
     date: Date,
     temperature: number,
-    isHighFloodRisk: boolean,
-    weatherType: WeatherType
+    weatherCondition: WeatherType,
+    setSelectedDate: (date: Date) => void
 }
 
 interface TextProps {
@@ -65,7 +65,7 @@ function getTextColor(isSelected: boolean, isDarkMode: boolean): string {
 
 export default function ForecastPreview(props: ForecastPreviewProps) {
     const { theme } = useContext(ThemeContext);
-    const { selectedDate, setSelectedDate } = useContext(SelectedDateContext);
+    const { selectedDate } = useContext(SelectedDateContext);
 
     const month = props.date.getMonth() + 1;
 
@@ -73,7 +73,7 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
         <PreviewContainer
             isDarkMode={theme.isDarkMode}
             isSelected={props.date.toDateString() === selectedDate.toDateString()}
-            onClick={() => setSelectedDate(props.date)}>
+            onClick={() => props.setSelectedDate(props.date)}>
             <DateText
                 isDarkMode={theme.isDarkMode}
                 isSelected={props.date.toDateString() === selectedDate.toDateString()}>
