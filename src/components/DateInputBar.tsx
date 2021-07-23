@@ -12,6 +12,10 @@ const DateInputContainer = styled.div`
     display: flex;
     justify-content: center;
     margin: 8px 0;
+    // position: fixed;
+    // top: 0;
+    // left: 10%;
+    // right: 10%;
 `;
 
 const TopContainer = styled.div`
@@ -22,7 +26,7 @@ const TopContainer = styled.div`
 
 const DateInput = styled(Input)`
     height: 100%;
-    
+
     &::-webkit-inner-spin-button,
     &::-webkit-calendar-picker-indicator {
         display: none;

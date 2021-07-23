@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 import DateInputBar from './components/DateInputBar';
 import WeatherForecast from './components/WeatherForecast';
+import LocationInput from './components/LocationInput';
 import ForecastPreviews from './components/ForecastPreviews';
 import { ThemeContextProvider } from './contexts/ThemeContext';
 import { SelectedDateContextProvider } from './contexts/SelectedDateContext';

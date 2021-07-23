@@ -1,16 +1,17 @@
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { WeatherType } from './../enums/enums';
 import { Text } from './../styled_components/styledComponents';
-import { Sunny } from 'react-ionicons';
+import { Sunny, CloudOffline } from 'react-ionicons';
 import { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { SelectedDateContext } from '../contexts/SelectedDateContext';
 import { Theme } from '../interfaces/Interfaces';
 
+
 interface ForecastPreviewProps {
     date: Date,
-    temperature: number,
-    weatherCondition: WeatherType,
+    temperature: number | null,
+    weatherCondition: WeatherType | null,
     setSelectedDate: (date: Date) => void
 }
 
@@ -44,9 +45,17 @@ const PreviewContainer = styled.div<TextProps>`
     cursor: pointer;
 `;
 
-const SunnyIcon = styled(Sunny) <TextProps>`
+const iconCss = css`
     width: 24px;
     height: 24px;
+`;
+
+const NoDataIcon = styled(CloudOffline) <TextProps>`
+    ${iconCss}
+`;
+
+const SunnyIcon = styled(Sunny) <TextProps>`
+    ${iconCss}
 `;
 
 function getBackgroundColor(isSelected: boolean, isDarkMode: boolean): string {
@@ -81,7 +90,7 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
                 /
                 {props.date.getDate() < 10 ? '0' + props.date.getDate() : props.date.getDate()}
             </DateText>
-            <SunnyIcon
+            <NoDataIcon
                 width='24px'
                 height='24px'
                 color={getTextColor(props.date.toDateString() === selectedDate.toDateString(), theme.isDarkMode)}
@@ -89,7 +98,7 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
             <TemperatureText
                 isDarkMode={theme.isDarkMode}
                 isSelected={props.date.toDateString() === selectedDate.toDateString()}>
-                {props.temperature}°
+                {props.temperature ?? 'N/A'}
             </TemperatureText>
         </PreviewContainer>
     );

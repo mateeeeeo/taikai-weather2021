@@ -4,11 +4,21 @@ import { LocationSharp, Sunny } from 'react-ionicons';
 import { Text } from './../styled_components/styledComponents';
 import { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
+import arrowDown from './../assets/chevron-down.svg';
 
-const LocationText = styled(Text)`
+const LocationDropdown = styled.select<{ isDarkMode: boolean }>`
   font-size: 36px;
   margin-left: 8px;
-  font-weight: normal;
+  background: transparent;
+  border: none;
+  color: ${(props: { isDarkMode: boolean }) => props.isDarkMode ? 'white' : '#232323'};
+  font-family: 'Lato';
+  cursor: pointer;
+
+  & > option {
+    font-size: 18px;
+    background-color: #23232b;
+  }
 
   @media (min-width: 360px) {
     font-size: 44px;
@@ -56,7 +66,6 @@ const SunnyIcon = styled(Sunny)`
 `;
 
 function WeatherForecast() {
-
   const { theme } = useContext(ThemeContext);
 
   return (
@@ -67,7 +76,10 @@ function WeatherForecast() {
           height='40px'
           width='40px'
         />
-        <LocationText isDarkMode={theme.isDarkMode}>Accra</LocationText>
+        <LocationDropdown isDarkMode={theme.isDarkMode}>
+          <option>Accra</option>
+          <option>Uyo</option>
+        </LocationDropdown>
       </ForecastLocation>
       <ForecastWeatherDisplay>
         <SunnyIcon

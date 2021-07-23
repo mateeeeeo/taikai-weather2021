@@ -43,7 +43,7 @@ export default function ForecastPreviews() {
     useEffect(() => {
         if (!changedByForecastClick.current) {
             if (scrollContainerRef.current)
-                loadDatesByRange(selectedDate, Math.floor(scrollContainerRef.current.clientWidth / forecastPreviewWidth));
+                loadDatesByRange(selectedDate, Math.ceil(scrollContainerRef.current.clientWidth / forecastPreviewWidth));
         }
         changedByForecastClick.current = false;
     }, [selectedDate]);
@@ -51,7 +51,7 @@ export default function ForecastPreviews() {
     function loadNewDates(dates?: number): void {
         if (scrollContainerRef.current) {
             const forecastsAmount: number = dates ? Math.abs(dates) :
-                Math.floor(scrollContainerRef.current.clientWidth / forecastPreviewWidth); // loads in as many dates necessary as to fill the scrollview
+                Math.ceil(scrollContainerRef.current.clientWidth / forecastPreviewWidth); // loads in as many dates necessary as to fill the scrollview
 
             if (!dates) {
                 firstDayIndex.current = lastDayIndex.current = Math.floor(-forecastsAmount / 2);
@@ -117,9 +117,9 @@ export default function ForecastPreviews() {
             const scrollWidth = scrollContainerRef.current.scrollWidth - scrollContainerRef.current.clientWidth;
 
             if (scrollWidth - scrollContainerRef.current.scrollLeft == 0) {
-                loadNewDates(7);
+                loadNewDates(forecastsAmount);
             } else if (scrollContainerRef.current.scrollLeft == 0) {
-                loadNewDates(-7);
+                loadNewDates(-forecastsAmount);
                 scrollContainerRef.current?.scrollBy({ left: forecastPreviewWidth * forecastsAmount }); // scrolls the length of specified amount of forecasts 
             }
         }
@@ -144,8 +144,8 @@ export default function ForecastPreviews() {
                 <ForecastPreview
                     key={i}
                     date={preview.date}
-                    temperature={preview.temperature}
-                    weatherCondition={preview.weatherCondition}
+                    temperature={null}
+                    weatherCondition={null}
                     setSelectedDate={forecastSetSelectedDate}
                 />
             )}

@@ -4,20 +4,20 @@ import styled from 'styled-components';
 import { Input, InputIconContainer } from '../styled_components/styledComponents';
 
 const Container = styled.div`
-    display: none;
     width: 100%;
     justify-content: center;
     margin-bottom: 32px;
-
-    @media (min-width: 768px) {
-        display: flex;
-    }
+    display: flex;
 `;
 
 const LocationInputContainer = styled.div`
     display: flex;
     justify-content: center;
-    width: 60%;
+    width: 80%;
+
+    @media(min-width: 768px) {
+        width: 50%;
+    }
 `;
 
 const LocationInputBar = styled(Input)`
