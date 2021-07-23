@@ -27,6 +27,56 @@ type Location = {
 export let locations: Array<Location>;
 const path = "../assets/forecasts.txt"
 
+export function fetchWeeklyForecastsForLocation(lname: string): Array<Forecast> {
+  let result: Array<Forecast> = new Array<Forecast>();
+  let match: boolean;
+  let actforecast: Forecast;
+  let currentDate: Date = new Date();
+
+  const reader = readline.createInterface(fs.createReadStream(path));
+  reader.on("line", (l: string) => {
+    const s = l.split(' ');
+    if(s[0].endsWith(',')) {
+      match=false;
+      const d: number = parseInt(s[3].substring(0, s[3].length - 1))
+      const yr: number = parseInt(s[4])
+      const ndate: Date = revformat(s[2], d, yr)
+      // checking if they're in the 7-day interval, also if it's the location we want
+      if ((Math.abs(currentDate.getDay() - d) % 30) <= 3 && lname.toLowerCase() == s[0].toLowerCase()) match = true;
+    }
+    else
+    {
+      if (match) switch (s[0].toLowerCase()) {
+        case "pressure:":
+          actforecast.weather_info.pressure = parseFloat(s[1]);
+          break;
+        case "temperature:":
+          actforecast.weather_info.temp = parseFloat(s[1]);
+          break;
+        case "humidity:":
+          actforecast.weather_info.humidity = parseFloat(s[1]);
+          break;
+        case "condition:":
+          let aux: string = "";
+          for (let i = 1; i < s.length; ++i)
+            aux += s[i]; aux += " ";
+          actforecast.weather_info.condition = aux;
+          break;
+        case "wind:":
+          if (s[1] == "Unknown") actforecast.weather_info.wind = ["N/A", -1];
+          else actforecast.weather_info.wind = [s[1], parseInt(s[3])];
+          break;
+        case "chance":
+          // this is also the end of the buffer which is why we'll be checking for duplicates
+          actforecast.weather_info.rain_chance = parseInt(s[3]);
+          result.push(actforecast);
+          break;
+      }
+    }
+  })
+  return result;
+}
+
 export function fetchForecastsForDate(date:Date) : Array<Location> {
   let result: Array<Location> = new Array<Location>();
   let match: boolean;
