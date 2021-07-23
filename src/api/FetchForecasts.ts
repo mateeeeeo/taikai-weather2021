@@ -27,6 +27,57 @@ type Location = {
 export let locations: Array<Location>;
 const path = "../assets/forecasts.txt"
 
+export function fetchForecastsForDate(date:Date) : Array<Location> {
+  let result: Array<Location> = new Array<Location>();
+  let match: boolean;
+  let actforecast: Forecast;
+  let actlocation: Location;
+
+  const reader = readline.createInterface(fs.createReadStream(path));
+  reader.on("line", (l: string) => {
+    const s = l.split(' ');
+    if(s[0].endsWith(',')) {
+      match=false;
+      const d: number = parseInt(s[3].substring(0, s[3].length - 1))
+      const yr: number = parseInt(s[4])
+      const ndate: Date = revformat(s[2], d, yr)
+      if (ndate == date) match = true; // if it's the same date we're looking for, we proceed with the reading
+    }
+    else
+    {
+      if (match) switch (s[0].toLowerCase()) {
+        case "pressure:":
+          actforecast.weather_info.pressure = parseFloat(s[1]);
+          break;
+        case "temperature:":
+          actforecast.weather_info.temp = parseFloat(s[1]);
+          break;
+        case "humidity:":
+          actforecast.weather_info.humidity = parseFloat(s[1]);
+          break;
+        case "condition:":
+          let aux: string = "";
+          for (let i = 1; i < s.length; ++i)
+            aux += s[i]; aux += " ";
+          actforecast.weather_info.condition = aux;
+          break;
+        case "wind:":
+          if (s[1] == "Unknown") actforecast.weather_info.wind = ["N/A", -1];
+          else actforecast.weather_info.wind = [s[1], parseInt(s[3])];
+          break;
+        case "chance":
+          // this is also the end of the buffer which is why we'll be checking for duplicates
+          actforecast.weather_info.rain_chance = parseInt(s[3]);
+
+          actlocation.forecasts?.push(actforecast); // we create a new location if that is not the case
+          result.push(actlocation);
+          break;
+      }
+    }
+  })
+  return result;
+}
+
 export function fetchForecasts(range:number) { //The forecasts will be saved in global variable locations
   let actforecast: Forecast;
   let actlocation: Location;
