@@ -59,5 +59,6 @@
     "@types/styled-components": "^5.1.10",
     "tsc-watch": "^4.4.0"
   },
-  "proxy": "https://api.dclimate.net/"
+  "proxy": "https://api.dclimate.net/",
+  "homepage": "./"
 }

@@ -1,6 +1,7 @@
 import { useContext } from 'react';
 import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
+import { fetchForecastsForLocationJSON } from '../api/FetchForecasts';
 import { SelectedDateContext } from '../contexts/SelectedDateContext';
 import { WeatherType } from './../enums/enums';
 import ForecastPreview from './ForecastPreview';
@@ -146,8 +147,7 @@ export default function ForecastPreviews() {
                     date={preview.date}
                     temperature={null}
                     weatherCondition={null}
-                    setSelectedDate={forecastSetSelectedDate}
-                />
+                    setSelectedDate={forecastSetSelectedDate} />
             )}
         </PreviewsContainer>
     );

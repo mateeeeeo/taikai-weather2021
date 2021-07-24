@@ -20,3 +20,24 @@ export interface APISoilMoistureResponse {
 export type Theme = {
     isDarkMode: boolean;
 }
+
+export type WeatherInfo = {
+    pressure?: number,
+    temp?: number,
+    humidity?: number,
+    condition?: string,
+    wind?: [string, number], // direction, speed
+    rain_chance?: number,
+};
+
+export type Forecast = {
+    date?: Date,
+    weather_info: WeatherInfo,
+};
+
+export type Location = {
+    name: string,
+    state: string,
+    //lat_long: LatLong,
+    forecasts?: Array<Forecast>
+};

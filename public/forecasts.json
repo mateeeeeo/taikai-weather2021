@@ -1,0 +1,60 @@
+{
+  "forecasts": [
+    {
+      "d": 18,
+      "m": "January",
+      "yr": 2021,
+      "city": "Uyo",
+      "country": "NG",
+      "pressure": 1000.7,
+      "temp": 29.5,
+      "humidity": 77,
+      "cond": "Cloudy",
+      "wind_direction": "WSW",
+      "wind_vel": 5,
+      "rain_chance": 80
+    },
+    {
+      "d": 7,
+      "m": "February",
+      "yr": 2021,
+      "city": "Uyo",
+      "country": "NG",
+      "pressure": 999.3,
+      "temp": 34.7,
+      "humidity": 57,
+      "cond": "Cloudy",
+      "wind_direction": "Unknown",
+      "wind_vel": null,
+      "rain_chance": 20
+    },
+    {
+      "d": 9,
+      "m": "March",
+      "yr": 2021,
+      "city": "Uyo",
+      "country": "NG",
+      "pressure": 998.2,
+      "temp": 34.9,
+      "humidity": 60,
+      "cond": "Sunny",
+      "wind_direction": "NE",
+      "wind_vel": 15,
+      "rain_chance": 20
+    },
+    {
+      "d": 9,
+      "m": "June",
+      "yr": 2021,
+      "city": "Accra",
+      "country": "GH",
+      "pressure": 1002.0,
+      "temp": 32.7,
+      "humidity": 68,
+      "cond": "Partly Cloudy",
+      "wind_direction": "Unknown",
+      "wind_vel": null,
+      "rain_chance": 30
+    }
+  ]
+}
