@@ -1,7 +1,7 @@
 import readline from 'readline';
 import fs from 'fs';
 import {LatLong} from '../interfaces/Interfaces';
-import { revformat } from '../helpers/DateFormat';
+import { MONTHS, revformat, toDClimateFormat } from '../helpers/DateFormat';
 
 type WeatherInfo = {
   pressure?: number,
@@ -27,11 +27,29 @@ type Location = {
 export let locations: Array<Location>;
 const path = "../assets/forecasts.txt"
 
+export function fetchForecastsForLocationJSON(interval: number, lname: string, indate: Date): Array<Forecast> {
+  let result: Array<Forecast> = new Array<Forecast>();
+  // we format our date so it fits our json requirements
+  const obj = JSON.parse(path);
+
+  for (let i = 0; i < obj.forecasts.length; ++i) {
+    let f = obj.forecasts[i];
+    if ((Math.abs(indate.getDay() - f.d) % 30) <= interval && lname.toLowerCase() == f.city.toLowerCase()) { // checking if name and date fit
+      let info: WeatherInfo = {
+        temp: f.temp, pressure: f.pressure, rain_chance: f.rain_chance,
+        humidity: f.humidity, condition: f.cond, wind: [f.wind_direction, f.wind_velocity]
+      }
+      let actforecast: Forecast = { date: indate, weather_info: info };
+      result.push(actforecast);
+    }
+  }
+  return result;
+}
+
 export function fetchForecastsForLocation(interval:number, lname: string, date:Date): Array<Forecast> {
   let result: Array<Forecast> = new Array<Forecast>();
   let match: boolean;
   let actforecast: Forecast;
-  let currentDate: Date = new Date();
 
   const reader = readline.createInterface(fs.createReadStream(path));
   reader.on("line", (l: string) => {

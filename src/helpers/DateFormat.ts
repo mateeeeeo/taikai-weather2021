@@ -1,5 +1,5 @@
 
-const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+export const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 export function toDClimateFormat(date: Date): string {
     return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDay()} ${date.getHours() < 9 ? date.getHours() : `0${date.getHours()}`}:00:00+00:00`;
