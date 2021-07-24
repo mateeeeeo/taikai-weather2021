@@ -27,7 +27,7 @@ type Location = {
 export let locations: Array<Location>;
 const path = "../assets/forecasts.txt"
 
-export function fetchWeeklyForecastsForLocation(lname: string): Array<Forecast> {
+export function fetchForecastsForLocation(interval:number, lname: string, date:Date): Array<Forecast> {
   let result: Array<Forecast> = new Array<Forecast>();
   let match: boolean;
   let actforecast: Forecast;
@@ -42,7 +42,7 @@ export function fetchWeeklyForecastsForLocation(lname: string): Array<Forecast> 
       const yr: number = parseInt(s[4])
       const ndate: Date = revformat(s[2], d, yr)
       // checking if they're in the 7-day interval, also if it's the location we want
-      if ((Math.abs(currentDate.getDay() - d) % 30) <= 3 && lname.toLowerCase() == s[0].toLowerCase()) match = true;
+      if ((Math.abs(date.getDay() - d) % 30) <= interval && lname.toLowerCase() == s[0].toLowerCase()) match = true;
     }
     else
     {
