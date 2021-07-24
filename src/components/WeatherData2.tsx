@@ -11,6 +11,7 @@ import SoilMoistureDisplay from './SoilMoistureDisplay';
 import { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { SelectedDateContext } from '../contexts/SelectedDateContext';
+import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
 import { useEffect } from 'react';
 
 function getSeverityColor(severity: Severity): string {
@@ -60,6 +61,7 @@ const LocationText = styled(Text) <{ isDarkMode: boolean }>`
 export default function WeatherData2() {
     const { theme } = useContext(ThemeContext);
     const { selectedDate } = useContext(SelectedDateContext);
+    const { selectedLocation } = useContext(SelectedLocationContext);
 
     useEffect(() => {
         // fetch weather data for the selected date
@@ -67,7 +69,7 @@ export default function WeatherData2() {
 
     return (
         <>
-            <LocationText as="h1" isDarkMode={theme.isDarkMode}>Accra, GH</LocationText>
+            <LocationText as="h1" isDarkMode={theme.isDarkMode}>{selectedLocation}</LocationText>
             <Grid>
                 <PressureDisplay pressure={1010.5} />
                 <HumidityDisplay humidity={77} />

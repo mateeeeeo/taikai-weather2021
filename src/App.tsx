@@ -6,6 +6,7 @@ import LocationInput from './components/LocationInput';
 import ForecastPreviews from './components/ForecastPreviews';
 import { ThemeContextProvider } from './contexts/ThemeContext';
 import { SelectedDateContextProvider } from './contexts/SelectedDateContext';
+import { SelectedLocationContextProvider } from './contexts/SelectedLocationContext';
 import WeatherData2 from './components/WeatherData2';
 
 const AppContainer = styled.div`
@@ -47,13 +48,15 @@ export default function App() {
       <AppContainer>
         <ThemeContextProvider>
           <SelectedDateContextProvider>
-            <DateInputBar />
-            <WeatherForecast />
-            {/* <LocationInput /> */}
-            <Separator />
-            <ForecastPreviews />
-            {/* <WeatherData /> */}
-            <WeatherData2 />
+            <SelectedLocationContextProvider>
+              <DateInputBar />
+              <WeatherForecast />
+              {/* <LocationInput /> */}
+              <Separator />
+              <ForecastPreviews />
+              {/* <WeatherData /> */}
+              <WeatherData2 />
+            </SelectedLocationContextProvider>
           </SelectedDateContextProvider>
         </ThemeContextProvider>
       </AppContainer>

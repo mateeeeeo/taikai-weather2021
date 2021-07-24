@@ -1,0 +1,15 @@
+.dropdown-control.dark {
+    color: white!important;
+}
+
+.dropdown-menu.dark {
+    background-color: #393a45!important;
+}
+
+.dropdown-menu.dark > .Dropdown-option {
+    color: white!important;
+}
+
+.dropdown-menu.dark > .Dropdown-option:hover {
+    background-color: #4c4d5c;
+}

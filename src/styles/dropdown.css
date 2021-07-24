@@ -1,0 +1,45 @@
+.dropdown-root {
+    cursor: pointer!important;
+}
+
+.dropdown-control {
+    background-color: transparent!important;
+    border: none!important;
+    font-family: 'Lato'!important;
+    font-size: 36px!important;
+    padding: 0.25rem 1rem 0.25rem 0.25rem!important;
+    cursor: pointer!important;
+}
+
+.dropdown-control:hover {
+    box-shadow: none;
+}
+
+.dropdown-arrow {
+    top: 50%!important;
+    right: 0!important;
+}
+
+.dropdown-menu {
+    border: none!important;
+    border-radius: 0.25rem;
+    width: auto!important;
+}
+
+.dropdown-menu > .Dropdown-option {
+    font-family: 'Lato'!important;
+    font-size: 24px;
+    padding: 0.75rem 5rem 0.75rem 0.75rem;
+}
+
+.dropdown-menu > .Dropdown-option.is-selected {
+    background: #4C65E9!important;
+    color: white!important;
+    font-family: 'Lato';
+}
+
+@media screen and (min-width: 768px) {
+    .dropdown-menu > .Dropdown-option {
+        font-size: 18px;
+    }
+}

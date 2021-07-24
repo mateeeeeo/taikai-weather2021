@@ -2,9 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { LocationSharp, Sunny } from 'react-ionicons';
 import { Text } from './../styled_components/styledComponents';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
-import arrowDown from './../assets/chevron-down.svg';
+import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
+import Dropdown from 'react-dropdown';
+import './../styles/dropdown-dark.css';
+import './../styles/dropdown-light.css';
+import './../styles/dropdown.css';
 
 const LocationDropdown = styled.select<{ isDarkMode: boolean }>`
   font-size: 36px;
@@ -65,8 +69,11 @@ const SunnyIcon = styled(Sunny)`
   width: 48px;
 `;
 
+export const locations: string[] = ['Accra', 'Uyo'];
+
 function WeatherForecast() {
   const { theme } = useContext(ThemeContext);
+  const { selectedLocation, setSelectedLocation } = useContext(SelectedLocationContext);
 
   return (
     <WeatherForecastContainer>
@@ -76,10 +83,18 @@ function WeatherForecast() {
           height='40px'
           width='40px'
         />
-        <LocationDropdown isDarkMode={theme.isDarkMode}>
+        {/* <LocationDropdown isDarkMode={theme.isDarkMode}>
           <option>Accra</option>
           <option>Uyo</option>
-        </LocationDropdown>
+        </LocationDropdown> */}
+        <Dropdown
+          value={selectedLocation}
+          onChange={location => setSelectedLocation(location.value)}
+          options={locations}
+          controlClassName={`dropdown-control ${theme.isDarkMode ? 'dark' : 'light'}`}
+          arrowClassName='dropdown-arrow'
+          menuClassName={`dropdown-menu ${theme.isDarkMode ? 'dark' : 'light'}`}
+          className='dropdown-root' />
       </ForecastLocation>
       <ForecastWeatherDisplay>
         <SunnyIcon

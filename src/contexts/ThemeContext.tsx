@@ -14,7 +14,7 @@ export function ThemeContextProvider(props: any) {
 
     useEffect(() => {
         if (!theme.isDarkMode)
-            document.documentElement.style.backgroundColor = '#EDF0FF';
+            document.documentElement.style.backgroundColor = '#dddfed';
         else
             document.documentElement.style.backgroundColor = '#2C2D35';
     }, [theme]);
