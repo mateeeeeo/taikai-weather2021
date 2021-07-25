@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import { WeatherType } from './../enums/enums';
 import { Text } from './../styled_components/styledComponents';
 import { Sunny, CloudOffline } from 'react-ionicons';
-import { useContext, useState, useEffect } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { SelectedDateContext } from '../contexts/SelectedDateContext';
 import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
@@ -12,8 +12,6 @@ import { fetchForecastsForLocationJSON } from '../api/FetchForecasts';
 
 interface ForecastPreviewProps {
     date: Date,
-    temperature: number | null,
-    weatherCondition: WeatherType | null,
     setSelectedDate: (date: Date) => void
 }
 
@@ -84,9 +82,11 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
     const month = props.date.getMonth() + 1;
 
     useEffect(() => {
-        fetchForecastsForLocationJSON(0, 'Accra', props.date)
-            .then(forecast => setData(forecast))
-            .catch((reason) => console.err(reason));
+        fetchForecastsForLocationJSON(selectedLocation, props.date)
+            .then(forecast => {
+                setData(forecast);
+            })
+            .catch(reason => console.log(reason));
     }, []);
 
     return (
@@ -109,7 +109,7 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
             <TemperatureText
                 isDarkMode={theme.isDarkMode}
                 isSelected={props.date.toDateString() === selectedDate.toDateString()}>
-                {data.weather_info.temperature ?? 'N/A'}
+                {(data?.weather_info.temp ?? 'N/A') + '°'}
             </TemperatureText>
         </PreviewContainer>
     );

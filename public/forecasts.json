@@ -2,7 +2,7 @@
   "forecasts": [
     {
       "d": 18,
-      "m": "January",
+      "m": 1,
       "yr": 2021,
       "city": "Uyo",
       "country": "NG",
@@ -16,7 +16,7 @@
     },
     {
       "d": 7,
-      "m": "February",
+      "m": 2,
       "yr": 2021,
       "city": "Uyo",
       "country": "NG",
@@ -30,7 +30,7 @@
     },
     {
       "d": 9,
-      "m": "March",
+      "m": 3,
       "yr": 2021,
       "city": "Uyo",
       "country": "NG",
@@ -44,7 +44,7 @@
     },
     {
       "d": 9,
-      "m": "June",
+      "m": 6,
       "yr": 2021,
       "city": "Accra",
       "country": "GH",

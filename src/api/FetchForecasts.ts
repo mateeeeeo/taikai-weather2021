@@ -2,15 +2,49 @@ import readline from 'readline';
 import fs from 'fs';
 import { Forecast, Location, WeatherInfo } from '../interfaces/Interfaces';
 import { MONTHS, revformat, toDClimateFormat } from '../helpers/DateFormat';
-import { isNullOrUndefined } from 'util';
 
 export let locations: Array<Location>;
 const path = "forecasts.json";
 
-export async function fetchForecastsForLocationJSON(interval: number, lname: string, indate: Date): Promise<Forecast | null> {
+// export async function fetchForecastsForLocationJSON(interval: number, lname: string, indate: Date): Promise<Forecast | undefined> {
+//   return new Promise(async (res, rej) => {
+//     try {
+//       let result: Forecast | undefined = undefined;
+//       // we format our date so it fits our json requirements
+//       const response = await fetch(path,
+//         {
+//           headers: {
+//             'Content-Type': 'application/json',
+//             'Accept': 'application/json'
+//           }
+//         });
+//       const obj = await response.json();
+
+//       for (let i = 0; i < obj.forecasts.length; ++i) {
+//         let f = obj.forecasts[i];
+//         if ((Math.abs(indate.getDate() - f.d) % 30) <= interval && lname.toLowerCase() == f.city.toLowerCase()) { // checking if name and date fit
+//           let info: WeatherInfo = {
+//             temp: f.temp, pressure: f.pressure, rain_chance: f.rain_chance,
+//             humidity: f.humidity, condition: f.cond, wind: [f.wind_direction, f.wind_velocity]
+//           }
+//           result = { date: indate, weather_info: info };
+//         }
+//       }
+
+//       res(result);
+
+//     } catch (err) {
+//       rej(err);
+//     }
+//   });
+// }
+
+export async function fetchForecastsForLocationJSON(lname: string, date: Date): Promise<Forecast | undefined> {
+  // console.log(date);
+
   return new Promise(async (res, rej) => {
     try {
-      let result: Forecast | null = null;
+      let result: Forecast | undefined = undefined;
       // we format our date so it fits our json requirements
       const response = await fetch(path,
         {
@@ -19,26 +53,35 @@ export async function fetchForecastsForLocationJSON(interval: number, lname: str
             'Accept': 'application/json'
           }
         });
+
       const obj = await response.json();
 
+
       for (let i = 0; i < obj.forecasts.length; ++i) {
-        let f = obj.forecasts[i];
-        if ((Math.abs(indate.getDate() - f.d) % 30) <= interval && lname.toLowerCase() == f.city.toLowerCase()) { // checking if name and date fit
+        const f = obj.forecasts[i]; // forecast
+        const fDate = new Date(f.yr, f.m - 1, f.d); // date of forecast
+
+        // console.log(date.toDateString());
+        // console.log(fDate.toDateString());
+
+        if (fDate.toDateString() === date.toDateString() && lname.toLowerCase() === f.city.toLowerCase()) { // checking if name and date fit
+
+          console.log(fDate.toDateString());
+
           let info: WeatherInfo = {
             temp: f.temp, pressure: f.pressure, rain_chance: f.rain_chance,
             humidity: f.humidity, condition: f.cond, wind: [f.wind_direction, f.wind_velocity]
           }
-          result = { date: indate, weather_info: info };
+          result = { date: date, weather_info: info };
         }
       }
-      
       res(result);
-
     } catch (err) {
       rej(err);
     }
   });
 }
+
 
 // export function fetchForecastsForLocation(interval: number, lname: string, date: Date): Array<Forecast> {
 //   let result: Array<Forecast> = new Array<Forecast>();

@@ -6,10 +6,9 @@ import { SelectedDateContext } from '../contexts/SelectedDateContext';
 import { WeatherType } from './../enums/enums';
 import ForecastPreview from './ForecastPreview';
 
-interface Forecast {
-    temperature: number,
+interface Preview {
     date: Date,
-    weatherCondition: WeatherType
+    key: number
 }
 
 const PreviewsContainer = styled.div`
@@ -23,33 +22,35 @@ const PreviewsContainer = styled.div`
 const forecastPreviewWidth: number = 69.875;
 
 export default function ForecastPreviews() {
-    const [previews, setPreviews] = useState<Forecast[]>([]);
+    const [previews, setPreviews] = useState<Preview[]>([]);
     const scrollContainerRef = useRef<HTMLDivElement>(null);
     const { selectedDate, setSelectedDate } = useContext(SelectedDateContext);
 
+    const key = useRef<number>(0);
+
     // const dayIndex = useRef<number>(0);
-    const lastDayIndex = useRef<number>(0);
+    const lastDayIndex = useRef<number>(-1);
     const firstDayIndex = useRef<number>(0);
 
     const changedByForecastClick = useRef<boolean>(false); // determines whether the current selected date was changed by the date picker or by clicking on a forecast
+    const isFirstRender = useRef<boolean>(true);
 
     useEffect(() => {
         scrollContainerRef.current?.addEventListener('wheel', onMouseWheelMove);
-
-        loadNewDates(); // loads initial forecasts 
-        // scrollContainerRef.current?.scrollBy({ left: scrollContainerRef.current.scrollWidth / 2 });
-
+        loadDates(); // loads initial forecasts 
+        scrollContainerRef.current?.scrollBy({ left: scrollContainerRef.current.scrollWidth / 2 });
     }, []);
 
     useEffect(() => {
-        if (!changedByForecastClick.current) {
+        if (!changedByForecastClick.current && !isFirstRender.current) {
             if (scrollContainerRef.current)
                 loadDatesByRange(selectedDate, Math.ceil(scrollContainerRef.current.clientWidth / forecastPreviewWidth));
         }
         changedByForecastClick.current = false;
+        isFirstRender.current = false;
     }, [selectedDate]);
 
-    function loadNewDates(dates?: number): void {
+    function loadDates(dates?: number): void {
         if (scrollContainerRef.current) {
             const forecastsAmount: number = dates ? Math.abs(dates) :
                 Math.ceil(scrollContainerRef.current.clientWidth / forecastPreviewWidth); // loads in as many dates necessary as to fill the scrollview
@@ -61,33 +62,26 @@ export default function ForecastPreviews() {
             for (let i = 0; i < forecastsAmount; i++) {
                 const date: Date = new Date(); // today's date as starting point
 
-                if (dates && dates > 0) { // future dates
+                if ((dates && dates > 0) || !dates) { // future or initial dates 
                     date.setDate(date.getDate() + lastDayIndex.current);
-                    previews.push({
-                        temperature: 32,
-                        date,
-                        weatherCondition: WeatherType.sunny
-                    });
-                    lastDayIndex.current++;
 
-                } else if (dates) { // past dates
-                    firstDayIndex.current--;
+                    previews.push({
+                        date,
+                        key: key.current
+                    });
+
+                    lastDayIndex.current++;
+                } else { // past dates
                     date.setDate(date.getDate() + firstDayIndex.current);
+
                     previews.unshift({
-                        temperature: 32,
                         date,
-                        weatherCondition: WeatherType.sunny
+                        key: key.current
                     });
 
-                } else { // initial dates
-                    date.setDate(date.getDate() + lastDayIndex.current);
-                    previews.push({
-                        temperature: 32,
-                        date,
-                        weatherCondition: WeatherType.sunny
-                    });
-                    lastDayIndex.current++;
+                    firstDayIndex.current--;
                 }
+                key.current++;
             }
             setPreviews([...previews]);
         }
@@ -102,11 +96,11 @@ export default function ForecastPreviews() {
             const date = new Date(start);
             date.setDate(date.getDate() + lastDayIndex.current);
             previews.push({
-                temperature: 32,
                 date,
-                weatherCondition: WeatherType.sunny
+                key: key.current
             });
             lastDayIndex.current++;
+            key.current++;
         }
         setPreviews([...previews]);
     }
@@ -118,9 +112,9 @@ export default function ForecastPreviews() {
             const scrollWidth = scrollContainerRef.current.scrollWidth - scrollContainerRef.current.clientWidth;
 
             if (scrollWidth - scrollContainerRef.current.scrollLeft == 0) {
-                loadNewDates(forecastsAmount);
+                loadDates(forecastsAmount);
             } else if (scrollContainerRef.current.scrollLeft == 0) {
-                loadNewDates(-forecastsAmount);
+                loadDates(-forecastsAmount);
                 scrollContainerRef.current?.scrollBy({ left: forecastPreviewWidth * forecastsAmount }); // scrolls the length of specified amount of forecasts 
             }
         }
@@ -141,14 +135,13 @@ export default function ForecastPreviews() {
         <PreviewsContainer
             ref={scrollContainerRef}
             onScroll={onScroll}>
-            {previews.map((preview, i) =>
-                <ForecastPreview
-                    key={i}
+            {previews.map((preview) => {
+                console.log(preview.key);
+                return <ForecastPreview
+                    key={preview.key}
                     date={preview.date}
-                    temperature={null}
-                    weatherCondition={null}
                     setSelectedDate={forecastSetSelectedDate} />
-            )}
+            })}
         </PreviewsContainer>
     );
 }
