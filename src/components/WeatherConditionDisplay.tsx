@@ -2,13 +2,10 @@ import { Text } from '../styled_components/styledComponents';
 import styled from 'styled-components';
 import { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
-
-export enum WeatherCondition {
-    Sunny, Clear, PartlyCloudy, Cloudy, Foggy,
-}
+import { WeatherCondition } from './../enums/enums';
 
 interface WeatherConditionDisplayProps {
-    condition: WeatherCondition
+    condition: WeatherCondition | undefined
 }
 
 const ConditionIcon = styled.i`
@@ -41,28 +38,33 @@ const WeatherConditionValue = styled(Text)`
 `;
 
 export default function WeatherConditionDisplay(props: WeatherConditionDisplayProps) {
-    let conditionIconClass: string;
+    let conditionIconClass: string = '';
 
-    switch (props.condition) {
-        case WeatherCondition.Sunny:
-            conditionIconClass = 'ri-sun-fill';
-            break;
+    if (props.condition) {
+        switch (+WeatherCondition[props.condition]) {
+            case 1:
+                conditionIconClass = 'ri-sun-fill';
+                break;
 
-        case WeatherCondition.PartlyCloudy:
-            conditionIconClass = 'ri-sun-cloudy-fill';
-            break;
+            case 2:
+                conditionIconClass = 'ri-sun-cloudy-fill';
+                break;
 
-        case WeatherCondition.Cloudy:
-            conditionIconClass = 'ri-cloudy-fill';
-            break;
+            case 3:
+                conditionIconClass = 'ri-cloudy-fill';
+                break;
 
-        case WeatherCondition.Foggy:
-            conditionIconClass = 'ri-foggy-fill';
-            break;
+            case 4:
+                conditionIconClass = 'ri-foggy-fill';
+                break;
 
-        case WeatherCondition.Clear:
-            conditionIconClass = 'ri-sun-foggy-fill';
-            break;
+            case 5:
+                conditionIconClass = 'ri-sun-foggy-fill';
+                break;
+
+            default:
+                console.log('No icon');
+        }
     }
 
     const { theme } = useContext(ThemeContext);
@@ -72,7 +74,7 @@ export default function WeatherConditionDisplay(props: WeatherConditionDisplayPr
             <WeatherConditionText isDarkMode={theme.isDarkMode}>Weather Condition</WeatherConditionText>
             <ConditionValueContainer>
                 <ConditionIcon isDarkMode={theme.isDarkMode} className={conditionIconClass} />
-                <WeatherConditionValue isDarkMode={theme.isDarkMode}>{WeatherCondition[props.condition]}</WeatherConditionValue>
+                <WeatherConditionValue isDarkMode={theme.isDarkMode}>{props.condition ?? 'N/A'}</WeatherConditionValue>
             </ConditionValueContainer>
         </WeatherConditionContainer>
     );

@@ -1,18 +1,17 @@
 import { Severity } from '../enums/enums';
 import styled from 'styled-components';
 import { Text } from '../styled_components/styledComponents';
-
 import PressureDisplay from './PressureDisplay';
 import HumidityDisplay from './HumidityDisplay';
-import WindDisplay, { WindDirection } from './WindDisplay';
+import WindDisplay from './WindDisplay';
 import RainChanceDisplay from './RainChanceDisplay';
-import WeatherConditionDisplay, { WeatherCondition } from './WeatherConditionDisplay';
+import WeatherConditionDisplay from './WeatherConditionDisplay';
 import SoilMoistureDisplay from './SoilMoistureDisplay';
 import { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { SelectedDateContext } from '../contexts/SelectedDateContext';
 import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
-import { useEffect } from 'react';
+import { WeatherDataContext } from '../contexts/WeatherDataContext';
 
 function getSeverityColor(severity: Severity): string {
     switch (severity) {
@@ -62,22 +61,23 @@ export default function WeatherData2() {
     const { theme } = useContext(ThemeContext);
     const { selectedDate } = useContext(SelectedDateContext);
     const { selectedLocation } = useContext(SelectedLocationContext);
-
-    useEffect(() => {
-        // fetch weather data for the selected date
-    }, [selectedDate]);
+    const { weatherData } = useContext(WeatherDataContext);
+    //
+    // useEffect(() => {
+    //     // fetch weather data for the selected date
+    // }, [selectedDate]);
 
     return (
         <>
             <LocationText as="h1" isDarkMode={theme.isDarkMode}>{selectedLocation}</LocationText>
             <Grid>
-                <PressureDisplay pressure={1010.5} />
-                <HumidityDisplay humidity={77} />
-                <RainChanceDisplay chance={20} />
+                <PressureDisplay pressure={weatherData?.pressure} />
+                <HumidityDisplay humidity={weatherData?.humidity} />
+                <RainChanceDisplay chance={weatherData?.rain_chance} />
                 <WindDisplay
-                    speed={15}
-                    direction={WindDirection.SW} />
-                <WeatherConditionDisplay condition={WeatherCondition.Foggy} />
+                    speed={weatherData?.wind_vel}
+                    direction={weatherData?.wind_direction} />
+                <WeatherConditionDisplay condition={weatherData?.condition} />
                 <SoilMoistureDisplay moisture={0.033} />
             </Grid>
         </>

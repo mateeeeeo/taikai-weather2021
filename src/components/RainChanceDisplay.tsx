@@ -5,7 +5,7 @@ import { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 
 interface RainChanceDisplayProps {
-    chance: number
+    chance: number | undefined
 }
 
 const RainDisplayContainer = styled.div`

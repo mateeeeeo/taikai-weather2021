@@ -1,14 +1,14 @@
 import styled, { css } from 'styled-components';
-import { WeatherType } from './../enums/enums';
+import { WeatherCondition } from './../enums/enums';
 import { Text } from './../styled_components/styledComponents';
 import { Sunny, CloudOffline } from 'react-ionicons';
 import { useContext, useState, useEffect, useRef } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { SelectedDateContext } from '../contexts/SelectedDateContext';
 import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
-import { Forecast, Theme } from '../interfaces/Interfaces';
+import { WeatherDataContext } from '../contexts/WeatherDataContext';
+import { Forecast, Theme, WeatherInfo } from '../interfaces/Interfaces';
 import { fetchForecastsForLocationJSON } from '../api/FetchForecasts';
-
 
 interface ForecastPreviewProps {
     date: Date,
@@ -45,6 +45,12 @@ const PreviewContainer = styled.div<TextProps>`
     cursor: pointer;
 `;
 
+const ConditionIcon = styled.i`
+    font-size: 24px;
+    color: ${({ isDarkMode }: { isDarkMode: boolean }) => isDarkMode ? 'white' : '#232323'};
+    margin-right: 8px;
+`;
+
 const iconCss = css`
     width: 24px;
     height: 24px;
@@ -54,9 +60,9 @@ const NoDataIcon = styled(CloudOffline) <TextProps>`
     ${iconCss}
 `;
 
-const SunnyIcon = styled(Sunny) <TextProps>`
-    ${iconCss}
-`;
+// const SunnyIcon = styled(Sunny) <TextProps>`
+//     ${iconCss}
+// `;
 
 function getBackgroundColor(isSelected: boolean, isDarkMode: boolean): string {
     if (isDarkMode)
@@ -76,18 +82,55 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
     const { theme } = useContext(ThemeContext);
     const { selectedDate } = useContext(SelectedDateContext);
     const { selectedLocation } = useContext(SelectedLocationContext);
+    const { weatherData, setWeatherData } = useContext(WeatherDataContext);
 
-    const [data, setData] = useState<Forecast>();
+    const [data, setData] = useState<WeatherInfo>();
 
     const month = props.date.getMonth() + 1;
 
     useEffect(() => {
         fetchForecastsForLocationJSON(selectedLocation, props.date)
             .then(forecast => {
-                setData(forecast);
+                setData(forecast?.weather_info);
             })
             .catch(reason => console.log(reason));
     }, []);
+
+    useEffect(() => {
+        /* if this forecast preview is the one selected, then its data will be 
+        forwarded to the weather data context after being fetched */
+        if (props.date.toDateString() === selectedDate.toDateString()) {
+            setWeatherData(data);
+        }
+    }, [data, selectedDate]);
+
+    let conditionIconClass: string = '';
+
+    if (weatherData?.condition)
+        switch (+WeatherCondition[weatherData.condition]) {
+            case 1:
+                conditionIconClass = 'ri-sun-fill';
+                break;
+
+            case 2:
+                conditionIconClass = 'ri-sun-cloudy-fill';
+                break;
+
+            case 3:
+                conditionIconClass = 'ri-cloudy-fill';
+                break;
+
+            case 4:
+                conditionIconClass = 'ri-foggy-fill';
+                break;
+
+            case 5:
+                conditionIconClass = 'ri-sun-foggy-fill';
+                break;
+
+            default:
+                console.log('No icon');
+        }
 
     return (
         <PreviewContainer
@@ -101,15 +144,17 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
                 /
                 {props.date.getDate() < 10 ? '0' + props.date.getDate() : props.date.getDate()}
             </DateText>
-            <NoDataIcon
-                width='24px'
-                height='24px'
-                color={getTextColor(props.date.toDateString() === selectedDate.toDateString(), theme.isDarkMode)}
-            />
+            {weatherData ? <ConditionIcon
+                isDarkMode={theme.isDarkMode}
+                className={conditionIconClass} /> :
+                <NoDataIcon
+                    width='24px'
+                    height='24px'
+                    color={getTextColor(props.date.toDateString() === selectedDate.toDateString(), theme.isDarkMode)} />}
             <TemperatureText
                 isDarkMode={theme.isDarkMode}
                 isSelected={props.date.toDateString() === selectedDate.toDateString()}>
-                {(data?.weather_info.temp ?? 'N/A') + '°'}
+                {(data?.temp ?? 'N/A') + '°'}
             </TemperatureText>
         </PreviewContainer>
     );

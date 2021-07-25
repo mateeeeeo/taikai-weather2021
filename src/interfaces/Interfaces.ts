@@ -1,3 +1,5 @@
+import { WindDirection } from './../enums/enums';
+import { WeatherCondition } from './../enums/enums';
 
 // coordinates of a location using latitude and longitude
 export interface LatLong {
@@ -25,8 +27,9 @@ export type WeatherInfo = {
     pressure?: number,
     temp?: number,
     humidity?: number,
-    condition?: string,
-    wind?: [string, number], // direction, speed
+    condition?: WeatherCondition,
+    wind_direction: WindDirection,
+    wind_vel: number,
     rain_chance?: number,
 };
 

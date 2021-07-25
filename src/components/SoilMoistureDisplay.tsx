@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 
 interface SoilMoistureDisplayProps {
-    moisture: number
+    moisture: number | undefined
 }
 
 const SoilMoistureContainer = styled.div`

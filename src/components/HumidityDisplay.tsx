@@ -5,7 +5,7 @@ import { Water } from "react-ionicons";
 import { ThemeContext } from "../contexts/ThemeContext";
 
 interface HumidityDisplayProps {
-    humidity: number
+    humidity: number | undefined
 }
 
 const HumidityDisplayContainer = styled.div`

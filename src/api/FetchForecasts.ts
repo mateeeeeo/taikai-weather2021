@@ -69,8 +69,13 @@ export async function fetchForecastsForLocationJSON(lname: string, date: Date): 
           console.log(fDate.toDateString());
 
           let info: WeatherInfo = {
-            temp: f.temp, pressure: f.pressure, rain_chance: f.rain_chance,
-            humidity: f.humidity, condition: f.cond, wind: [f.wind_direction, f.wind_velocity]
+            temp: f.temp,
+            pressure: f.pressure,
+            rain_chance: f.rain_chance,
+            humidity: f.humidity,
+            condition: f.cond,
+            wind_direction: f.wind_direction,
+            wind_vel: f.wind_velocity
           }
           result = { date: date, weather_info: info };
         }

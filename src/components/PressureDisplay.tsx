@@ -27,7 +27,7 @@ function describeArc(x: number, y: number, radius: number, startAngle: number, e
 }
 
 interface PressureDisplayProps {
-    pressure: number
+    pressure: number | undefined
 }
 
 const Container = styled.div`
@@ -66,7 +66,7 @@ export default function PressureDisplay(props: PressureDisplayProps) {
     const Meter = useRef<SVGPathElement>(null);
     const Pressure = useRef<SVGPathElement>(null);
 
-    const angle = -90 + (props.pressure - MIN_PRESSURE) * 90 / 100;
+    const angle = -90 + ((props.pressure ?? 0) - MIN_PRESSURE) * 90 / 100;
 
     useEffect(() => {
         Pressure.current?.setAttribute("d", describeArc(169, 154, 120, -90, angle));

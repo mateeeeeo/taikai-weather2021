@@ -5,10 +5,12 @@ import { Text } from './../styled_components/styledComponents';
 import { useContext, useState } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
+import { WeatherDataContext } from '../contexts/WeatherDataContext';
 import Dropdown from 'react-dropdown';
 import './../styles/dropdown-dark.css';
 import './../styles/dropdown-light.css';
 import './../styles/dropdown.css';
+import { WeatherCondition } from '../enums/enums';
 
 const LocationDropdown = styled.select<{ isDarkMode: boolean }>`
   font-size: 36px;
@@ -69,11 +71,46 @@ const SunnyIcon = styled(Sunny)`
   width: 48px;
 `;
 
+const ConditionIcon = styled.i`
+    font-size: 48px;
+    color: ${({ isDarkMode }: { isDarkMode: boolean }) => isDarkMode ? 'white' : '#232323'};
+    margin-right: 8px;
+`;
+
 export const locations: string[] = ['Accra', 'Uyo'];
 
 function WeatherForecast() {
   const { theme } = useContext(ThemeContext);
   const { selectedLocation, setSelectedLocation } = useContext(SelectedLocationContext);
+  const { weatherData } = useContext(WeatherDataContext);
+
+  let conditionIconClass: string = '';
+
+  if (weatherData?.condition)
+    switch (+WeatherCondition[weatherData.condition]) {
+      case 1:
+        conditionIconClass = 'ri-sun-fill';
+        break;
+
+      case 2:
+        conditionIconClass = 'ri-sun-cloudy-fill';
+        break;
+
+      case 3:
+        conditionIconClass = 'ri-cloudy-fill';
+        break;
+
+      case 4:
+        conditionIconClass = 'ri-foggy-fill';
+        break;
+
+      case 5:
+        conditionIconClass = 'ri-sun-foggy-fill';
+        break;
+
+      default:
+        console.log('No icon');
+    }
 
   return (
     <WeatherForecastContainer>
@@ -97,12 +134,14 @@ function WeatherForecast() {
           className='dropdown-root' />
       </ForecastLocation>
       <ForecastWeatherDisplay>
-        <SunnyIcon
+        {/* <SunnyIcon
           color={theme.isDarkMode ? 'white' : '#232323'}
           height='48px'
           width='48px'
-        />
-        <TemperatureText isDarkMode={theme.isDarkMode}>35°</TemperatureText>
+        /> */}
+        <ConditionIcon isDarkMode={theme.isDarkMode} className={conditionIconClass} />
+
+        <TemperatureText isDarkMode={theme.isDarkMode}>{weatherData?.temp}°</TemperatureText>
       </ForecastWeatherDisplay>
     </WeatherForecastContainer>
   );

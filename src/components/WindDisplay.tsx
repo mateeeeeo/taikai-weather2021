@@ -3,14 +3,11 @@ import { Text } from "./../styled_components/styledComponents";
 import { CompassSharp } from "react-ionicons";
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
-
-export enum WindDirection {
-    'N', 'NE', 'E', 'SE', 'S', 'SW', 'W', 'NW'
-}
+import { WindDirection } from './../enums/enums';
 
 interface WindDisplayProps {
-    speed: number,
-    direction: WindDirection,
+    speed: number | undefined,
+    direction: WindDirection | undefined,
 }
 
 const WindDisplayContainer = styled.div`
@@ -62,14 +59,14 @@ export default function WindDisplay(props: WindDisplayProps) {
             <WindValueContainer>
                 <WindIcon isDarkMode={theme.isDarkMode} className="ri-windy-line" />
                 <WindValue isDarkMode={theme.isDarkMode}>
-                    <b>{props.speed}m/s</b>
+                    <b>{props.speed ?? 'N/A '}m/s</b>
                     <ArrowIcon isDarkMode={theme.isDarkMode} className="ri-arrow-right-line" />
                 </WindValue>
                 <CompassIcon
                     width="32px"
                     height="32px"
                     color={theme.isDarkMode ? 'white' : '#232323'} />
-                <WindValue isDarkMode={theme.isDarkMode}><b>{WindDirection[props.direction]}</b></WindValue>
+                <WindValue isDarkMode={theme.isDarkMode}><b>{props.direction}</b></WindValue>
             </WindValueContainer>
         </WindDisplayContainer>
     );
