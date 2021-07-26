@@ -49,7 +49,7 @@ export default function HumidityDisplay(props: HumidityDisplayProps) {
                     width='32px'
                     height='32px'
                     color={theme.isDarkMode ? 'white' : '#232323'} />
-                <HumidityValue isDarkMode={theme.isDarkMode}>{props.humidity}%</HumidityValue>
+                <HumidityValue isDarkMode={theme.isDarkMode}>{props.humidity ?? 'N/A '}%</HumidityValue>
             </HumidityContainer>
         </HumidityDisplayContainer>
     );

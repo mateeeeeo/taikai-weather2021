@@ -45,9 +45,9 @@ const PreviewContainer = styled.div<TextProps>`
     cursor: pointer;
 `;
 
-const ConditionIcon = styled.i`
+const ConditionIcon = styled.i<TextProps>`
     font-size: 24px;
-    color: ${({ isDarkMode }: { isDarkMode: boolean }) => isDarkMode ? 'white' : '#232323'};
+    color: ${(props: TextProps) => getTextColor(props.isSelected, props.isDarkMode)};
     margin-right: 8px;
 `;
 
@@ -106,8 +106,8 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
 
     let conditionIconClass: string = '';
 
-    if (weatherData?.condition)
-        switch (+WeatherCondition[weatherData.condition]) {
+    if (data?.condition)
+        switch (+WeatherCondition[data.condition]) {
             case 1:
                 conditionIconClass = 'ri-sun-fill';
                 break;
@@ -127,9 +127,6 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
             case 5:
                 conditionIconClass = 'ri-sun-foggy-fill';
                 break;
-
-            default:
-                console.log('No icon');
         }
 
     return (
@@ -144,9 +141,11 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
                 /
                 {props.date.getDate() < 10 ? '0' + props.date.getDate() : props.date.getDate()}
             </DateText>
-            {weatherData ? <ConditionIcon
-                isDarkMode={theme.isDarkMode}
-                className={conditionIconClass} /> :
+            {data?.condition ?
+                <ConditionIcon
+                    isDarkMode={theme.isDarkMode}
+                    isSelected={props.date.toDateString() === selectedDate.toDateString()}
+                    className={conditionIconClass} /> :
                 <NoDataIcon
                     width='24px'
                     height='24px'

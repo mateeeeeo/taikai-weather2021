@@ -24,6 +24,7 @@ const WindText = styled(Text)`
 
 const WindIcon = styled.i<{ isDarkMode: boolean }>`
     font-size: 32px;
+    margin-right: 8px;
     color: ${({ isDarkMode }: { isDarkMode: boolean }) => isDarkMode ? 'white' : '#232323'};
 `;
 
@@ -43,10 +44,11 @@ const WindValueContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+    
 `;
 
 const WindValue = styled(Text)`
-    font-size: 32px;
+    font-size: 24px;
 `;
 
 
@@ -60,14 +62,16 @@ export default function WindDisplay(props: WindDisplayProps) {
                 <WindIcon isDarkMode={theme.isDarkMode} className="ri-windy-line" />
                 <WindValue isDarkMode={theme.isDarkMode}>
                     <b>{props.speed ?? 'N/A '}m/s</b>
-                    <ArrowIcon isDarkMode={theme.isDarkMode} className="ri-arrow-right-line" />
+                    {/* <ArrowIcon isDarkMode={theme.isDarkMode} className="ri-arrow-right-line" /> */}
                 </WindValue>
+            </WindValueContainer>
+            <WindValueContainer>
                 <CompassIcon
                     width="32px"
                     height="32px"
                     color={theme.isDarkMode ? 'white' : '#232323'} />
-                <WindValue isDarkMode={theme.isDarkMode}><b>{props.direction}</b></WindValue>
+                <WindValue isDarkMode={theme.isDarkMode}><b>{props.direction ?? 'Unknown'}</b></WindValue>
             </WindValueContainer>
-        </WindDisplayContainer>
+        </WindDisplayContainer >
     );
 }

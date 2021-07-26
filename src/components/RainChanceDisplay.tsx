@@ -49,7 +49,7 @@ export default function RainChanceDisplay(props: RainChanceDisplayProps) {
                     height="32px"
                     color={theme.isDarkMode ? 'white' : '#232323'} />
                 <RainValue isDarkMode={theme.isDarkMode}>
-                    {props.chance}%
+                    {props.chance ?? 'N/A '}%
                 </RainValue>
             </RainValueContainer>
         </RainDisplayContainer>
