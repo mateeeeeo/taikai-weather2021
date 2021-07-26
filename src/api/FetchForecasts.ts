@@ -4,7 +4,6 @@ import { MONTHS, revformat, toDClimateFormat } from '../helpers/DateFormat';
 
 export let locations: Array<Location>;
 const path = "forecasts.json";
-let fpath: string = "/public/forecasts/"
 
 // export async function fetchForecastsForLocationJSON(interval: number, lname: string, indate: Date): Promise<Forecast | undefined> {
 //   return new Promise(async (res, rej) => {
@@ -41,10 +40,11 @@ let fpath: string = "/public/forecasts/"
 
 export async function fetchForecastsForLocationJSON(lname: string, date: Date): Promise<Forecast | undefined> {
   // console.log(date);
+  let fpath: string = "forecasts";
   fpath += date.getDate().toString();
   if (date.getMonth() <= 10) fpath += "0"
   fpath += (date.getMonth().toString() + date.getFullYear().toString() + ".json");
-  console.log("////PATH: fpath");
+  console.log(fpath);
 
   return new Promise(async (res, rej) => {
     try {
@@ -60,6 +60,7 @@ export async function fetchForecastsForLocationJSON(lname: string, date: Date): 
 
       const obj = await response.json();
 
+      console.log(obj);
 
       for (let i = 0; i < obj.cities.length; ++i) {
         const c = obj.cities[i]; // forecast

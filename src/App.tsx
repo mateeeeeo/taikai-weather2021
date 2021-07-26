@@ -7,6 +7,7 @@ import ForecastPreviews from './components/ForecastPreviews';
 import { ThemeContextProvider } from './contexts/ThemeContext';
 import { SelectedDateContextProvider } from './contexts/SelectedDateContext';
 import { SelectedLocationContextProvider } from './contexts/SelectedLocationContext';
+import { SelectedLanguageContextProvider } from './contexts/SelectedLanguageContext';
 import { WeatherDataContextProvider } from './contexts/WeatherDataContext';
 import WeatherData2 from './components/WeatherData2';
 
@@ -51,13 +52,15 @@ export default function App() {
           <SelectedDateContextProvider>
             <SelectedLocationContextProvider>
               <WeatherDataContextProvider>
-                <DateInputBar />
-                <WeatherForecast />
-                {/* <LocationInput /> */}
-                <Separator />
-                <ForecastPreviews />
-                {/* <WeatherData /> */}
-                <WeatherData2 />
+                <SelectedLanguageContextProvider>
+                  <DateInputBar />
+                  <WeatherForecast />
+                  {/* <LocationInput /> */}
+                  <Separator />
+                  <ForecastPreviews />
+                  {/* <WeatherData /> */}
+                  <WeatherData2 />
+                </SelectedLanguageContextProvider>
               </WeatherDataContextProvider>
             </SelectedLocationContextProvider>
           </SelectedDateContextProvider>

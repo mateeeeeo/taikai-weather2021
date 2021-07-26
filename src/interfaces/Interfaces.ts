@@ -43,3 +43,15 @@ export type Location = {
     lat_long: LatLong,
     // forecasts?: Array<Forecast>
 };
+
+export interface Language {
+    name: string, 
+    noDataTitle: string,
+    noDataDesc: string,
+    airPressure: string,
+    humidity: string,
+    chanceOfRain: string,
+    wird: string,
+    weatherCondition: string,
+    soilMoisture: string
+} 

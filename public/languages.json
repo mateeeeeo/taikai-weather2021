@@ -1,0 +1,22 @@
+{
+    "en": {
+        "noDataTitle": "No data available",
+        "noDataDesc": "Please try another date or location or try again later.",
+        "airPressure": "Air Pressure",
+        "humidity": "Humidity",
+        "chanceOfRain": "Chance of rain",
+        "wind": "Wind",
+        "weatherCondition": "Weather Condition",
+        "soilMoisture": "Soil Moisture"
+    },
+    "fr": {
+        "noDataTitle": "Pas de données disponibles",
+        "noDataDesc": "Veuillez essayer une autre date ou un autre lieu ou réessayer plus tard.",
+        "airPressure": "Pression de l'air",
+        "humidity": "Humidité",
+        "chanceOfRain": "Chance de pluie",
+        "wind": "Vent",
+        "weatherCondition": "Conditions météo",
+        "soilMoisture": "Humidité du sol"
+    }
+}

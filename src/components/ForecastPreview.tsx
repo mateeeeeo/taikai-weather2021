@@ -93,8 +93,7 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
             fetchForecastsForLocationJSON(selectedLocation.name, props.date)
                 .then(forecast => {
                     setData(forecast?.weather_info);
-                })
-                .catch(reason => console.log(reason));
+                }).catch(reason => console.log(reason));
         }
     }, [selectedLocation]);
 
