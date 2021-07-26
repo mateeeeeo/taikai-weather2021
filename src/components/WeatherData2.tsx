@@ -56,6 +56,25 @@ const LocationText = styled(Text) <{ isDarkMode: boolean }>`
     color: ${(props: { isDarkMode: boolean }) => props.isDarkMode ? 'white' : '#232323'}
 `;
 
+const NoDataContainer = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 1rem;
+`;
+
+const NoDataText = styled(Text) <{ isDarkMode: boolean }>`
+    color: ${({ isDarkMode }: { isDarkMode: boolean }) => isDarkMode ? 'white' : '#232323'};
+    text-align: center;
+    font-size: 20px;
+`;
+
+const NoDataHeader = styled(NoDataText)`
+    font-weight: bold;
+    font-size: 24px;
+`;
 
 export default function WeatherData2() {
     const { theme } = useContext(ThemeContext);
@@ -69,7 +88,13 @@ export default function WeatherData2() {
 
     return (
         <>
+            {!weatherData &&
+                <NoDataContainer>
+                    <NoDataHeader isDarkMode={theme.isDarkMode}>No data available</NoDataHeader>
+                    <NoDataText isDarkMode={theme.isDarkMode}>Please try another date or location or try again later.</NoDataText>
+                </NoDataContainer>}
             <LocationText as="h1" isDarkMode={theme.isDarkMode}>{selectedLocation}</LocationText>
+
             <Grid>
                 <PressureDisplay pressure={weatherData?.pressure} />
                 <HumidityDisplay humidity={weatherData?.humidity} />

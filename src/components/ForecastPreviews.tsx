@@ -34,11 +34,11 @@ export default function ForecastPreviews() {
 
     const changedByForecastClick = useRef<boolean>(false); // determines whether the current selected date was changed by the date picker or by clicking on a forecast
     const isFirstRender = useRef<boolean>(true);
+    const changedByScroll = useRef<boolean>(false);
 
     useEffect(() => {
         scrollContainerRef.current?.addEventListener('wheel', onMouseWheelMove);
         loadDates(); // loads initial forecasts 
-        scrollContainerRef.current?.scrollBy({ left: scrollContainerRef.current.scrollWidth / 2 });
     }, []);
 
     useEffect(() => {
@@ -50,6 +50,15 @@ export default function ForecastPreviews() {
         isFirstRender.current = false;
     }, [selectedDate]);
 
+    useEffect(() => {
+        if (!changedByScroll.current)
+            scrollContainerRef.current?.scrollTo({
+                left: scrollContainerRef.current?.scrollWidth / 2 - scrollContainerRef.current?.clientWidth / 2,
+                behavior: 'smooth'
+            });
+        changedByScroll.current = false;
+    }, [previews]);
+
     function loadDates(dates?: number): void {
         if (scrollContainerRef.current) {
             const forecastsAmount: number = dates ? Math.abs(dates) :
@@ -59,47 +68,53 @@ export default function ForecastPreviews() {
                 firstDayIndex.current = lastDayIndex.current = Math.floor(-forecastsAmount / 2);
             }
 
+            let date: Date;
+
             for (let i = 0; i < forecastsAmount; i++) {
-                const date: Date = new Date(); // today's date as starting point
 
                 if ((dates && dates > 0) || !dates) { // future or initial dates 
-                    date.setDate(date.getDate() + lastDayIndex.current);
-
+                    date = previews.length > 0 ? new Date(previews[previews.length - 1].date.getTime()) : new Date(); // today's date as starting point
+                    // date.setDate(date.getDate() + lastDayIndex.current);
+                    date.setDate(date.getDate() + 1);
                     previews.push({
                         date,
                         key: key.current
                     });
 
-                    lastDayIndex.current++;
+                    // lastDayIndex.current++;
                 } else { // past dates
-                    date.setDate(date.getDate() + firstDayIndex.current);
-
+                    date = new Date(previews[0].date.getTime()); // today's date as starting point
+                    // date.setDate(date.getDate() + firstDayIndex.current);
+                    date.setDate(date.getDate() - 1);
                     previews.unshift({
                         date,
                         key: key.current
                     });
 
-                    firstDayIndex.current--;
+                    // firstDayIndex.current--;
                 }
                 key.current++;
+                changedByScroll.current = true;
             }
             setPreviews([...previews]);
         }
     }
 
     function loadDatesByRange(start: Date, dates: number): void {
-        firstDayIndex.current = lastDayIndex.current = Math.floor(-dates / 2);
+        // firstDayIndex.current = lastDayIndex.current = Math.floor(-dates / 2);
 
         previews.splice(0, previews.length); // clears the previews
+        const date = new Date(start);
+        date.setDate(date.getDate() - Math.floor(dates / 2));
 
         for (let i = 0; i < dates; i++) {
-            const date = new Date(start);
-            date.setDate(date.getDate() + lastDayIndex.current);
+            // date.setDate(date.getDate() + lastDayIndex.current);
             previews.push({
-                date,
+                date: new Date(date.getTime()),
                 key: key.current
             });
-            lastDayIndex.current++;
+            date.setDate(date.getDate() + 1);
+            // lastDayIndex.current++;
             key.current++;
         }
         setPreviews([...previews]);
@@ -136,7 +151,6 @@ export default function ForecastPreviews() {
             ref={scrollContainerRef}
             onScroll={onScroll}>
             {previews.map((preview) => {
-                console.log(preview.key);
                 return <ForecastPreview
                     key={preview.key}
                     date={preview.date}
