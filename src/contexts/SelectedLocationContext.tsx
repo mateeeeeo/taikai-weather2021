@@ -1,15 +1,16 @@
 import { createContext, useState } from "react";
-import { locations } from './../components/WeatherForecast';
+import { Location } from "../interfaces/Interfaces";
+// import { locations } from './../components/WeatherForecast';
 
 const defaultVal = {
-    selectedLocation: '',
-    setSelectedLocation: (location: string) => { }
+    selectedLocation: {} as Location | undefined,
+    setSelectedLocation: (location: Location | undefined) => { }
 }
 
 export const SelectedLocationContext = createContext(defaultVal);
 
 export function SelectedLocationContextProvider(props: any) {
-    const [selectedLocation, setSelectedLocation] = useState<string>(locations[0]);
+    const [selectedLocation, setSelectedLocation] = useState<Location | undefined>(undefined);
 
     return (
         <SelectedLocationContext.Provider value={{ selectedLocation, setSelectedLocation }}>

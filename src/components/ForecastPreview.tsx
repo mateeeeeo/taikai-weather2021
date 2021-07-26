@@ -89,12 +89,14 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
     const month = props.date.getMonth() + 1;
 
     useEffect(() => {
-        fetchForecastsForLocationJSON(selectedLocation, props.date)
-            .then(forecast => {
-                setData(forecast?.weather_info);
-            })
-            .catch(reason => console.log(reason));
-    }, []);
+        if (selectedLocation) {
+            fetchForecastsForLocationJSON(selectedLocation.name, props.date)
+                .then(forecast => {
+                    setData(forecast?.weather_info);
+                })
+                .catch(reason => console.log(reason));
+        }
+    }, [selectedLocation]);
 
     useEffect(() => {
         /* if this forecast preview is the one selected, then its data will be 

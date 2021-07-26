@@ -40,7 +40,6 @@ export type Forecast = {
 
 export type Location = {
     name: string,
-    state: string,
-    //lat_long: LatLong,
-    forecasts?: Array<Forecast>
+    lat_long: LatLong,
+    // forecasts?: Array<Forecast>
 };

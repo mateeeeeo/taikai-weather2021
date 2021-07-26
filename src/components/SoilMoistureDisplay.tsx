@@ -1,10 +1,14 @@
 import { Text } from '../styled_components/styledComponents';
 import styled from 'styled-components';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
+import { SelectedDateContext } from '../contexts/SelectedDateContext';
+import { useState } from 'react';
+import { fetchSoilMoisture } from '../api/SoilMoisture';
+import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
 
 interface SoilMoistureDisplayProps {
-    moisture: number | undefined
+    // moisture: number | undefined
 }
 
 const SoilMoistureContainer = styled.div`
@@ -38,13 +42,22 @@ const SoilMoistureIcon = styled.i`
 
 export default function SoilMoistureDisplay(props: SoilMoistureDisplayProps) {
     const { theme } = useContext(ThemeContext);
+    const { selectedDate } = useContext(SelectedDateContext);
+    const { selectedLocation } = useContext(SelectedLocationContext);
+
+    useEffect(() => {
+        if(selectedLocation)
+            fetchSoilMoisture(selectedLocation.lat_long, selectedDate);
+    }, [selectedDate, selectedLocation]);
+
+    const [moisture, setMoisture] = useState<number | undefined>();
 
     return (
         <SoilMoistureContainer>
             <SoilMoistureText isDarkMode={theme.isDarkMode}>Soil moisture</SoilMoistureText>
             <SoilMoistureValueContainer>
                 <SoilMoistureIcon isDarkMode={theme.isDarkMode} className="ri-flood-fill" />
-                <SoilMoistureValue isDarkMode={theme.isDarkMode}>{props.moisture}m</SoilMoistureValue>
+                <SoilMoistureValue isDarkMode={theme.isDarkMode}>{moisture ?? 'N/A'}m</SoilMoistureValue>
             </SoilMoistureValueContainer>
         </SoilMoistureContainer>
     );

@@ -1,7 +1,7 @@
 import { APISoilMoistureResponse, LatLong, SoilMoistureResponse } from "../interfaces/Interfaces";
 import { toDClimateFormat } from "../helpers/DateFormat";
 
-export async function get(latLong: LatLong, date: Date): Promise<any> {
+export async function fetchSoilMoisture(latLong: LatLong, date: Date): Promise<any> {
     const res = await fetch(`/apiv2/grid-history/era5_volumetric_soil_water_layer_1-hourly/${latLong.lat}_${latLong.long}?also_return_metadata=false&use_imperial_units=false&also_return_snapped_coordinates=true&convert_to_local_time=true`);
     const resJson : APISoilMoistureResponse = await res.json();
     const data : any = resJson.data;

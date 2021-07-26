@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import { CloudOffline, LocationSharp, Sunny } from 'react-ionicons';
 import { Text } from './../styled_components/styledComponents';
-import { useContext, useState } from 'react';
+import { useContext, useState, useRef } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
 import { WeatherDataContext } from '../contexts/WeatherDataContext';
@@ -11,6 +11,9 @@ import './../styles/dropdown-dark.css';
 import './../styles/dropdown-light.css';
 import './../styles/dropdown.css';
 import { WeatherCondition } from '../enums/enums';
+import { useEffect } from 'react';
+import { fetchLocations } from '../api/FetchLocations';
+import { Location } from '../interfaces/Interfaces';
 
 const LocationDropdown = styled.select<{ isDarkMode: boolean }>`
   font-size: 36px;
@@ -82,7 +85,7 @@ const NoDataIcon = styled(CloudOffline)`
     height: 48px;
 `;
 
-export const locations: string[] = ['Accra', 'Uyo'];
+// export const locations: string[] = ['Accra', 'Uyo'];
 
 function WeatherForecast() {
   const { theme } = useContext(ThemeContext);
@@ -90,6 +93,22 @@ function WeatherForecast() {
   const { weatherData } = useContext(WeatherDataContext);
 
   let conditionIconClass: string = '';
+
+  const [locations, setLocations] = useState<Location[]>([]);
+
+  const getLocations = async () => {
+    try {
+      const res: Location[] = await fetchLocations();
+      setLocations(res);
+      // setSelectedLocation(res[0]);
+    } catch (err) {
+      console.log(err)
+    }
+  };
+
+  useEffect(() => {
+    getLocations();
+  }, []);
 
   if (weatherData?.condition) {
     switch (+WeatherCondition[weatherData.condition]) {
@@ -124,9 +143,9 @@ function WeatherForecast() {
           width='40px'
         />
         <Dropdown
-          value={selectedLocation}
-          onChange={location => setSelectedLocation(location.value)}
-          options={locations}
+          value={selectedLocation?.name}
+          onChange={location => setSelectedLocation(locations.find(l => l.name.toLowerCase() === location.label?.toString().toLowerCase()))}
+          options={locations.map(location => location.name)}
           controlClassName={`dropdown-control ${theme.isDarkMode ? 'dark' : 'light'}`}
           arrowClassName='dropdown-arrow'
           menuClassName={`dropdown-menu ${theme.isDarkMode ? 'dark' : 'light'}`}

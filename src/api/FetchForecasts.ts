@@ -1,5 +1,4 @@
-import readline from 'readline';
-import fs from 'fs';
+
 import { Forecast, Location, WeatherInfo } from '../interfaces/Interfaces';
 import { MONTHS, revformat, toDClimateFormat } from '../helpers/DateFormat';
 
@@ -40,8 +39,6 @@ const path = "forecasts.json";
 // }
 
 export async function fetchForecastsForLocationJSON(lname: string, date: Date): Promise<Forecast | undefined> {
-  // console.log(date);
-
   return new Promise(async (res, rej) => {
     try {
       let result: Forecast | undefined = undefined;
@@ -56,7 +53,6 @@ export async function fetchForecastsForLocationJSON(lname: string, date: Date): 
 
       const obj = await response.json();
 
-
       for (let i = 0; i < obj.forecasts.length; ++i) {
         const f = obj.forecasts[i]; // forecast
         const fDate = new Date(f.yr, f.m - 1, f.d); // date of forecast
@@ -65,9 +61,6 @@ export async function fetchForecastsForLocationJSON(lname: string, date: Date): 
         // console.log(fDate.toDateString());
 
         if (fDate.toDateString() === date.toDateString() && lname.toLowerCase() === f.city.toLowerCase()) { // checking if name and date fit
-
-          console.log(fDate.toDateString());
-
           let info: WeatherInfo = {
             temp: f.temp,
             pressure: f.pressure,

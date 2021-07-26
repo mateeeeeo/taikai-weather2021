@@ -93,7 +93,8 @@ export default function WeatherData2() {
                     <NoDataHeader isDarkMode={theme.isDarkMode}>No data available</NoDataHeader>
                     <NoDataText isDarkMode={theme.isDarkMode}>Please try another date or location or try again later.</NoDataText>
                 </NoDataContainer>}
-            <LocationText as="h1" isDarkMode={theme.isDarkMode}>{selectedLocation}</LocationText>
+                
+            <LocationText as="h1" isDarkMode={theme.isDarkMode}>{selectedLocation?.name}</LocationText>
 
             <Grid>
                 <PressureDisplay pressure={weatherData?.pressure} />
@@ -103,7 +104,7 @@ export default function WeatherData2() {
                     speed={weatherData?.wind_vel}
                     direction={weatherData?.wind_direction} />
                 <WeatherConditionDisplay condition={weatherData?.condition} />
-                <SoilMoistureDisplay moisture={0.033} />
+                <SoilMoistureDisplay />
             </Grid>
         </>
     );
