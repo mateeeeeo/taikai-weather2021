@@ -4,6 +4,7 @@ import { MONTHS, revformat, toDClimateFormat } from '../helpers/DateFormat';
 
 export let locations: Array<Location>;
 const path = "forecasts.json";
+let fpath: string = "/public/forecasts/"
 
 // export async function fetchForecastsForLocationJSON(interval: number, lname: string, indate: Date): Promise<Forecast | undefined> {
 //   return new Promise(async (res, rej) => {
@@ -39,11 +40,17 @@ const path = "forecasts.json";
 // }
 
 export async function fetchForecastsForLocationJSON(lname: string, date: Date): Promise<Forecast | undefined> {
+  // console.log(date);
+  fpath += date.getDate().toString();
+  if (date.getMonth() <= 10) fpath += "0"
+  fpath += (date.getMonth().toString() + date.getFullYear().toString() + ".json");
+  console.log("////PATH: fpath");
+
   return new Promise(async (res, rej) => {
     try {
       let result: Forecast | undefined = undefined;
       // we format our date so it fits our json requirements
-      const response = await fetch(path,
+      const response = await fetch(fpath,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -53,22 +60,26 @@ export async function fetchForecastsForLocationJSON(lname: string, date: Date): 
 
       const obj = await response.json();
 
-      for (let i = 0; i < obj.forecasts.length; ++i) {
-        const f = obj.forecasts[i]; // forecast
-        const fDate = new Date(f.yr, f.m - 1, f.d); // date of forecast
+
+      for (let i = 0; i < obj.cities.length; ++i) {
+        const c = obj.cities[i]; // forecast
+        //const fDate = new Date(f.yr, f.m - 1, f.d); // date of forecast
 
         // console.log(date.toDateString());
         // console.log(fDate.toDateString());
 
-        if (fDate.toDateString() === date.toDateString() && lname.toLowerCase() === f.city.toLowerCase()) { // checking if name and date fit
+        if (lname.toLowerCase() === c.name.toLowerCase()) { // checking if name and date fit
+
+          //console.log(fD.toDateString());
+
           let info: WeatherInfo = {
-            temp: f.temp,
-            pressure: f.pressure,
-            rain_chance: f.rain_chance,
-            humidity: f.humidity,
-            condition: f.cond,
-            wind_direction: f.wind_direction,
-            wind_vel: f.wind_velocity
+            temp: c.temp,
+            pressure: c.pressure,
+            rain_chance: c.rain_chance,
+            humidity: c.humidity,
+            condition: c.cond,
+            wind_direction: c.wind_direction,
+            wind_vel: c.wind_velocity
           }
           result = { date: date, weather_info: info };
         }
