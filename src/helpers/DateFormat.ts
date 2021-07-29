@@ -2,7 +2,10 @@
 export const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 export function toDClimateFormat(date: Date): string {
-    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDay()} ${date.getHours() < 9 ? date.getHours() : `0${date.getHours()}`}:00:00+00:00`;
+    const month = (date.getMonth() + 1) < 10 ? '0' + (date.getMonth() + 1) : (date.getMonth() + 1) + '';
+    const day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate() + '';
+
+    return `${date.getFullYear()}-${month}-${day} ${date.getHours() < 10 ? `0${date.getHours()}` : date.getHours()}:00:00+00:00`;
 }
 
 export function format(date: Date): string {
