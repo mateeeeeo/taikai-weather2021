@@ -1,10 +1,9 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { CalendarOutline, Moon, Sunny } from 'react-ionicons';
 import { Input, InputIconContainer } from '../styled_components/styledComponents';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { SelectedDateContext } from '../contexts/SelectedDateContext';
-import { inputFormat } from '../helpers/DateFormat';
 import DatePicker from 'react-datepicker';
 import './../react-datepicker.css';
 

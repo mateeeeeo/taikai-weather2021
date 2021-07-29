@@ -48,15 +48,12 @@ export default function SoilMoistureDisplay(props: SoilMoistureDisplayProps) {
     async function fetch() {
         if (selectedLocation) {
             try {
-                console.log('response');
                 const data = await fetchSoilMoisture(selectedLocation.lat_long, selectedDate);
-                console.log(data);
                 setMoisture(data);
 
             } catch (err) {
                 console.log(err);
             }
-
         }
     }
 

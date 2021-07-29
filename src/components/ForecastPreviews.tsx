@@ -1,9 +1,7 @@
 import { useContext } from 'react';
 import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
-import { fetchForecastsForLocationJSON } from '../api/FetchForecasts';
 import { SelectedDateContext } from '../contexts/SelectedDateContext';
-import { WeatherType } from './../enums/enums';
 import ForecastPreview from './ForecastPreview';
 
 interface Preview {
@@ -126,9 +124,9 @@ export default function ForecastPreviews() {
         if (scrollContainerRef.current) {
             const scrollWidth = scrollContainerRef.current.scrollWidth - scrollContainerRef.current.clientWidth;
 
-            if (scrollWidth - scrollContainerRef.current.scrollLeft == 0) {
+            if (scrollWidth - scrollContainerRef.current.scrollLeft === 0) {
                 loadDates(forecastsAmount);
-            } else if (scrollContainerRef.current.scrollLeft == 0) {
+            } else if (scrollContainerRef.current.scrollLeft === 0) {
                 loadDates(-forecastsAmount);
                 scrollContainerRef.current?.scrollBy({ left: forecastPreviewWidth * forecastsAmount }); // scrolls the length of specified amount of forecasts 
             }

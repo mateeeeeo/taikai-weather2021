@@ -1,4 +1,3 @@
-import { Severity } from '../enums/enums';
 import styled from 'styled-components';
 import { Text } from '../styled_components/styledComponents';
 import PressureDisplay from './PressureDisplay';
@@ -9,24 +8,8 @@ import WeatherConditionDisplay from './WeatherConditionDisplay';
 import SoilMoistureDisplay from './SoilMoistureDisplay';
 import { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
-import { SelectedDateContext } from '../contexts/SelectedDateContext';
 import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
 import { WeatherDataContext } from '../contexts/WeatherDataContext';
-
-function getSeverityColor(severity: Severity): string {
-    switch (severity) {
-        case Severity.great:
-            return '#33cd18';
-        case Severity.good:
-            return '#72CD18';
-        case Severity.ok:
-            return '#d6cc11';
-        case Severity.severe:
-            return '#e3815b';
-        case Severity.verySevere:
-            return '#F16060';
-    }
-}
 
 const Grid = styled.div`
     margin: 1rem 0 5rem;
@@ -78,14 +61,9 @@ const NoDataHeader = styled(NoDataText)`
 
 export default function WeatherData2() {
     const { theme } = useContext(ThemeContext);
-    const { selectedDate } = useContext(SelectedDateContext);
     const { selectedLocation } = useContext(SelectedLocationContext);
     const { weatherData } = useContext(WeatherDataContext);
-    //
-    // useEffect(() => {
-    //     // fetch weather data for the selected date
-    // }, [selectedDate]);
-
+    
     return (
         <>
             {!weatherData &&

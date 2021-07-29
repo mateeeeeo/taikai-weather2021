@@ -1,4 +1,4 @@
-import { APISoilMoistureResponse, LatLong, Location, SoilMoistureResponse } from "../interfaces/Interfaces";
+import { APISoilMoistureResponse, LatLong } from "../interfaces/Interfaces";
 import { toDClimateFormat } from "../helpers/DateFormat";
 
 export let soilMoistureValues: Record<string, Record<string, number>> = {};
@@ -49,10 +49,6 @@ export async function fetchSoilMoisture(latLong: LatLong, date: Date): Promise<n
 
     return new Promise<number>((res, rej) => {
         const dClimateDateStr = toDClimateFormat(date);
-
-        console.log(latLong.lat + " " + latLong.long);
-        console.log(Object.values(data)[Object.values(data).length - 1]);
-        console.log(data[dClimateDateStr]);
 
         if (data)
             res(data[dClimateDateStr]);

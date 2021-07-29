@@ -28,12 +28,6 @@ const WindIcon = styled.i<{ isDarkMode: boolean }>`
     color: ${({ isDarkMode }: { isDarkMode: boolean }) => isDarkMode ? 'white' : '#232323'};
 `;
 
-const ArrowIcon = styled(WindIcon)`
-    font-size: 24px;
-    padding: 0 8px;
-    color: ${({ isDarkMode }: { isDarkMode: boolean }) => isDarkMode ? 'white' : '#232323'};
-`;
-
 const CompassIcon = styled(CompassSharp)`
     width: 32px;
     height: 32px;
