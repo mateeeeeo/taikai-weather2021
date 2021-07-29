@@ -18,5 +18,15 @@
         "wind": "Vent",
         "weatherCondition": "Conditions météo",
         "soilMoisture": "Humidité du sol"
+    },
+    "yoruba": {
+        "noDataTitle": "Ko si data to wa",
+        "noDataDesc": "Veuillez essayer une autre date ou un autre lieu ou réessayer plus tard.",
+        "airPressure": "Pression de l'air",
+        "humidity": "Humidité",
+        "chanceOfRain": "Chance de pluie",
+        "wind": "Vent",
+        "weatherCondition": "Conditions météo",
+        "soilMoisture": "Humidité du sol"
     }
 }

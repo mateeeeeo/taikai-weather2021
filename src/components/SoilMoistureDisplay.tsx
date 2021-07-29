@@ -45,9 +45,23 @@ export default function SoilMoistureDisplay(props: SoilMoistureDisplayProps) {
     const { selectedDate } = useContext(SelectedDateContext);
     const { selectedLocation } = useContext(SelectedLocationContext);
 
+    async function fetch() {
+        if (selectedLocation) {
+            try {
+                console.log('response');
+                const data = await fetchSoilMoisture(selectedLocation.lat_long, selectedDate);
+                console.log(data);
+                setMoisture(data);
+
+            } catch (err) {
+                console.log(err);
+            }
+
+        }
+    }
+
     useEffect(() => {
-        if(selectedLocation)
-            fetchSoilMoisture(selectedLocation.lat_long, selectedDate);
+        fetch();
     }, [selectedDate, selectedLocation]);
 
     const [moisture, setMoisture] = useState<number | undefined>();
@@ -57,7 +71,7 @@ export default function SoilMoistureDisplay(props: SoilMoistureDisplayProps) {
             <SoilMoistureText isDarkMode={theme.isDarkMode}>Soil moisture</SoilMoistureText>
             <SoilMoistureValueContainer>
                 <SoilMoistureIcon isDarkMode={theme.isDarkMode} className="ri-flood-fill" />
-                <SoilMoistureValue isDarkMode={theme.isDarkMode}>{moisture ?? 'N/A'}m</SoilMoistureValue>
+                <SoilMoistureValue isDarkMode={theme.isDarkMode}>{moisture ?? 'N/A '}m</SoilMoistureValue>
             </SoilMoistureValueContainer>
         </SoilMoistureContainer>
     );

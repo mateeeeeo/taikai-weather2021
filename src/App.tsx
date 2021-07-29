@@ -10,6 +10,8 @@ import { SelectedLocationContextProvider } from './contexts/SelectedLocationCont
 import { SelectedLanguageContextProvider } from './contexts/SelectedLanguageContext';
 import { WeatherDataContextProvider } from './contexts/WeatherDataContext';
 import WeatherData2 from './components/WeatherData2';
+// import { fetchSoilMoistureValues } from './api/SoilMoisture';
+import { useEffect } from 'react';
 
 const AppContainer = styled.div`
   width: 90%;
@@ -39,7 +41,7 @@ const Separator = styled.hr`
 
 export default function App() {
   // useEffect(() => {
-  //   soilMoisture.get(accra).then(res => setMoisture(res.moisture));
+  //   fetchSoilMoistureValues();
   // }, []);
 
   return (
