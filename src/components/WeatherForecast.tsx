@@ -112,25 +112,23 @@ function WeatherForecast() {
 
   if (weatherData?.condition) {
     switch (+WeatherCondition[weatherData.condition]) {
+      case 0:
+          conditionIconClass = 'ri-sun-fill';
+          break;
       case 1:
-        conditionIconClass = 'ri-sun-fill';
-        break;
-
+          conditionIconClass = 'ri-sun-fill';
+          break;
       case 2:
-        conditionIconClass = 'ri-sun-cloudy-fill';
-        break;
+          conditionIconClass = 'ri-sun-cloudy-fill';
+          break;
 
       case 3:
-        conditionIconClass = 'ri-cloudy-fill';
-        break;
+          conditionIconClass = 'ri-cloudy-fill';
+          break;
 
       case 4:
-        conditionIconClass = 'ri-foggy-fill';
-        break;
-
-      case 5:
-        conditionIconClass = 'ri-sun-foggy-fill';
-        break;
+          conditionIconClass = 'ri-foggy-fill';
+          break;
     }
   } else conditionIconClass = 'ri-cloud-off-fill';
 

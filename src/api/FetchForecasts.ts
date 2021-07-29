@@ -1,4 +1,4 @@
-
+import * as fs from 'fs';
 import { Forecast, Location, WeatherInfo } from '../interfaces/Interfaces';
 import { MONTHS, revformat, toDClimateFormat } from '../helpers/DateFormat';
 
@@ -40,14 +40,14 @@ const path = "forecasts.json";
 
 export async function fetchForecastsForLocationJSON(lname: string, date: Date): Promise<Forecast | undefined> {
   // console.log(date);
-  let fpath: string = "forecasts";
+  let fpath: string = "forecasts/";
+
+  if(date.getDate() <= 10) fpath += "0"
   fpath += date.getDate().toString();
   if (date.getMonth() <= 10) fpath += "0"
-  fpath += (date.getMonth().toString() + date.getFullYear().toString() + ".json");
+  fpath += ((date.getMonth() +1).toString() + date.getFullYear().toString() + ".json");
   console.log(fpath);
-
-  return new Promise(async (res, rej) => {
-    try {
+    return new Promise(async (res, rej) => {
       let result: Forecast | undefined = undefined;
       // we format our date so it fits our json requirements
       const response = await fetch(fpath,
@@ -56,39 +56,34 @@ export async function fetchForecastsForLocationJSON(lname: string, date: Date): 
             'Content-Type': 'application/json',
             'Accept': 'application/json'
           }
-        });
-
-      const obj = await response.json();
-
-      console.log(obj);
-
-      for (let i = 0; i < obj.cities.length; ++i) {
-        const c = obj.cities[i]; // forecast
-        //const fDate = new Date(f.yr, f.m - 1, f.d); // date of forecast
-
-        // console.log(date.toDateString());
-        // console.log(fDate.toDateString());
-
-        if (lname.toLowerCase() === c.name.toLowerCase()) { // checking if name and date fit
-
-          //console.log(fD.toDateString());
-
-          let info: WeatherInfo = {
-            temp: c.temp,
-            pressure: c.pressure,
-            rain_chance: c.rain_chance,
-            humidity: c.humidity,
-            condition: c.cond,
-            wind_direction: c.wind_direction,
-            wind_vel: c.wind_velocity
+        }).then(async function (response) {
+          if (!response.ok) throw new Error("There isn't a forecast available for this date.")
+          else {
+            const obj = await response.json();
+            for (let i = 0; i < obj.cities.length; ++i) {
+              const c = obj.cities[i]; // forecast
+  
+              if (lname.toLowerCase() === c.name.toLowerCase()) { // checking if name and date fit
+  
+                //console.log(fD.toDateString());
+  
+                let info: WeatherInfo = {
+                  temp: c.temp,
+                  pressure: c.pressure,
+                  rain_chance: c.rain_chance,
+                  humidity: c.humidity,
+                  condition: c.cond,
+                  wind_direction: c.wind_direction,
+                  wind_vel: c.wind_vel
+                }
+                result = { date: date, weather_info: info };
+              }
+            }
+            res(result);
           }
-          result = { date: date, weather_info: info };
-        }
-      }
-      res(result);
-    } catch (err) {
-      rej(err);
-    }
+        }).catch(function (err) {
+          rej(err);
+        }); 
   });
 }
 

@@ -109,10 +109,12 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
 
     if (data?.condition)
         switch (+WeatherCondition[data.condition]) {
+            case 0:
+                conditionIconClass = 'ri-sun-fill';
+                break;
             case 1:
                 conditionIconClass = 'ri-sun-fill';
                 break;
-
             case 2:
                 conditionIconClass = 'ri-sun-cloudy-fill';
                 break;
@@ -123,10 +125,6 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
 
             case 4:
                 conditionIconClass = 'ri-foggy-fill';
-                break;
-
-            case 5:
-                conditionIconClass = 'ri-sun-foggy-fill';
                 break;
         }
 

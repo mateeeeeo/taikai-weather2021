@@ -42,10 +42,12 @@ export default function WeatherConditionDisplay(props: WeatherConditionDisplayPr
 
     if (props.condition) {
         switch (+WeatherCondition[props.condition]) {
+            case 0:
+                conditionIconClass = 'ri-sun-fill';
+                break;
             case 1:
                 conditionIconClass = 'ri-sun-fill';
                 break;
-
             case 2:
                 conditionIconClass = 'ri-sun-cloudy-fill';
                 break;
@@ -56,10 +58,6 @@ export default function WeatherConditionDisplay(props: WeatherConditionDisplayPr
 
             case 4:
                 conditionIconClass = 'ri-foggy-fill';
-                break;
-
-            case 5:
-                conditionIconClass = 'ri-sun-foggy-fill';
                 break;
 
             default:
