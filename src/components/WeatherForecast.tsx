@@ -1,8 +1,7 @@
-import React from 'react';
 import styled from 'styled-components';
-import { CloudOffline, LocationSharp, Sunny } from 'react-ionicons';
+import { CloudOffline, LocationSharp } from 'react-ionicons';
 import { Text } from './../styled_components/styledComponents';
-import { useContext, useState, useRef } from 'react';
+import { useContext, useState } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
 import { WeatherDataContext } from '../contexts/WeatherDataContext';
@@ -15,24 +14,24 @@ import { useEffect } from 'react';
 import { fetchLocations } from '../api/FetchLocations';
 import { Location } from '../interfaces/Interfaces';
 
-const LocationDropdown = styled.select<{ isDarkMode: boolean }>`
-  font-size: 36px;
-  margin-left: 8px;
-  background: transparent;
-  border: none;
-  color: ${(props: { isDarkMode: boolean }) => props.isDarkMode ? 'white' : '#232323'};
-  font-family: 'Lato';
-  cursor: pointer;
+// const LocationDropdown = styled.select<{ isDarkMode: boolean }>`
+//   font-size: 36px;
+//   margin-left: 8px;
+//   background: transparent;
+//   border: none;
+//   color: ${(props: { isDarkMode: boolean }) => props.isDarkMode ? 'white' : '#232323'};
+//   font-family: 'Lato';
+//   cursor: pointer;
 
-  & > option {
-    font-size: 18px;
-    background-color: #23232b;
-  }
+//   & > option {
+//     font-size: 18px;
+//     background-color: #23232b;
+//   }
 
-  @media (min-width: 360px) {
-    font-size: 44px;
-  }
-`;
+//   @media (min-width: 360px) {
+//     font-size: 44px;
+//   }
+// `;
 
 const WeatherForecastContainer = styled.div`
   width: 100%;
@@ -69,10 +68,10 @@ const LocationIcon = styled(LocationSharp)`
   width: 40px;
 `;
 
-const SunnyIcon = styled(Sunny)`
-  height: 48px;
-  width: 48px;
-`;
+// const SunnyIcon = styled(Sunny)`
+//   height: 48px;
+//   width: 48px;
+// `;
 
 const ConditionIcon = styled.i`
     font-size: 48px;
@@ -100,7 +99,7 @@ function WeatherForecast() {
     try {
       const res: Location[] = await fetchLocations();
       setLocations(res);
-      // setSelectedLocation(res[0]);
+      setSelectedLocation(res[0]);
     } catch (err) {
       console.log(err)
     }

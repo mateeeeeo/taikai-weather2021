@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { WeatherCondition } from './../enums/enums';
+import { SelectedLanguageContext } from './../contexts/SelectedLanguageContext';
 
 interface WeatherConditionDisplayProps {
     condition: WeatherCondition | undefined
@@ -66,10 +67,11 @@ export default function WeatherConditionDisplay(props: WeatherConditionDisplayPr
     }
 
     const { theme } = useContext(ThemeContext);
+    const { selectedLanguage } = useContext(SelectedLanguageContext);
 
     return (
         <WeatherConditionContainer>
-            <WeatherConditionText isDarkMode={theme.isDarkMode}>Weather Condition</WeatherConditionText>
+            <WeatherConditionText isDarkMode={theme.isDarkMode}>{selectedLanguage?.weatherCondition}</WeatherConditionText>
             <ConditionValueContainer>
                 <ConditionIcon isDarkMode={theme.isDarkMode} className={conditionIconClass} />
                 <WeatherConditionValue isDarkMode={theme.isDarkMode}>{props.condition ?? 'N/A'}</WeatherConditionValue>

@@ -1,8 +1,6 @@
 import styled from 'styled-components';
-
 import DateInputBar from './components/DateInputBar';
 import WeatherForecast from './components/WeatherForecast';
-import LocationInput from './components/LocationInput';
 import ForecastPreviews from './components/ForecastPreviews';
 import { ThemeContextProvider } from './contexts/ThemeContext';
 import { SelectedDateContextProvider } from './contexts/SelectedDateContext';
@@ -10,8 +8,6 @@ import { SelectedLocationContextProvider } from './contexts/SelectedLocationCont
 import { SelectedLanguageContextProvider } from './contexts/SelectedLanguageContext';
 import { WeatherDataContextProvider } from './contexts/WeatherDataContext';
 import WeatherData2 from './components/WeatherData2';
-// import { fetchSoilMoistureValues } from './api/SoilMoisture';
-import { useEffect } from 'react';
 
 const AppContainer = styled.div`
   width: 90%;
@@ -25,14 +21,6 @@ const AppContainer = styled.div`
   }
 `;
 
-// const Header = styled.div`
-//   width: 100%;
-//   padding: 12px 16px;
-//   margin-bottom: 16px;
-//   box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.2);
-//   background-color: #414141;
-// `;
-
 const Separator = styled.hr`
   border-radius: 999px;
   border: none;
@@ -40,15 +28,8 @@ const Separator = styled.hr`
 `;
 
 export default function App() {
-  // useEffect(() => {
-  //   fetchSoilMoistureValues();
-  // }, []);
-
   return (
     <>
-      {/* <Header>
-        <Title>Sunrise Dashboard</Title>
-      </Header> */}
       <AppContainer>
         <ThemeContextProvider>
           <SelectedDateContextProvider>

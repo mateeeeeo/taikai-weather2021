@@ -1,13 +1,13 @@
 import styled, { css } from 'styled-components';
 import { WeatherCondition } from './../enums/enums';
 import { Text } from './../styled_components/styledComponents';
-import { Sunny, CloudOffline } from 'react-ionicons';
-import { useContext, useState, useEffect, useRef } from 'react';
+import { CloudOffline } from 'react-ionicons';
+import { useContext, useState, useEffect } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { SelectedDateContext } from '../contexts/SelectedDateContext';
 import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
 import { WeatherDataContext } from '../contexts/WeatherDataContext';
-import { Forecast, Theme, WeatherInfo } from '../interfaces/Interfaces';
+import { WeatherInfo } from '../interfaces/Interfaces';
 import { fetchForecastsForLocationJSON } from '../api/FetchForecasts';
 
 interface ForecastPreviewProps {
@@ -82,7 +82,7 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
     const { theme } = useContext(ThemeContext);
     const { selectedDate } = useContext(SelectedDateContext);
     const { selectedLocation } = useContext(SelectedLocationContext);
-    const { weatherData, setWeatherData } = useContext(WeatherDataContext);
+    const { setWeatherData } = useContext(WeatherDataContext);
 
     const [data, setData] = useState<WeatherInfo>();
 
@@ -93,7 +93,8 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
             fetchForecastsForLocationJSON(selectedLocation.name, props.date)
                 .then(forecast => {
                     setData(forecast?.weather_info);
-                }).catch(reason => console.log(reason));
+                })
+                .catch(reason => { console.log(reason) });
         }
     }, [selectedLocation]);
 

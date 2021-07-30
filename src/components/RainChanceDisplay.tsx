@@ -3,6 +3,7 @@ import { Text } from '../styled_components/styledComponents';
 import styled from 'styled-components';
 import { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
+import { SelectedLanguageContext } from './../contexts/SelectedLanguageContext';
 
 interface RainChanceDisplayProps {
     chance: number | undefined
@@ -39,10 +40,11 @@ const RainValue = styled(Text)`
 
 export default function RainChanceDisplay(props: RainChanceDisplayProps) {
     const { theme } = useContext(ThemeContext);
+    const { selectedLanguage } = useContext(SelectedLanguageContext);
 
     return (
         <RainDisplayContainer>
-            <RainText isDarkMode={theme.isDarkMode}>Chance of rain</RainText>
+            <RainText isDarkMode={theme.isDarkMode}>{selectedLanguage?.chanceOfRain}</RainText>
             <RainValueContainer>
                 <RainIcon
                     width="32px"

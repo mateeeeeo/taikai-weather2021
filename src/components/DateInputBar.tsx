@@ -1,10 +1,10 @@
-import { useState, useContext } from 'react';
+import { useContext } from 'react';
 import styled, { css } from 'styled-components';
 import { CalendarOutline, Moon, Sunny } from 'react-ionicons';
 import { Input, InputIconContainer } from '../styled_components/styledComponents';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { SelectedDateContext } from '../contexts/SelectedDateContext';
-import { inputFormat } from '../helpers/DateFormat';
+import SelectLanguage from './SelectLanguage';
 import DatePicker from 'react-datepicker';
 import './../react-datepicker.css';
 
@@ -12,26 +12,28 @@ const DateInputContainer = styled.div`
     display: flex;
     justify-content: center;
     margin: 8px 0;
-    // position: fixed;
-    // top: 0;
-    // left: 10%;
-    // right: 10%;
 `;
 
 const TopContainer = styled.div`
     display: grid;
-    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-columns: 1fr 4fr 1fr;
+    grid-gap: 1rem;
     width: 100%;
 `;
 
 const DateInput = styled(Input)`
     height: 100%;
+    width: 100%;
 
     &::-webkit-inner-spin-button,
     &::-webkit-calendar-picker-indicator {
         display: none;
         -webkit-appearance: none;
     }
+`;
+
+const SelectLanguageDropdown = styled(SelectLanguage)`
+    justify-self: end;
 `;
 
 const iconCss = css`
@@ -103,11 +105,7 @@ export default function DateInputBar() {
                         />
                     </InputIconContainer>
                 </DateInputContainer>
-                {/* <MobileSearchButton
-                    color={theme.isDarkMode ? 'white' : '#232323'}
-                    height='32px'
-                    width='32px'
-                /> */}
+                <SelectLanguage />
             </TopContainer>
         </DateInputContainer>
     );

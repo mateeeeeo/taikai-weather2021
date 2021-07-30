@@ -19,14 +19,14 @@
         "weatherCondition": "Conditions météo",
         "soilMoisture": "Humidité du sol"
     },
-    "yoruba": {
+    "yo": {
         "noDataTitle": "Ko si data to wa",
-        "noDataDesc": "Veuillez essayer une autre date ou un autre lieu ou réessayer plus tard.",
-        "airPressure": "Pression de l'air",
-        "humidity": "Humidité",
-        "chanceOfRain": "Chance de pluie",
-        "wind": "Vent",
-        "weatherCondition": "Conditions météo",
-        "soilMoisture": "Humidité du sol"
+        "noDataDesc": "Jọwọ gbiyanju ọjọ miiran tabi ipo tabi gbiyanju lẹẹkansi nigbamii.",
+        "airPressure": "Ipa Afẹfẹ",
+        "humidity": "Ọriniinitutu",
+        "chanceOfRain": "Iseese ojo",
+        "wind": "Afẹfẹ",
+        "weatherCondition": "Ipo Oju ojo",
+        "soilMoisture": "Ile ọrinrin"
     }
 }

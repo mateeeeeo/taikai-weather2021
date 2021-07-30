@@ -1,9 +1,7 @@
 import { useContext } from 'react';
 import { useEffect, useState, useRef } from 'react';
 import styled from 'styled-components';
-import { fetchForecastsForLocationJSON } from '../api/FetchForecasts';
 import { SelectedDateContext } from '../contexts/SelectedDateContext';
-import { WeatherType } from './../enums/enums';
 import ForecastPreview from './ForecastPreview';
 
 interface Preview {
@@ -38,7 +36,7 @@ export default function ForecastPreviews() {
 
     useEffect(() => {
         scrollContainerRef.current?.addEventListener('wheel', onMouseWheelMove);
-        loadDates(); // loads initial forecasts 
+        loadInitialDates(); // loads initial forecasts 
     }, []);
 
     useEffect(() => {
@@ -59,62 +57,59 @@ export default function ForecastPreviews() {
         changedByScroll.current = false;
     }, [previews]);
 
-    function loadDates(dates?: number): void {
-        if (scrollContainerRef.current) {
-            const forecastsAmount: number = dates ? Math.abs(dates) :
-                Math.ceil(scrollContainerRef.current.clientWidth / forecastPreviewWidth); // loads in as many dates necessary as to fill the scrollview
-
-            if (!dates) {
-                firstDayIndex.current = lastDayIndex.current = Math.floor(-forecastsAmount / 2);
+    function loadNewDates(dates: number): void {
+        for (let i = 0; i < Math.abs(dates); i++) {
+            if (dates > 0) { // future or initial dates 
+                const date = previews.length > 0 ? new Date(previews[previews.length - 1].date.getTime()) : new Date(); // today's date as starting point
+                date.setDate(date.getDate() + 1);
+                previews.push({
+                    date,
+                    key: key.current
+                });
+            } else { // past dates
+                const date = new Date(previews[0].date.getTime()); // today's date as starting point
+                date.setDate(date.getDate() - 1);
+                previews.unshift({
+                    date,
+                    key: key.current
+                });
             }
+            key.current++;
+            changedByScroll.current = true;
+        }
+        setPreviews([...previews]);
+    }
 
-            let date: Date;
+    function loadInitialDates() {
+        if (scrollContainerRef.current) {
+            const forecastsAmount: number = Math.ceil(scrollContainerRef.current.clientWidth / forecastPreviewWidth); // loads in as many dates necessary as to fill the scrollview
+
+            const date: Date = new Date();
+            date.setDate(date.getDate() - Math.ceil(forecastsAmount / 2));
 
             for (let i = 0; i < forecastsAmount; i++) {
-
-                if ((dates && dates > 0) || !dates) { // future or initial dates 
-                    date = previews.length > 0 ? new Date(previews[previews.length - 1].date.getTime()) : new Date(); // today's date as starting point
-                    // date.setDate(date.getDate() + lastDayIndex.current);
-                    date.setDate(date.getDate() + 1);
-                    previews.push({
-                        date,
-                        key: key.current
-                    });
-
-                    // lastDayIndex.current++;
-                } else { // past dates
-                    date = new Date(previews[0].date.getTime()); // today's date as starting point
-                    // date.setDate(date.getDate() + firstDayIndex.current);
-                    date.setDate(date.getDate() - 1);
-                    previews.unshift({
-                        date,
-                        key: key.current
-                    });
-
-                    // firstDayIndex.current--;
-                }
+                previews.push({
+                    date: new Date(date.getTime()),
+                    key: key.current
+                });
+                date.setDate(date.getDate() + 1);
                 key.current++;
-                changedByScroll.current = true;
             }
             setPreviews([...previews]);
         }
     }
 
     function loadDatesByRange(start: Date, dates: number): void {
-        // firstDayIndex.current = lastDayIndex.current = Math.floor(-dates / 2);
-
         previews.splice(0, previews.length); // clears the previews
         const date = new Date(start);
         date.setDate(date.getDate() - Math.floor(dates / 2));
 
         for (let i = 0; i < dates; i++) {
-            // date.setDate(date.getDate() + lastDayIndex.current);
             previews.push({
                 date: new Date(date.getTime()),
                 key: key.current
             });
             date.setDate(date.getDate() + 1);
-            // lastDayIndex.current++;
             key.current++;
         }
         setPreviews([...previews]);
@@ -126,10 +121,10 @@ export default function ForecastPreviews() {
         if (scrollContainerRef.current) {
             const scrollWidth = scrollContainerRef.current.scrollWidth - scrollContainerRef.current.clientWidth;
 
-            if (scrollWidth - scrollContainerRef.current.scrollLeft == 0) {
-                loadDates(forecastsAmount);
-            } else if (scrollContainerRef.current.scrollLeft == 0) {
-                loadDates(-forecastsAmount);
+            if (scrollWidth - scrollContainerRef.current.scrollLeft === 0) {
+                loadNewDates(forecastsAmount);
+            } else if (scrollContainerRef.current.scrollLeft === 0) {
+                loadNewDates(-forecastsAmount);
                 scrollContainerRef.current?.scrollBy({ left: forecastPreviewWidth * forecastsAmount }); // scrolls the length of specified amount of forecasts 
             }
         }

@@ -2,6 +2,7 @@ import { useEffect, useRef, useContext } from "react";
 import styled from "styled-components";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { Text } from "./../styled_components/styledComponents";
+import { SelectedLanguageContext } from './../contexts/SelectedLanguageContext';
 
 function polarToCartesian(centerX: number, centerY: number, radius: number, angleInDegrees: number): { x: number, y: number } {
     const angleInRadians: number = (angleInDegrees - 90) * Math.PI / 180.0;
@@ -74,10 +75,11 @@ export default function PressureDisplay(props: PressureDisplayProps) {
     });
 
     const { theme } = useContext(ThemeContext);
+    const { selectedLanguage } = useContext(SelectedLanguageContext);
 
     return (
         <Container>
-            <PressureText isDarkMode={theme.isDarkMode}>Air Pressure</PressureText>
+            <PressureText isDarkMode={theme.isDarkMode}>{selectedLanguage?.airPressure}</PressureText>
             <DisplayContainer width="256" height="123" viewBox="0 0 348 167" fill="none" xmlns="http://www.w3.org/2000/svg">
                 {/* <path d="M41 154C41 137.191 44.3108 120.546 50.7434 105.017C57.176 89.4868 66.6044 75.3762 78.4904 63.4903C90.3763 51.6044 104.487 42.176 120.017 35.7434C135.546 29.3108 152.191 26 169 26C185.809 26 202.454 29.3108 217.984 35.7434C233.513 42.1761 247.624 51.6045 259.51 63.4904C271.396 75.3763 280.824 89.4869 287.257 105.017C293.689 120.546 297 137.191 297 154H277.8C277.8 139.712 274.986 125.564 269.518 112.364C264.05 99.1639 256.036 87.1698 245.933 77.0668C235.83 66.9638 223.836 58.9496 210.636 53.4819C197.436 48.0142 183.288 45.2 169 45.2C154.712 45.2 140.564 48.0142 127.364 53.4819C114.164 58.9496 102.17 66.9637 92.0668 77.0668C81.9638 87.1698 73.9496 99.1638 68.4819 112.364C63.0142 125.564 60.2 139.712 60.2 154H41Z" fill="#D8D8D8" />
                 <path d="M41 154C41 137.191 44.3108 120.546 50.7434 105.017C57.176 89.4868 66.6044 75.3762 78.4904 63.4903C90.3763 51.6044 104.487 42.176 120.017 35.7434C135.546 29.3108 152.191 26 169 26C185.809 26 202.454 29.3108 217.984 35.7434C233.513 42.1761 247.624 51.6045 259.51 63.4904C271.396 75.3763 280.824 89.4869 287.257 105.017C293.689 120.546 297 137.191 297 154L277.8 154C277.8 139.712 274.986 125.564 269.518 112.364C264.05 99.1639 256.036 87.1698 245.933 77.0668C235.83 66.9638 223.836 58.9496 210.636 53.4819C197.436 48.0142 183.288 45.2 169 45.2C154.712 45.2 140.564 48.0142 127.364 53.4819C114.164 58.9496 102.17 66.9637 92.0668 77.0668C81.9638 87.1698 73.9496 99.1638 68.4819 112.364C63.0142 125.564 60.2 139.712 60.2 154L41 154Z" fill="#4C65E9" /> */}
