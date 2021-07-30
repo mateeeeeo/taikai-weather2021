@@ -78,6 +78,12 @@
   border: 0;
 }
 
+@media screen and (min-width: 512px) {
+  .react-datepicker-wrapper {
+    width: auto;
+  }
+}
+
 .react-datepicker {
   font-family: 'Lato';
   font-size: 0.8rem;

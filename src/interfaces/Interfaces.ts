@@ -51,7 +51,7 @@ export interface Language {
     airPressure: string,
     humidity: string,
     chanceOfRain: string,
-    wird: string,
+    wind: string,
     weatherCondition: string,
     soilMoisture: string
 } 

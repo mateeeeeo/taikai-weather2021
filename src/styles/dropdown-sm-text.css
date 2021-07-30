@@ -1,0 +1,7 @@
+.dropdown-control.sm {
+    font-size: 18px!important;
+}
+
+.dropdown-menu.sm > .Dropdown-option {
+    font-size: 15px;
+}

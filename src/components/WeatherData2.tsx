@@ -10,6 +10,8 @@ import { useContext } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
 import { WeatherDataContext } from '../contexts/WeatherDataContext';
+import { SelectedLanguageContext } from './../contexts/SelectedLanguageContext';
+
 
 const Grid = styled.div`
     margin: 1rem 0 5rem;
@@ -63,13 +65,14 @@ export default function WeatherData2() {
     const { theme } = useContext(ThemeContext);
     const { selectedLocation } = useContext(SelectedLocationContext);
     const { weatherData } = useContext(WeatherDataContext);
-    
+    const { selectedLanguage } = useContext(SelectedLanguageContext);
+
     return (
         <>
             {!weatherData &&
                 <NoDataContainer>
-                    <NoDataHeader isDarkMode={theme.isDarkMode}>No data available</NoDataHeader>
-                    <NoDataText isDarkMode={theme.isDarkMode}>Please try another date or location or try again later.</NoDataText>
+                    <NoDataHeader isDarkMode={theme.isDarkMode}>{selectedLanguage?.noDataTitle}</NoDataHeader>
+                    <NoDataText isDarkMode={theme.isDarkMode}>{selectedLanguage?.noDataDesc}</NoDataText>
                 </NoDataContainer>}
                 
             <LocationText as="h1" isDarkMode={theme.isDarkMode}>{selectedLocation?.name}</LocationText>

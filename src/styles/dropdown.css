@@ -1,5 +1,8 @@
 .dropdown-root {
     cursor: pointer!important;
+    display: flex;
+    align-items: center;
+    justify-self: end;
 }
 
 .dropdown-control {
@@ -28,7 +31,7 @@
 
 .dropdown-menu > .Dropdown-option {
     font-family: 'Lato'!important;
-    font-size: 24px;
+    font-size: 15px;
     padding: 0.75rem 5rem 0.75rem 0.75rem;
 }
 
@@ -38,8 +41,8 @@
     font-family: 'Lato';
 }
 
-@media screen and (min-width: 768px) {
+/* @media screen and (min-width: 768px) {
     .dropdown-menu > .Dropdown-option {
-        font-size: 18px;
+        font-size: 24px;
     }
-}
+} */

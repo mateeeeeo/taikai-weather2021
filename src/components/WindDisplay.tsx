@@ -4,6 +4,7 @@ import { CompassSharp } from "react-ionicons";
 import { useContext } from "react";
 import { ThemeContext } from "../contexts/ThemeContext";
 import { WindDirection } from './../enums/enums';
+import { SelectedLanguageContext } from './../contexts/SelectedLanguageContext';
 
 interface WindDisplayProps {
     speed: number | undefined,
@@ -48,10 +49,11 @@ const WindValue = styled(Text)`
 
 export default function WindDisplay(props: WindDisplayProps) {
     const { theme } = useContext(ThemeContext);
+    const { selectedLanguage } = useContext(SelectedLanguageContext);
 
     return (
         <WindDisplayContainer>
-            <WindText isDarkMode={theme.isDarkMode}>Wind</WindText>
+            <WindText isDarkMode={theme.isDarkMode}>{selectedLanguage?.wind}</WindText>
             <WindValueContainer>
                 <WindIcon isDarkMode={theme.isDarkMode} className="ri-windy-line" />
                 <WindValue isDarkMode={theme.isDarkMode}>

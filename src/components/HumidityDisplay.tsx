@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { Text } from "./../styled_components/styledComponents";
 import { Water } from "react-ionicons";
 import { ThemeContext } from "../contexts/ThemeContext";
+import { SelectedLanguageContext } from './../contexts/SelectedLanguageContext';
+
 
 interface HumidityDisplayProps {
     humidity: number | undefined
@@ -40,10 +42,11 @@ const HumidityValue = styled(Text)`
 
 export default function HumidityDisplay(props: HumidityDisplayProps) {
     const { theme } = useContext(ThemeContext);
+    const { selectedLanguage } = useContext(SelectedLanguageContext);
 
     return (
         <HumidityDisplayContainer>
-            <HumidityText isDarkMode={theme.isDarkMode}>Humidity</HumidityText>
+            <HumidityText isDarkMode={theme.isDarkMode}>{selectedLanguage?.humidity}</HumidityText>
             <HumidityContainer>
                 <HumidityIcon
                     width='32px'

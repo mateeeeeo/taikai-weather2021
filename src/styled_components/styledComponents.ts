@@ -17,8 +17,8 @@ export const Input = styled.input`
     background-color: #4C65E9;
     color: white;
     font-family: 'Lato';
-    font-weight: 500;
-    font-size: 20px;
+    font-weight: 400;
+    font-size: 18px;
     border: none;
     outline: none;
     border-radius: 8px 0 0 8px;
