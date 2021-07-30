@@ -40,25 +40,39 @@ const WeatherConditionValue = styled(Text)`
 
 export default function WeatherConditionDisplay(props: WeatherConditionDisplayProps) {
     let conditionIconClass: string = '';
+    let conditionName: string = '';
+
+    const { theme } = useContext(ThemeContext);
+    const { selectedLanguage } = useContext(SelectedLanguageContext);
 
     if (props.condition) {
         switch (+WeatherCondition[props.condition]) {
             case 0:
                 conditionIconClass = 'ri-sun-fill';
+                if (selectedLanguage)
+                    conditionName = selectedLanguage.sunny;
                 break;
             case 1:
                 conditionIconClass = 'ri-sun-fill';
+                if (selectedLanguage)
+                    conditionName = selectedLanguage?.clear;
                 break;
             case 2:
                 conditionIconClass = 'ri-sun-cloudy-fill';
+                if (selectedLanguage)
+                    conditionName = selectedLanguage?.partlyCloudy;
                 break;
 
             case 3:
                 conditionIconClass = 'ri-cloudy-fill';
+                if (selectedLanguage)
+                    conditionName = selectedLanguage?.cloudy;
                 break;
 
             case 4:
                 conditionIconClass = 'ri-foggy-fill';
+                if (selectedLanguage)
+                    conditionName = selectedLanguage?.foggy;
                 break;
 
             default:
@@ -66,15 +80,12 @@ export default function WeatherConditionDisplay(props: WeatherConditionDisplayPr
         }
     }
 
-    const { theme } = useContext(ThemeContext);
-    const { selectedLanguage } = useContext(SelectedLanguageContext);
-
     return (
         <WeatherConditionContainer>
             <WeatherConditionText isDarkMode={theme.isDarkMode}>{selectedLanguage?.weatherCondition}</WeatherConditionText>
             <ConditionValueContainer>
                 <ConditionIcon isDarkMode={theme.isDarkMode} className={conditionIconClass} />
-                <WeatherConditionValue isDarkMode={theme.isDarkMode}>{props.condition ?? 'N/A'}</WeatherConditionValue>
+                <WeatherConditionValue isDarkMode={theme.isDarkMode}>{conditionName != '' ? conditionName : 'N/A'}</WeatherConditionValue>
             </ConditionValueContainer>
         </WeatherConditionContainer>
     );

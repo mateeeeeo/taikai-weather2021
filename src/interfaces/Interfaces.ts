@@ -53,5 +53,20 @@ export interface Language {
     chanceOfRain: string,
     wind: string,
     weatherCondition: string,
-    soilMoisture: string
+    soilMoisture: string,
+    highFloodRisk: string,
+    sunny: string,
+    clear: string,
+    partlyCloudy: string,
+    cloudy: string,
+    foggy: string,
+    north: string,
+    northEast: string,
+    east: string,
+    southEast: string,
+    south: string,
+    southWest: string,
+    west: string,
+    northWest: string,
+    unknown: string
 } 

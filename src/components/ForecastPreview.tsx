@@ -8,7 +8,7 @@ import { SelectedDateContext } from '../contexts/SelectedDateContext';
 import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
 import { WeatherDataContext } from '../contexts/WeatherDataContext';
 import { WeatherInfo } from '../interfaces/Interfaces';
-import { fetchForecastsForLocationJSON } from '../api/FetchForecasts';
+import { fetchForecastsForLocationJSON1, fetchForecastsForLocationJSON2 } from '../api/FetchForecasts';
 
 interface ForecastPreviewProps {
     date: Date,
@@ -90,9 +90,15 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
 
     useEffect(() => {
         if (selectedLocation) {
-            fetchForecastsForLocationJSON(selectedLocation.name, props.date)
+            fetchForecastsForLocationJSON1(selectedLocation.name, props.date)
                 .then(forecast => {
                     setData(forecast?.weather_info);
+                })
+                .catch(reason => { console.log(reason) });
+                
+            fetchForecastsForLocationJSON2(selectedLocation.name, props.date)
+                .then(forecast => {
+                    console.log(forecast);
                 })
                 .catch(reason => { console.log(reason) });
         }

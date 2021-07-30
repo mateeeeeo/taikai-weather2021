@@ -51,6 +51,36 @@ export default function WindDisplay(props: WindDisplayProps) {
     const { theme } = useContext(ThemeContext);
     const { selectedLanguage } = useContext(SelectedLanguageContext);
 
+    let windDirectionName = '';
+
+    if (selectedLanguage && props.direction)
+        switch (+WindDirection[props.direction]) {
+            case 0:
+                windDirectionName = selectedLanguage.north;
+                break;
+            case 1:
+                windDirectionName = selectedLanguage.northEast;
+                break;
+            case 2:
+                windDirectionName = selectedLanguage.east;
+                break;
+            case 3:
+                windDirectionName = selectedLanguage.southEast;
+                break;
+            case 4:
+                windDirectionName = selectedLanguage.south;
+                break;
+            case 5:
+                windDirectionName = selectedLanguage.southWest;
+                break;
+            case 6:
+                windDirectionName = selectedLanguage.west;
+                break;
+            case 7:
+                windDirectionName = selectedLanguage.northWest;
+                break;
+        }
+
     return (
         <WindDisplayContainer>
             <WindText isDarkMode={theme.isDarkMode}>{selectedLanguage?.wind}</WindText>
@@ -66,7 +96,7 @@ export default function WindDisplay(props: WindDisplayProps) {
                     width="32px"
                     height="32px"
                     color={theme.isDarkMode ? 'white' : '#232323'} />
-                <WindValue isDarkMode={theme.isDarkMode}><b>{props.direction ?? 'Unknown'}</b></WindValue>
+                <WindValue isDarkMode={theme.isDarkMode}><b>{props.direction ?? selectedLanguage?.unknown}</b></WindValue>
             </WindValueContainer>
         </WindDisplayContainer >
     );

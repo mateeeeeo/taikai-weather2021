@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { fetchSoilMoisture } from '../api/SoilMoisture';
 import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
 import { SelectedLanguageContext } from './../contexts/SelectedLanguageContext';
-
+import { Alert } from 'react-ionicons';
 
 interface SoilMoistureDisplayProps {
     // moisture: number | undefined
@@ -42,25 +42,40 @@ const SoilMoistureIcon = styled.i`
     margin-right: 8px;
 `;
 
+const AlertIcon = styled(Alert)`
+    width: 48px;
+    height: 48px;
+`;
+
+const FloodRiskWarning = styled.div`
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+const FloodRiskText = styled(Text)`
+    color: #F16060;
+`;
+
 export default function SoilMoistureDisplay(props: SoilMoistureDisplayProps) {
     const { theme } = useContext(ThemeContext);
     const { selectedDate } = useContext(SelectedDateContext);
     const { selectedLocation } = useContext(SelectedLocationContext);
     const { selectedLanguage } = useContext(SelectedLanguageContext);
 
-    async function fetch() {
-        if (selectedLocation) {
-            try {
-                const data = await fetchSoilMoisture(selectedLocation.lat_long, selectedDate);
-                setMoisture(data);
-
-            } catch (err) {
-                console.log(err);
+    useEffect(() => {
+        async function fetch() {
+            if (selectedLocation) {
+                try {
+                    const data = await fetchSoilMoisture(selectedLocation.lat_long, selectedDate);
+                    setMoisture(data);
+    
+                } catch (err) {
+                    console.log(err);
+                }
             }
         }
-    }
 
-    useEffect(() => {
         fetch();
     }, [selectedDate, selectedLocation]);
 
@@ -70,9 +85,18 @@ export default function SoilMoistureDisplay(props: SoilMoistureDisplayProps) {
         <SoilMoistureContainer>
             <SoilMoistureText isDarkMode={theme.isDarkMode}>{selectedLanguage?.soilMoisture}</SoilMoistureText>
             <SoilMoistureValueContainer>
+                {/* {(moisture && moisture >= 0.01) && */}
+                {/* // } */}
                 <SoilMoistureIcon isDarkMode={theme.isDarkMode} className="ri-flood-fill" />
-                <SoilMoistureValue isDarkMode={theme.isDarkMode}>{moisture ?? 'N/A '}m</SoilMoistureValue>
+                <SoilMoistureValue isDarkMode={theme.isDarkMode}>{moisture?.toFixed(3) ?? 'N/A '}m</SoilMoistureValue>
             </SoilMoistureValueContainer>
+            <FloodRiskWarning>
+                <AlertIcon
+                    width='48px'
+                    height='48px'
+                    color='#F16060' />
+                <FloodRiskText as='h1' isDarkMode>{selectedLanguage?.highFloodRisk}</FloodRiskText>
+            </FloodRiskWarning>
         </SoilMoistureContainer>
     );
 }
