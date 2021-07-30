@@ -99,7 +99,7 @@ function WeatherForecast() {
     try {
       const res: Location[] = await fetchLocations();
       setLocations(res);
-      // setSelectedLocation(res[0]);
+      setSelectedLocation(res[0]);
     } catch (err) {
       console.log(err)
     }
