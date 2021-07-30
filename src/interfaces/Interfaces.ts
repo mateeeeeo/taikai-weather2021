@@ -18,6 +18,11 @@ export interface APISoilMoistureResponse {
     data: Object,
     snappedTo: Array<number>
 }
+// response from the OpenAQ API for air quality
+export interface APIAirQualityResponse {
+    data: Object,
+    snappedTo: Array<number>
+}
 
 export type Theme = {
     isDarkMode: boolean;
