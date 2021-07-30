@@ -4,7 +4,7 @@ import { useContext, useEffect } from 'react';
 import { ThemeContext } from '../contexts/ThemeContext';
 import { SelectedDateContext } from '../contexts/SelectedDateContext';
 import { useState } from 'react';
-import { fetchSoilMoisture } from '../api/SoilMoisture';
+import { fetchSoilMoisture } from '../api/AdditionalData';
 import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
 
 interface SoilMoistureDisplayProps {
