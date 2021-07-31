@@ -1,7 +1,4 @@
-1. introduction
-2. functions
-3. how to run it
-4. dependencies
+<b>Introduction</b>
 
 Dear Kanda Weather Group,
 
@@ -16,5 +13,11 @@ In order to implement that which is described above, we manually transcribed the
 
 In addition to using the given data from the forecast (or rather hindcast) templates, we've also implemented a function to fetch the soil moisture for a given region and date using the dClimate API. If a certain level of flood risk is reached, the user is notified accordingly. Similarly, we have added a display for the air quality of the region, which is made using the open-source OpenAQ API. The user will also be notified if the air quality is particularly bad. 
 
+<b>Usage</b>
+
 As for the UI itself, the user first has to select the region he wants. Next, there are two possibilities to view data for a certain date in the preferred region: one can either scroll through the dates (which also shows previews for the dates which the user passes), or one can simply choose a desired date from the calendar above. Either way, when a date is chosen, the application fetches the data locally (from the .json files) and online (from the APIs) and displays it in a simple, readable way. To assure interactivity, we've also added a button to toggle dark mode and the ability to change the language of the application.
+
+<b>Building and running the application</b>
+
+In order to build the application, you need to run "npm run build" in a terminal at the root of the project folder. After the build operation is done, you should see a new folder, called "build". Next, you need to run the command "node server", again at the root of the project, to start the server. The server will start at 4000, after which you should see the message "Server started at port 4000" in the console. Afterwards go to the url "localhost:4000". There you'll be able to use our dashboard.
 
