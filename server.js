@@ -1,4 +1,3 @@
-"use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,22 +34,26 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-exports.__esModule = true;
+var _this = this;
 var express = require('express');
 var path = require('path');
 var app = express();
 var createProxyMiddleware = require("http-proxy-middleware").createProxyMiddleware;
 var port = 4000;
-var FetchForecasts_1 = require("./FetchForecasts");
+var fetchForecastsForLocationJSON2 = require('./FetchForecasts').fetchForecastsForLocationJSON2;
 app.use(express.static(path.join(__dirname, 'build')));
 app.use("/apiv2", createProxyMiddleware({
     target: "https://api.dclimate.net/",
     changeOrigin: true
 }));
+app.use("/v2", createProxyMiddleware({
+    target: "https://u50g7n0cbj.execute-api.us-east-1.amazonaws.com",
+    changeOrigin: true
+}));
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
-app.get('/forecast', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app.get('/forecast', function (req, res) { return __awaiter(_this, void 0, void 0, function () {
     var forecast, err_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -59,7 +62,7 @@ app.get('/forecast', function (req, res) { return __awaiter(void 0, void 0, void
                 _a.label = 1;
             case 1:
                 _a.trys.push([1, 3, , 4]);
-                return [4 /*yield*/, FetchForecasts_1.fetchForecastsForLocationJSON2(req.query.l, new Date(parseInt(req.query.y), parseInt(req.query.m) - 1, parseInt(req.query.d)))];
+                return [4 /*yield*/, fetchForecastsForLocationJSON2(req.query.l, new Date(parseInt(req.query.y), parseInt(req.query.m) - 1, parseInt(req.query.d)))];
             case 2:
                 forecast = _a.sent();
                 res.send(forecast);

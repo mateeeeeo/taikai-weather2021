@@ -53,8 +53,16 @@ const FloodRiskWarning = styled.div`
     justify-content: center;
 `;
 
-const FloodRiskText = styled(Text)`
+const HighFloodRiskText = styled(Text)`
     color: #F16060;
+`;
+
+const MediumFloodRiskText = styled(Text)`
+    color: #fcba03;
+`;
+
+const LowFloodRiskText = styled(Text)`
+    color: #5efc03;
 `;
 
 const SyncIcon = styled(Sync)`
@@ -74,7 +82,7 @@ export default function SoilMoistureDisplay(props: SoilMoistureDisplayProps) {
                 try {
                     const moisture = await fetchSoilMoisture(selectedLocation.lat_long, selectedDate);
                     setFetching(false);
-                    if(!isNaN(moisture))
+                    if (!isNaN(moisture))
                         setMoisture(moisture);
                     else
                         setMoisture(undefined);
@@ -104,13 +112,19 @@ export default function SoilMoistureDisplay(props: SoilMoistureDisplayProps) {
                 <SoilMoistureIcon isDarkMode={theme.isDarkMode} className="ri-flood-fill" />
                 <SoilMoistureValue isDarkMode={theme.isDarkMode}>{moisture?.toFixed(3) ?? 'N/A '}m</SoilMoistureValue>
             </SoilMoistureValueContainer>
-            {(moisture && moisture >= 0.1) &&
+            {(moisture && moisture < 0.05) &&
+                <LowFloodRiskText as='h1' isDarkMode>{selectedLanguage?.lowFloodRisk}</LowFloodRiskText>}
+
+            {(moisture && (moisture >= 0.05 && moisture < 0.1)) &&
+                <MediumFloodRiskText as='h1' isDarkMode>{selectedLanguage?.mediumFloodRisk}</MediumFloodRiskText>}
+
+            {(moisture && moisture >= 0.1) && // more than 10cm -> high risk
                 <FloodRiskWarning>
                     <AlertIcon
                         width='48px'
                         height='48px'
                         color='#F16060' />
-                    <FloodRiskText as='h1' isDarkMode>{selectedLanguage?.highFloodRisk}</FloodRiskText>
+                    <HighFloodRiskText as='h1' isDarkMode>{selectedLanguage?.highFloodRisk}</HighFloodRiskText>
                 </FloodRiskWarning>}
         </SoilMoistureContainer>
     );

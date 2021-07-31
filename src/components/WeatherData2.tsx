@@ -11,6 +11,7 @@ import { ThemeContext } from '../contexts/ThemeContext';
 import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
 import { WeatherDataContext } from '../contexts/WeatherDataContext';
 import { SelectedLanguageContext } from './../contexts/SelectedLanguageContext';
+import AirQualityDisplay from './AirQualityDisplay';
 
 
 const Grid = styled.div`
@@ -74,7 +75,7 @@ export default function WeatherData2() {
                     <NoDataHeader isDarkMode={theme.isDarkMode}>{selectedLanguage?.noDataTitle}</NoDataHeader>
                     <NoDataText isDarkMode={theme.isDarkMode}>{selectedLanguage?.noDataDesc}</NoDataText>
                 </NoDataContainer>}
-                
+
             <LocationText as="h1" isDarkMode={theme.isDarkMode}>{selectedLocation?.name}</LocationText>
 
             <Grid>
@@ -86,6 +87,7 @@ export default function WeatherData2() {
                     direction={weatherData?.wind_direction} />
                 <WeatherConditionDisplay condition={weatherData?.condition} />
                 <SoilMoistureDisplay />
+                <AirQualityDisplay />
             </Grid>
         </>
     );

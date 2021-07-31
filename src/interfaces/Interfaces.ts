@@ -50,7 +50,7 @@ export type Location = {
 };
 
 export interface Language {
-    name: string, 
+    name: string,
     noDataTitle: string,
     noDataDesc: string,
     airPressure: string,
@@ -60,6 +60,8 @@ export interface Language {
     weatherCondition: string,
     soilMoisture: string,
     highFloodRisk: string,
+    lowFloodRisk: string,
+    mediumFloodRisk: string,
     sunny: string,
     clear: string,
     partlyCloudy: string,
@@ -74,4 +76,4 @@ export interface Language {
     west: string,
     northWest: string,
     unknown: string
-} 
+}

@@ -4,14 +4,18 @@ const app = express();
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const port = 4000;
 
-import { fetchForecastsForLocationJSON2 } from './FetchForecasts';
-import { LatLong } from './src/interfaces/Interfaces';
+const { fetchForecastsForLocationJSON2 } = require('./FetchForecasts');
 
 app.use(express.static(path.join(__dirname, 'build')));
 app.use("/apiv2", createProxyMiddleware({
   target: "https://api.dclimate.net/",
   changeOrigin: true
 }));
+
+app.use("/v2", createProxyMiddleware({
+  target: "https://u50g7n0cbj.execute-api.us-east-1.amazonaws.com",
+  changeOrigin: true
+}))
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
@@ -21,7 +25,6 @@ app.get('/forecast', async (req, res) => {
   console.log('request');
   try {
     const forecast = await fetchForecastsForLocationJSON2(req.query.l, new Date(parseInt(req.query.y), parseInt(req.query.m) - 1, parseInt(req.query.d)));
-
     res.send(forecast);
   } catch (err) {
     console.log(err);

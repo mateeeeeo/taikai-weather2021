@@ -52,7 +52,7 @@ export async function fetchAirQuality(city: string, country: string, d: Date): P
   return new Promise(async (res, rej) => {
     // Note: The result will be returned in the form of "Tuple<day_value,weekly_avg>"
     let result: [number, number] | undefined = undefined;
-    const response = await fetch(`https://u50g7n0cbj.execute-api.us-east-1.amazonaws.com/v2/measurements?date_from=${datestr1}&date_to=${datestr2}&limit=10&page=1&offset=0&sort=desc&radius=1000&country_id=${country}&city=${city}&order_by=datetime`,
+    const response = await fetch(`/v2/measurements?date_from=${datestr1}&date_to=${datestr2}&limit=10&page=1&offset=0&sort=desc&radius=1000&country_id=${country}&city=${city}&order_by=datetime`,
       {
         headers: {
           'Content-Type': 'application/json',
