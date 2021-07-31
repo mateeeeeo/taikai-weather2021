@@ -43,10 +43,10 @@ var createProxyMiddleware = require("http-proxy-middleware").createProxyMiddlewa
 var port = 4000;
 var FetchForecasts_1 = require("./FetchForecasts");
 app.use(express.static(path.join(__dirname, 'build')));
-// app.use("/apiv2", createProxyMiddleware({
-//   target: "https://api.dclimate.net/",
-//   changeOrigin: true
-// }));
+app.use("/apiv2", createProxyMiddleware({
+    target: "https://api.dclimate.net/",
+    changeOrigin: true
+}));
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
@@ -55,17 +55,21 @@ app.get('/forecast', function (req, res) { return __awaiter(void 0, void 0, void
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, FetchForecasts_1.fetchForecastsForLocationJSON2(req.query.l, new Date(parseInt(req.query.y), parseInt(req.query.m) - 1, parseInt(req.query.d)))];
+                console.log('request');
+                _a.label = 1;
             case 1:
+                _a.trys.push([1, 3, , 4]);
+                return [4 /*yield*/, FetchForecasts_1.fetchForecastsForLocationJSON2(req.query.l, new Date(parseInt(req.query.y), parseInt(req.query.m) - 1, parseInt(req.query.d)))];
+            case 2:
                 forecast = _a.sent();
                 res.send(forecast);
-                return [3 /*break*/, 3];
-            case 2:
+                return [3 /*break*/, 4];
+            case 3:
                 err_1 = _a.sent();
                 console.log(err_1);
-                return [3 /*break*/, 3];
-            case 3: return [2 /*return*/];
+                res.send({});
+                return [3 /*break*/, 4];
+            case 4: return [2 /*return*/];
         }
     });
 }); });

@@ -90,15 +90,10 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
 
     useEffect(() => {
         async function fetchForecast() {
-            console.log('forecast');
-
             if (selectedLocation) {
                 try {
-                    const response = await fetch(`/forecast?l=${selectedLocation.name.toLowerCase()}&d=${props.date.getDate()}&m=${props.date.getMonth() + 1}&y=${props.date.getFullYear()}`, {
-                    });
+                    const response = await fetch(`/forecast?l=${selectedLocation.name.toLowerCase()}&d=${props.date.getDate()}&m=${props.date.getMonth() + 1}&y=${props.date.getFullYear()}`);
                     const forecast = await response.json();
-                    console.log('forecast');
-                    console.log(forecast);
                     setData(forecast?.weather_info);
                 } catch (err) {
                     console.log(err);

@@ -8,21 +8,24 @@ import { fetchForecastsForLocationJSON2 } from './FetchForecasts';
 import { LatLong } from './src/interfaces/Interfaces';
 
 app.use(express.static(path.join(__dirname, 'build')));
-// app.use("/apiv2", createProxyMiddleware({
-//   target: "https://api.dclimate.net/",
-//   changeOrigin: true
-// }));
+app.use("/apiv2", createProxyMiddleware({
+  target: "https://api.dclimate.net/",
+  changeOrigin: true
+}));
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
 app.get('/forecast', async (req, res) => {
+  console.log('request');
   try {
     const forecast = await fetchForecastsForLocationJSON2(req.query.l, new Date(parseInt(req.query.y), parseInt(req.query.m) - 1, parseInt(req.query.d)));
+
     res.send(forecast);
   } catch (err) {
     console.log(err);
+    res.send({});
   }
 });
 

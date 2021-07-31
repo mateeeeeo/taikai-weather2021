@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { fetchSoilMoisture } from '../api/AdditionalData';
 import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
 import { SelectedLanguageContext } from './../contexts/SelectedLanguageContext';
-import { Alert } from 'react-ionicons';
+import { Alert, Sync } from 'react-ionicons';
 
 interface SoilMoistureDisplayProps {
     // moisture: number | undefined
@@ -57,6 +57,11 @@ const FloodRiskText = styled(Text)`
     color: #F16060;
 `;
 
+const SyncIcon = styled(Sync)`
+    width: 40px;
+    height: 40px;
+`;
+
 export default function SoilMoistureDisplay(props: SoilMoistureDisplayProps) {
     const { theme } = useContext(ThemeContext);
     const { selectedDate } = useContext(SelectedDateContext);
@@ -68,38 +73,45 @@ export default function SoilMoistureDisplay(props: SoilMoistureDisplayProps) {
             if (selectedLocation) {
                 try {
                     const moisture = await fetchSoilMoisture(selectedLocation.lat_long, selectedDate);
-                    // const response = await fetch(`/soil_moisture?lat=${selectedLocation.lat_long.lat}&long=${selectedLocation.lat_long.long}&d=${selectedDate.getDate()}&m=${selectedDate.getMonth()}&y=${selectedDate.getFullYear()}`);
-                    // const response = await fetch(`/soil_moisture/grid-history/era5_volumetric_soil_water_layer_1-hourly/${selectedLocation.lat_long.lat}_${selectedLocation.lat_long.long}?also_return_metadata=false&use_imperial_units=true&also_return_snapped_coordinates=true&convert_to_local_time=true`);
-                    // const data = await response.json();
-                    setMoisture(moisture);
-    
+                    setFetching(false);
+                    if(!isNaN(moisture))
+                        setMoisture(moisture);
+                    else
+                        setMoisture(undefined);
+
                 } catch (err) {
                     console.log(err);
                 }
             }
         }
-
+        setMoisture(undefined);
+        setFetching(true);
         fetchMoisture();
     }, [selectedDate, selectedLocation]);
 
+    const [fetching, setFetching] = useState<boolean>(true);
     const [moisture, setMoisture] = useState<number | undefined>();
+
+    useEffect(() => {
+        console.log(moisture);
+    }, [moisture]);
 
     return (
         <SoilMoistureContainer>
             <SoilMoistureText isDarkMode={theme.isDarkMode}>{selectedLanguage?.soilMoisture}</SoilMoistureText>
             <SoilMoistureValueContainer>
-                {/* {(moisture && moisture >= 0.01) && */}
-                {/* // } */}
+                {fetching && <SyncIcon height='40px' width='40px' color={theme.isDarkMode ? 'white' : '#232323'} rotate />}
                 <SoilMoistureIcon isDarkMode={theme.isDarkMode} className="ri-flood-fill" />
                 <SoilMoistureValue isDarkMode={theme.isDarkMode}>{moisture?.toFixed(3) ?? 'N/A '}m</SoilMoistureValue>
             </SoilMoistureValueContainer>
-            <FloodRiskWarning>
-                <AlertIcon
-                    width='48px'
-                    height='48px'
-                    color='#F16060' />
-                <FloodRiskText as='h1' isDarkMode>{selectedLanguage?.highFloodRisk}</FloodRiskText>
-            </FloodRiskWarning>
+            {(moisture && moisture >= 0.1) &&
+                <FloodRiskWarning>
+                    <AlertIcon
+                        width='48px'
+                        height='48px'
+                        color='#F16060' />
+                    <FloodRiskText as='h1' isDarkMode>{selectedLanguage?.highFloodRisk}</FloodRiskText>
+                </FloodRiskWarning>}
         </SoilMoistureContainer>
     );
 }

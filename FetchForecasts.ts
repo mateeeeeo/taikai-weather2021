@@ -104,6 +104,7 @@ export async function fetchForecastsForLocationJSON2(lname: string, date: Date):
 
     try {
       const data = await fs.promises.readFile(fpath, { encoding: 'utf-8' });
+      console.log(data);
       if (data) {
         const obj = JSON.parse(data);
 

@@ -88,10 +88,9 @@ export async function fetchSoilMoisture(latLong: LatLong, date: Date): Promise<n
       console.log('fetched');
       const resJson: APISoilMoistureResponse = await response.json();
       const data: any = resJson.data;
-      console.log('soil moisture');
-      console.log(data);
       const dClimateDateStr = toDClimateFormat(date);
-      res(data[dClimateDateStr]);
+      console.log(data[dClimateDateStr]);
+      res(parseFloat(data[dClimateDateStr]));
     } catch (err) {
       console.log(err);
       rej(err);
