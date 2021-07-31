@@ -56,7 +56,7 @@ const Indicator = styled.div`
     border: 3px solid #232323;
     position: absolute;
     top: calc(50% - 0.625rem);
-    left: calc(${(props: { percentage: number }) => props.percentage}% - 0.625rem);
+    left: calc(${(props: { percentage: number }) => Math.max(props.percentage, 0)}% - 0.625rem);
 `;
 
 const SyncIcon = styled(Sync)`
