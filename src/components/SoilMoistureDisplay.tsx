@@ -9,10 +9,6 @@ import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
 import { SelectedLanguageContext } from './../contexts/SelectedLanguageContext';
 import { Alert, Sync } from 'react-ionicons';
 
-interface SoilMoistureDisplayProps {
-    // moisture: number | undefined
-}
-
 const SoilMoistureContainer = styled.div`
     display: flex;
     flex-direction: column;
@@ -66,11 +62,11 @@ const LowFloodRiskText = styled(Text)`
 `;
 
 const SyncIcon = styled(Sync)`
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
 `;
 
-export default function SoilMoistureDisplay(props: SoilMoistureDisplayProps) {
+export default function SoilMoistureDisplay() {
     const { theme } = useContext(ThemeContext);
     const { selectedDate } = useContext(SelectedDateContext);
     const { selectedLocation } = useContext(SelectedLocationContext);
@@ -100,15 +96,11 @@ export default function SoilMoistureDisplay(props: SoilMoistureDisplayProps) {
     const [fetching, setFetching] = useState<boolean>(true);
     const [moisture, setMoisture] = useState<number | undefined>();
 
-    useEffect(() => {
-        console.log(moisture);
-    }, [moisture]);
-
     return (
         <SoilMoistureContainer>
             <SoilMoistureText isDarkMode={theme.isDarkMode}>{selectedLanguage?.soilMoisture}</SoilMoistureText>
             <SoilMoistureValueContainer>
-                {fetching && <SyncIcon height='40px' width='40px' color={theme.isDarkMode ? 'white' : '#232323'} rotate />}
+                {fetching && <SyncIcon height='32px' width='32px' color={theme.isDarkMode ? 'white' : '#232323'} rotate />}
                 <SoilMoistureIcon isDarkMode={theme.isDarkMode} className="ri-flood-fill" />
                 <SoilMoistureValue isDarkMode={theme.isDarkMode}>{moisture?.toFixed(3) ?? 'N/A '}m</SoilMoistureValue>
             </SoilMoistureValueContainer>

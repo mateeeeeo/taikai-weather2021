@@ -13,3 +13,7 @@ export enum WindDirection {
 export enum WeatherCondition {
     'Sunny', 'Clear', 'Partly Cloudy', 'Cloudy', 'Foggy',
 }
+
+export enum AirQuality {
+    good, moderate, unhealthySensitive, unhealthy, veryUnhealthy, hazardous
+}

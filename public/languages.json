@@ -24,7 +24,14 @@
         "southWest": "SW",
         "west": "W",
         "northWest": "NW",
-        "unknown": "Unknown"
+        "unknown": "Unknown",
+        "airQuality": "Air Quality",
+        "good": "Good",
+        "moderate": "Moderate",
+        "unhealthySensitive": "Unhealthy for Sensitive Groups",
+        "unhealthy": "Unhealthy",
+        "veryUnhealthy": "Very Unhealthy",
+        "hazardous": "Hazardous"
     },
     "fr": {
         "noDataTitle": "Pas de données disponibles",
@@ -51,7 +58,14 @@
         "southWest": "SO",
         "west": "O",
         "northWest": "NO",
-        "unknown": "Inconnu"
+        "unknown": "Inconnu",
+        "airQuality": "Qualité de l'air",
+        "good": "Bon",
+        "moderate": "Modéré",
+        "unhealthySensitive": "Malsain pour les groupes sensibles",
+        "unhealthy": "Malsain",
+        "veryUnhealthy": "Très malsain",
+        "hazardous": "Hazardous"
     },
     "yo": {
         "noDataTitle": "Ko si data to wa",
@@ -78,6 +92,13 @@
         "southWest": "SW",
         "west": "W",
         "northWest": "NW",
-        "unknown": "Aimọ"
+        "unknown": "Aimọ",
+        "airQuality": "Didara afẹfẹ",
+        "good": "O dara",
+        "moderate": "Dede",
+        "unhealthySensitive": "Ailera fun Awọn ẹgbẹ ti o ni imọlara",
+        "unhealthy": "Alailera",
+        "veryUnhealthy": "Alailera pupọ",
+        "hazardous": "Ewu"
     }
 }

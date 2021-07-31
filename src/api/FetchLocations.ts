@@ -18,7 +18,7 @@ export async function fetchLocations(): Promise<Location[]> {
 
             // iterating through all locations inside the json file
             for (let location in responseData) {
-                locations.push({ name: location, lat_long: { lat: parseFloat(responseData[location].lat), long: parseFloat(responseData[location].long) } });
+                locations.push({ name: location, country: responseData[location].country, lat_long: { lat: parseFloat(responseData[location].lat), long: parseFloat(responseData[location].long) } });
             }
             res(locations);
         } catch (err) {

@@ -44,9 +44,9 @@ export type Forecast = {
 };
 
 export type Location = {
+    country: string,
     name: string,
     lat_long: LatLong,
-    // forecasts?: Array<Forecast>
 };
 
 export interface Language {
@@ -75,5 +75,12 @@ export interface Language {
     southWest: string,
     west: string,
     northWest: string,
-    unknown: string
+    unknown: string,
+    airQuality: string,
+    good: string,
+    moderate: string,
+    unhealthySensitive: string,
+    unhealthy: string,
+    veryUnhealthy: string,
+    hazardous: string
 }

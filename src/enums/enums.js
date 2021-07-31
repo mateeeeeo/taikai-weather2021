@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.WeatherCondition = exports.WindDirection = exports.Severity = exports.WeatherType = void 0;
+exports.AirQuality = exports.WeatherCondition = exports.WindDirection = exports.Severity = exports.WeatherType = void 0;
 var WeatherType;
 (function (WeatherType) {
     WeatherType[WeatherType["sunny"] = 0] = "sunny";
@@ -38,3 +38,12 @@ var WeatherCondition;
     WeatherCondition[WeatherCondition["Cloudy"] = 3] = "Cloudy";
     WeatherCondition[WeatherCondition["Foggy"] = 4] = "Foggy";
 })(WeatherCondition = exports.WeatherCondition || (exports.WeatherCondition = {}));
+var AirQuality;
+(function (AirQuality) {
+    AirQuality[AirQuality["good"] = 0] = "good";
+    AirQuality[AirQuality["moderate"] = 1] = "moderate";
+    AirQuality[AirQuality["unhealthySensitive"] = 2] = "unhealthySensitive";
+    AirQuality[AirQuality["unhealthy"] = 3] = "unhealthy";
+    AirQuality[AirQuality["veryUnhealthy"] = 4] = "veryUnhealthy";
+    AirQuality[AirQuality["hazardous"] = 5] = "hazardous";
+})(AirQuality = exports.AirQuality || (exports.AirQuality = {}));
