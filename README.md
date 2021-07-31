@@ -19,5 +19,5 @@ As for the UI itself, the user first has to select the region he wants. Next, th
 
 <b>Building and running the application</b>
 
-In order to build the application, you will need to run "npm run build" in a terminal at the root of the project folder. After the build operation is done, you should see a new folder, called "build". Next, you need to run the command "npx tsc server.ts && npx tsc FetchForecasts.ts", again at the root of the project, to build the server application. After that, run "node server" in the terminal. The server will start on port 4000, after which you should see the message "Server started at port 4000" in the console. Afterwards go to the url "localhost:4000" and there you'll be able to use and test our dashboard.
+In order to build the application, you will need to run "npm run build" in a terminal at the root of the project folder. After the build operation is done, you should see a new folder, called "build". Next, you will need to run the command "node server", again at the root of the project, in order to run the server application. The server will start on port 4000, after which you should see the message "Server started at port 4000" in the console. Afterwards go to the url "localhost:4000" and there you'll be able to use and test our dashboard.
 
