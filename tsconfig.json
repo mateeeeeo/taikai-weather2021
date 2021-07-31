@@ -4,7 +4,8 @@
     "lib": [
       "dom",
       "dom.iterable",
-      "esnext"
+      "esnext",
+      "es2021"
     ],
     "allowJs": true,
     "skipLibCheck": true,
@@ -24,6 +25,7 @@
   },
   "include": [
     "src",
-    "react-app-env.d.ts"
+    "react-app-env.d.ts",
+    "src/api/FetchForecasts.ts"
   ]
 }

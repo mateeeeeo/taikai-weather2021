@@ -57,8 +57,7 @@
     "@types/react-datepicker": "^4.1.2",
     "@types/react-slick": "^0.23.4",
     "@types/styled-components": "^5.1.10",
+    "http-proxy-middleware": "^2.0.1",
     "tsc-watch": "^4.4.0"
-  },
-  "proxy": "https://api.dclimate.net/",
-  "homepage": "./"
+  }
 }

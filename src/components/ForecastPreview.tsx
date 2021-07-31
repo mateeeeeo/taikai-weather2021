@@ -8,7 +8,7 @@ import { SelectedDateContext } from '../contexts/SelectedDateContext';
 import { SelectedLocationContext } from '../contexts/SelectedLocationContext';
 import { WeatherDataContext } from '../contexts/WeatherDataContext';
 import { WeatherInfo } from '../interfaces/Interfaces';
-import { fetchForecastsForLocationJSON1, fetchForecastsForLocationJSON2 } from '../api/FetchForecasts';
+// import { fetchForecastsForLocationJSON1, fetchForecastsForLocationJSON2 } from '../../FetchForecasts';
 
 interface ForecastPreviewProps {
     date: Date,
@@ -89,19 +89,30 @@ export default function ForecastPreview(props: ForecastPreviewProps) {
     const month = props.date.getMonth() + 1;
 
     useEffect(() => {
-        if (selectedLocation) {
-            fetchForecastsForLocationJSON1(selectedLocation.name, props.date)
-                .then(forecast => {
-                    setData(forecast?.weather_info);
-                })
-                .catch(reason => { console.log(reason) });
-                
-            fetchForecastsForLocationJSON2(selectedLocation.name, props.date)
-                .then(forecast => {
+        async function fetchForecast() {
+            console.log('forecast');
+
+            if (selectedLocation) {
+                try {
+                    const response = await fetch(`/forecast?l=${selectedLocation.name.toLowerCase()}&d=${props.date.getDate()}&m=${props.date.getMonth() + 1}&y=${props.date.getFullYear()}`, {
+                    });
+                    const forecast = await response.json();
+                    console.log('forecast');
                     console.log(forecast);
-                })
-                .catch(reason => { console.log(reason) });
+                    setData(forecast?.weather_info);
+                } catch (err) {
+                    console.log(err);
+                }
+
+                // fetchForecastsForLocationJSON1(selectedLocation.name, props.date)
+                //     .then(forecast => {
+                //         setData(forecast?.weather_info);
+                //     })
+                //     .catch(reason => { console.log(reason) });
+            }
         }
+        fetchForecast();
+
     }, [selectedLocation]);
 
     useEffect(() => {

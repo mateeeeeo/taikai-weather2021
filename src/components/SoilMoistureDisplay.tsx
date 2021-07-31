@@ -64,11 +64,14 @@ export default function SoilMoistureDisplay(props: SoilMoistureDisplayProps) {
     const { selectedLanguage } = useContext(SelectedLanguageContext);
 
     useEffect(() => {
-        async function fetch() {
+        async function fetchMoisture() {
             if (selectedLocation) {
                 try {
-                    const data = await fetchSoilMoisture(selectedLocation.lat_long, selectedDate);
-                    setMoisture(data);
+                    const moisture = await fetchSoilMoisture(selectedLocation.lat_long, selectedDate);
+                    // const response = await fetch(`/soil_moisture?lat=${selectedLocation.lat_long.lat}&long=${selectedLocation.lat_long.long}&d=${selectedDate.getDate()}&m=${selectedDate.getMonth()}&y=${selectedDate.getFullYear()}`);
+                    // const response = await fetch(`/soil_moisture/grid-history/era5_volumetric_soil_water_layer_1-hourly/${selectedLocation.lat_long.lat}_${selectedLocation.lat_long.long}?also_return_metadata=false&use_imperial_units=true&also_return_snapped_coordinates=true&convert_to_local_time=true`);
+                    // const data = await response.json();
+                    setMoisture(moisture);
     
                 } catch (err) {
                     console.log(err);
@@ -76,7 +79,7 @@ export default function SoilMoistureDisplay(props: SoilMoistureDisplayProps) {
             }
         }
 
-        fetch();
+        fetchMoisture();
     }, [selectedDate, selectedLocation]);
 
     const [moisture, setMoisture] = useState<number | undefined>();
