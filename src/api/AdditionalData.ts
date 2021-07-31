@@ -67,9 +67,15 @@ export async function fetchAirQuality(city: string, country: string, d: Date): P
   // console.log(datestr1);
   // console.log(datestr2);
 
-  const dateStr1 = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}T${date.getHours()}%3A${date.getMinutes()}%3A${date.getMilliseconds()}%2B00%3A00`;
-  date.setDate(date.getDate()+ 1);
-  const dateStr2 = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}T${date.getHours()}%3A${date.getMinutes()}%3A${date.getMilliseconds()}%2B00%3A00`;
+  const day1 = date.getDate() > 9 ? date.getDate() + '' : '0' + date.getDate();
+  const day2 = (date.getDate() + 1) > 9 ? (date.getDate() + 1) + '' : '0' + (date.getDate() + 1);
+  const month = date.getMonth() > 9 ? date.getMonth() + '' : '0' + date.getMonth();
+  const hour = date.getHours() > 9 ? date.getHours() + '' : '0' + date.getHours();
+  const minutes = date.getMinutes() > 9 ? date.getMinutes() + '' : '0' + date.getMinutes();
+
+
+  const dateStr1 = `${date.getFullYear()}-${month}-${day1}T00%3A00%3A00%2B00%3A00`;
+  const dateStr2 = `${date.getFullYear()}-${month}-${day2}T00%3A00%3A00%2B00%3A00`;
   console.log(dateStr1);
   console.log(dateStr2);
 
